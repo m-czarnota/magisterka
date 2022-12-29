@@ -20,22 +20,4 @@ class InitialSurveyRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, InitialSurvey::class);
     }
-
-    public function save(InitialSurvey $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->persist($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
-
-    public function remove(InitialSurvey $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
 }
