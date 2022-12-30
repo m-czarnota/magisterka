@@ -1,0 +1,20 @@
+pages:
+  form:
+    cancelButton: 'Cancel'
+  login:
+    title: 'Sign in'
+    header: 'Please sign in'
+    form:
+      login: 'Login'
+      password: 'Password'
+      signInButton: 'Sign in'
+
+aside:
+  dashboard: 'Dashboard'
+  users:
+    header: 'Users'
+    list: 'List of users'
+    add: 'Create a user'
+
+user_footer:
+  description: 'Created and supported by %creator%'

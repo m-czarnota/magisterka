@@ -6,7 +6,7 @@ use App\Repository\GameRepository;
 use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use HistoryEntityTrait;
+use App\Trait\Entity\HistoryEntityTrait;
 
 #[ORM\Entity(repositoryClass: GameRepository::class)]
 class Game

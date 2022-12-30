@@ -1,0 +1,13 @@
+@import "./../theme/palette";
+
+form[method="post"] {
+  padding: 1em;
+  background-color: $form_background_color;
+  border-radius: 3px;
+}
+
+label.required:after {
+  content: " *";
+  color: $form_label_required_color;
+  font-weight: 900;
+}

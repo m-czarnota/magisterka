@@ -1,6 +1,6 @@
 <?php
 
-namespace App\InitialSurvey;
+namespace App\Enum\InitialSurvey;
 
 enum GameTypeEnum
 {

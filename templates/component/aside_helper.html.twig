@@ -1,0 +1,19 @@
+{% macro isCategoryMenuActive() %}
+    {% if app.request.attributes.get('_route') in [
+        'app_user_category_list',
+        'app_user_category_add',
+    ] %}current{% endif %}
+{% endmacro %}
+
+{# ------------- single routes ------------- #}
+{% macro isDashboardMenuActive() %}
+    {% if app.request.attributes.get('_route') == 'app_user_dashboard' %}current{% endif %}
+{% endmacro %}
+
+{% macro isCategoryListMenuActive() %}
+    {% if app.request.attributes.get('_route') == 'app_user_category_list' %}current{% endif %}
+{% endmacro %}
+
+{% macro isCategoryAddMenuActive() %}
+    {% if app.request.attributes.get('_route') == 'app_user_category_add' %}current{% endif %}
+{% endmacro %}

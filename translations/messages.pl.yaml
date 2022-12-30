@@ -1,0 +1,20 @@
+pages:
+  form:
+    cancelButton: 'Anuluj'
+  login:
+    title: 'Logowanie'
+    header: 'Logowanie'
+    form:
+      login: 'Login'
+      password: 'Hasło'
+      signInButton: 'Zaloguj się'
+
+aside:
+  dashboard: 'Kokpit'
+  users:
+    header: 'Użytkownicy'
+    list: 'Lista użytkowników'
+    add: 'Stwórz nowego użytkownika'
+
+user_footer:
+  description: 'Stworzone i wspierane przez %creator%'

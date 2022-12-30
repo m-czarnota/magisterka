@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\InitialSurvey\AgeEnum;
-use App\InitialSurvey\GameTypeEnum;
-use App\InitialSurvey\GenderEnum;
-use App\InitialSurvey\PlayingStyleEnum;
-use App\InitialSurvey\WorkTypeEnum;
+use App\Enum\InitialSurvey\AgeEnum;
+use App\Enum\InitialSurvey\GameTypeEnum;
+use App\Enum\InitialSurvey\GenderEnum;
+use App\Enum\InitialSurvey\PlayingStyleEnum;
+use App\Enum\InitialSurvey\WorkTypeEnum;
 use App\Repository\InitialSurveyRepository;
 use Doctrine\ORM\Mapping as ORM;
-use HistoryEntityTrait;
+use App\Trait\Entity\HistoryEntityTrait;
 
 #[ORM\Entity(repositoryClass: InitialSurveyRepository::class)]
 class InitialSurvey
