@@ -3,10 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Trait\Entity\HistoryEntityTrait;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -33,12 +33,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Game::class)]
     private Collection $games;
 
+    #[ORM\Column(type: 'datetime')]
+    private DateTime $createdAt;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?DateTime $modifyAt = null;
+
+    #[ORM\Column(type: 'boolean')]
+    private bool $isDeleted = false;
+
     public function __construct()
     {
         $this->games = new ArrayCollection();
+        $this->createdAt = new DateTime();
     }
-
-    use HistoryEntityTrait;
 
     public function getId(): ?int
     {
@@ -153,6 +161,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $game->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): DateTime
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(DateTime $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getModifyAt(): ?DateTime
+    {
+        return $this->modifyAt;
+    }
+
+    public function setModifyAt(?DateTime $modifyAt): self
+    {
+        $this->modifyAt = $modifyAt;
+
+        return $this;
+    }
+
+    public function isDeleted(): bool
+    {
+        return $this->isDeleted;
+    }
+
+    public function setIsDeleted(bool $isDeleted): self
+    {
+        $this->isDeleted = $isDeleted;
 
         return $this;
     }

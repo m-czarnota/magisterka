@@ -1,0 +1,29 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ 'page.initialSurvey.new.title'|trans }}{% endblock %}
+
+{% block main %}
+    <div id="initial-survey-new-container">
+        {% include 'component/alert.html.twig' %}
+
+        <h1>{{ 'page.initialSurvey.new.header'|trans }}</h1>
+        <p>{{ 'page.initialSurvey.new.description'|trans }}</p>
+
+        {{ form_start(form) }}
+            {{ form_row(form.age, {'label': 'page.initialSurvey.new.age'|trans}) }}
+            {{ form_row(form.gender, {'label': 'enum.initialSurvey.gender.label'|trans}) }}
+            {{ form_row(form.workType, {'label': 'enum.initialSurvey.workType.label'|trans}) }}
+            {{ form_row(form.preferredPlayingStyle, {'label': 'page.initialSurvey.new.preferredPlayingStyle'|trans}) }}
+            {{ form_row(form.favouriteGameType, {'label': 'page.initialSurvey.new.favouriteGameType'|trans}) }}
+            {{ form_row(form.computerUsagePerDay, {'label': 'page.initialSurvey.new.computerUsagePerDay'|trans}) }}
+            {{ form_row(form.gamingPerDay, {'label': 'page.initialSurvey.new.gamingPerDay'|trans}) }}
+
+            <div class="form_buttons d-flex justify-content-between">
+                <div class="mb-3">
+                    <a href="" class="btn-secondary btn">{{ 'page.form.cancelButton'|trans }}</a>
+                </div>
+                {{ form_row(form.submit, {'label': 'page.initialSurvey.new.submit'|trans}) }}
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

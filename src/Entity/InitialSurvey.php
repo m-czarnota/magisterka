@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Enum\InitialSurvey\AgeEnum;
@@ -8,8 +10,10 @@ use App\Enum\InitialSurvey\GenderEnum;
 use App\Enum\InitialSurvey\PlayingStyleEnum;
 use App\Enum\InitialSurvey\WorkTypeEnum;
 use App\Repository\InitialSurveyRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use App\Trait\Entity\HistoryEntityTrait;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator as AppAssert;
 
 #[ORM\Entity(repositoryClass: InitialSurveyRepository::class)]
 class InitialSurvey
@@ -24,27 +28,46 @@ class InitialSurvey
     private ?User $user = null;
 
     #[ORM\Column(type: 'string', length: 255, enumType: AgeEnum::class)]
+    #[AppAssert\Enum(path: AgeEnum::class)]
     private ?AgeEnum $age = null;
 
     #[ORM\Column(type: 'string', length: 255, enumType: GenderEnum::class)]
+    #[AppAssert\Enum(path: GenderEnum::class)]
     private ?GenderEnum $gender = null;
 
     #[ORM\Column(type: 'string', length: 255, enumType: WorkTypeEnum::class)]
+    #[AppAssert\Enum(path: WorkTypeEnum::class)]
     private ?WorkTypeEnum $workType = null;
 
     #[ORM\Column(type: 'string', length: 255, enumType: PlayingStyleEnum::class)]
+    #[AppAssert\Enum(path: PlayingStyleEnum::class)]
     private ?PlayingStyleEnum $preferredPlayingStyle = null;
 
     #[ORM\Column(type: 'string', length: 255, enumType: GameTypeEnum::class)]
+    #[AppAssert\Enum(path: GameTypeEnum::class)]
     private ?GameTypeEnum $favouriteGameType = null;
 
-    #[ORM\Column]
-    private ?float $computer_usage_per_day = null;
+    #[ORM\Column(type: 'float')]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'float')]
+    #[Assert\GreaterThanOrEqual(value: 0)]
+    #[Assert\LessThanOrEqual(value: 24)]
+    private ?float $computerUsagePerDay = null;
 
-    #[ORM\Column]
-    private ?float $gaming_per_day = null;
+    #[ORM\Column(type: 'float')]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'float')]
+    #[Assert\GreaterThanOrEqual(value: 0)]
+    #[Assert\LessThanOrEqual(value: 24)]
+    private ?float $gamingPerDay = null;
 
-    use HistoryEntityTrait;
+    #[ORM\Column(type: 'datetime')]
+    private DateTime $createdAt;
+
+    public function __construct()
+    {
+        $this->createdAt = new DateTime();
+    }
 
     public function getId(): ?int
     {
@@ -125,24 +148,36 @@ class InitialSurvey
 
     public function getComputerUsagePerDay(): ?float
     {
-        return $this->computer_usage_per_day;
+        return $this->computerUsagePerDay;
     }
 
-    public function setComputerUsagePerDay(float $computer_usage_per_day): self
+    public function setComputerUsagePerDay(float $computerUsagePerDay): self
     {
-        $this->computer_usage_per_day = $computer_usage_per_day;
+        $this->computerUsagePerDay = $computerUsagePerDay;
 
         return $this;
     }
 
     public function getGamingPerDay(): ?float
     {
-        return $this->gaming_per_day;
+        return $this->gamingPerDay;
     }
 
-    public function setGamingPerDay(float $gaming_per_day): self
+    public function setGamingPerDay(float $gamingPerDay): self
     {
-        $this->gaming_per_day = $gaming_per_day;
+        $this->gamingPerDay = $gamingPerDay;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): DateTime
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(DateTime $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

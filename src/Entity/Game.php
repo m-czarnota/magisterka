@@ -3,10 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\GameRepository;
+use DateTime;
 use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Trait\Entity\HistoryEntityTrait;
 
 #[ORM\Entity(repositoryClass: GameRepository::class)]
 class Game
@@ -23,13 +23,19 @@ class Game
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?DateTimeInterface $time = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'json')]
     private array $data = [];
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'float')]
     private ?float $score = null;
 
-    use HistoryEntityTrait;
+    #[ORM\Column(type: 'datetime')]
+    private DateTime $createdAt;
+
+    public function __construct()
+    {
+        $this->createdAt = new DateTime();
+    }
 
     public function getId(): ?int
     {
@@ -80,6 +86,18 @@ class Game
     public function setScore(float $score): self
     {
         $this->score = $score;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): DateTime
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(DateTime $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

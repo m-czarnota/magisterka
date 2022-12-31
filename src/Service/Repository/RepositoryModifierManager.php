@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\Repository;
 
 use App\Entity\User;
-use App\Interface\RepositoryModifierInterface;
+use App\Interface\Repository\RepositoryModifierInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;

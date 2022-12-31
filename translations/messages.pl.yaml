@@ -1,6 +1,43 @@
-pages:
+enum:
+  initialSurvey:
+    age:
+      label: 'Wiek'
+    gender:
+      label: 'Płeć'
+      male: 'Mężczyzna'
+      female: 'Kobieta'
+      other: 'Inna'
+    workType:
+      label: 'Typ pracy'
+      physical: 'Fizyczna'
+      mental: 'Umysłowa'
+      mixed: 'Mieszana'
+      noWork: 'Nie pracuję'
+    playingStyle:
+      label: 'Styl grania'
+      mouseAndKeyboard: 'Myszka i Klawiatura'
+      gamepad: 'Kontroler'
+    gameType:
+      label: 'Typ gry'
+      sandbox: 'Sandbox'
+      rts: 'RTS'
+      fps: 'FPS'
+      moba: 'MOBA'
+      rpg: 'RPG'
+      simulation: 'Symulacja'
+      action: 'Gry akcji'
+      survival: 'Przetrwanie'
+      horror: 'Horror'
+      adventure: 'Przygodowe'
+      platform: 'Platformowe'
+
+page:
   form:
     cancelButton: 'Anuluj'
+  choice:
+    login: 'Zaloguj się'
+    register: 'Zarejestruj się'
+    guest: 'Kontynuuj jako gość'
   login:
     title: 'Logowanie'
     header: 'Logowanie'
@@ -8,6 +45,19 @@ pages:
       login: 'Login'
       password: 'Hasło'
       signInButton: 'Zaloguj się'
+  initialSurvey:
+    flash:
+      success: 'Twoja odpowiedź została zapisana pomyślnie.'
+    new:
+      title: 'Wstępna ankieta'
+      header: 'Wstępna ankieta'
+      description: 'Zanim pójdziesz dalej, proszę o wypełnienie krótkiej ankiety poniżej. Pamiętaj, że twoje dane będą anonimowe i zostaną one wykorzystane jedynie do końcowego podsumowania w mojej pracy magisterskiej.'
+      age: 'Przedział wiekowy'
+      preferredPlayingStyle: 'Preferowany styl grania'
+      favouriteGameType: 'Ulubiony typ gry'
+      computerUsagePerDay: 'Przez ile godzin dzienne używasz komputera (włącznie z graniem na komputerze/konsoli)?'
+      gamingPerDay: 'Ile godzin dzienne przeznaczasz na granie w gry komputerowe?'
+      submit: 'Continue'
 
 aside:
   dashboard: 'Kokpit'

@@ -9,4 +9,9 @@ enum AgeEnum: string
     case MIDDLE = '25-45';
     case MIDDLE_AGE = '45-60';
     case OLD = '>60';
+
+    public static function values(): array
+    {
+        return array_map(fn(self $case) => $case->value, self::cases());
+    }
 }

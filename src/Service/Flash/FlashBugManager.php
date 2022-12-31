@@ -4,7 +4,6 @@ namespace App\Service\Flash;
 
 use App\Enum\Flash\FlashMessageEnum;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class FlashBugManager
 {
@@ -12,7 +11,7 @@ class FlashBugManager
 
     public function __construct(RequestStack $requestStack)
     {
-        $this->$requestStack = $requestStack;
+        $this->requestStack = $requestStack;
     }
 
     public function push(string $type, string $message): void

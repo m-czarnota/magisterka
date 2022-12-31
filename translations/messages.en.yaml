@@ -1,6 +1,43 @@
-pages:
+enum:
+  initialSurvey:
+    age:
+      label: 'Age'
+    gender:
+      label: 'Gender'
+      male: 'Male'
+      female: 'Female'
+      other: 'Other'
+    workType:
+      label: 'Work type'
+      physical: 'Physical'
+      mental: 'Mental'
+      mixed: 'Mixed'
+      noWork: "I'm not working"
+    playingStyle:
+      label: 'Playing style'
+      mouseAndKeyboard: 'Mouse & Keyboard'
+      gamepad: 'Gamepad'
+    gameType:
+      label: 'Game type'
+      sandbox: 'Sandbox'
+      rts: 'RTS'
+      fps: 'FPS'
+      moba: 'MOBA'
+      rpg: 'RPG'
+      simulation: 'Simulation'
+      action: 'Action games'
+      survival: 'Survival'
+      horror: 'Horror'
+      adventure: 'Adventure'
+      platform: 'Platform'
+
+page:
   form:
     cancelButton: 'Cancel'
+  choice:
+    login: 'Login'
+    register: 'Register'
+    guest: 'Continue as guest'
   login:
     title: 'Sign in'
     header: 'Please sign in'
@@ -8,6 +45,19 @@ pages:
       login: 'Login'
       password: 'Password'
       signInButton: 'Sign in'
+  initialSurvey:
+    flash:
+      success: 'Your response has been saved successfully.'
+    new:
+      title: 'Initial survey'
+      header: 'Initial survey'
+      description: 'Before you go next, please fill below short survey. Remember that your data will be anonymous and they are used only for cumulative summary in my master thesis.'
+      age: 'Age range'
+      preferredPlayingStyle: 'Preferred playing Style'
+      favouriteGameType: 'Favourite game type'
+      computerUsagePerDay: 'How many hours do you use a computer per day (including gaming on computer/console)?'
+      gamingPerDay: 'How many hours do you play in video games per day?'
+      submit: 'Continue'
 
 aside:
   dashboard: 'Dashboard'
