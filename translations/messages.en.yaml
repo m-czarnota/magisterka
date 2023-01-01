@@ -22,6 +22,7 @@ enum:
       sandbox: 'Sandbox'
       rts: 'RTS'
       fps: 'FPS'
+      mmo: 'MMO'
       moba: 'MOBA'
       rpg: 'RPG'
       simulation: 'Simulation'
@@ -30,6 +31,7 @@ enum:
       horror: 'Horror'
       adventure: 'Adventure'
       platform: 'Platform'
+      logic: 'Logic'
 
 page:
   form:
@@ -55,9 +57,12 @@ page:
       age: 'Age range'
       preferredPlayingStyle: 'Preferred playing Style'
       favouriteGameType: 'Favourite game type'
-      computerUsagePerDay: 'How many hours do you use a computer per day (including gaming on computer/console)?'
+      computerUsagePerDay: 'How many hours do you use a computer per day?'
       gamingPerDay: 'How many hours do you play in video games per day?'
       submit: 'Continue'
+      tooltip:
+        computerUsagePerDay: 'Including usage computer for work, studies, gaming, watching, paying bills, etc.'
+        gamingPerDay: 'Only on computer or consoles like PlayStation, Xbox, Nintendo Switch, SteamDeck etc.'
 
 aside:
   dashboard: 'Dashboard'

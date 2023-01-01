@@ -6,5 +6,5 @@ namespace App\Interface\Factory;
 
 interface BaseFactoryInterface
 {
-    public static function create();
+    public function create();
 }

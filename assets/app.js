@@ -2,7 +2,14 @@
 import './styles/app.scss';
 
 // bootstrap
-import 'bootstrap'
+const bootstrap = require('bootstrap')
 
 // start the Stimulus application
-import './bootstrap';
+// import './bootstrap';
+
+for (let tooltip of document.querySelectorAll('[data-bs-toggle="tooltip"]')) {
+    console.log('jes')
+    new bootstrap.Tooltip(tooltip);
+}
+
+import './scripts';

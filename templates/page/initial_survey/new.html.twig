@@ -9,14 +9,14 @@
         <h1>{{ 'page.initialSurvey.new.header'|trans }}</h1>
         <p>{{ 'page.initialSurvey.new.description'|trans }}</p>
 
-        {{ form_start(form) }}
+        {{ form_start(form, {'attr': {'class': 'needs-validation'}}) }}
             {{ form_row(form.age, {'label': 'page.initialSurvey.new.age'|trans}) }}
             {{ form_row(form.gender, {'label': 'enum.initialSurvey.gender.label'|trans}) }}
             {{ form_row(form.workType, {'label': 'enum.initialSurvey.workType.label'|trans}) }}
             {{ form_row(form.preferredPlayingStyle, {'label': 'page.initialSurvey.new.preferredPlayingStyle'|trans}) }}
             {{ form_row(form.favouriteGameType, {'label': 'page.initialSurvey.new.favouriteGameType'|trans}) }}
-            {{ form_row(form.computerUsagePerDay, {'label': 'page.initialSurvey.new.computerUsagePerDay'|trans}) }}
-            {{ form_row(form.gamingPerDay, {'label': 'page.initialSurvey.new.gamingPerDay'|trans}) }}
+            {{ form_row(form.computerUsagePerDay, { 'label': 'page.initialSurvey.new.computerUsagePerDay'|trans, 'label_attr': {'data-bs-toggle': 'tooltip', 'data-bs-placement': 'right', 'data-bs-title': 'page.initialSurvey.new.tooltip.computerUsagePerDay'|trans} }) }}
+            {{ form_row(form.gamingPerDay, { 'label': 'page.initialSurvey.new.gamingPerDay'|trans, 'label_attr': {'data-bs-toggle': 'tooltip', 'data-bs-placement': 'right', 'data-bs-title': 'page.initialSurvey.new.tooltip.gamingPerDay'|trans} }) }}
 
             <div class="form_buttons d-flex justify-content-between">
                 <div class="mb-3">

@@ -18,9 +18,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class InitialSurveyController extends AbstractController
 {
     #[Route(path: '/new', name: 'app_initial_survey_survey')]
-    public function new(Request $request, FlashBugManager $flashBugManager, TranslatorInterface $translator): RedirectResponse|Response
+    public function new(Request $request, FlashBugManager $flashBugManager, TranslatorInterface $translator, InitialSurveyFactory $initialSurveyFactory): RedirectResponse|Response
     {
-        $initialSurvey = InitialSurveyFactory::create();
+        $initialSurvey = $initialSurveyFactory->create();
         $form = $this->createForm(NewInitialSurveyType::class, $initialSurvey)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

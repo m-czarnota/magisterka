@@ -22,6 +22,7 @@ enum:
       sandbox: 'Sandbox'
       rts: 'RTS'
       fps: 'FPS'
+      mmo: 'MMO'
       moba: 'MOBA'
       rpg: 'RPG'
       simulation: 'Symulacja'
@@ -30,6 +31,7 @@ enum:
       horror: 'Horror'
       adventure: 'Przygodowe'
       platform: 'Platformowe'
+      logic: 'Logiczne'
 
 page:
   form:
@@ -55,9 +57,12 @@ page:
       age: 'Przedział wiekowy'
       preferredPlayingStyle: 'Preferowany styl grania'
       favouriteGameType: 'Ulubiony typ gry'
-      computerUsagePerDay: 'Przez ile godzin dzienne używasz komputera (włącznie z graniem na komputerze/konsoli)?'
+      computerUsagePerDay: 'Przez ile godzin dzienne używasz komputera?'
       gamingPerDay: 'Ile godzin dzienne przeznaczasz na granie w gry komputerowe?'
       submit: 'Continue'
+      tooltip:
+        computerUsagePerDay: 'Włączając w to użytkowanie komputera w pracy, na studiach, granie, oglądanie, opłacanie rachunków itp.'
+        gamingPerDay: 'Tylko na komputerze lub konsolach, takich jak PlayStation, Xbox, Nintendo Switch, SteamDeck itp.'
 
 aside:
   dashboard: 'Kokpit'

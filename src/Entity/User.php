@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\User\RoleEnum;
 use App\Repository\UserRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -21,7 +22,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, unique: true, nullable: true)]
     private ?string $email = null;
 
-    #[ORM\Column(type: 'json')]
+    #[ORM\Column(type: 'json', enumType: RoleEnum::class)]
     private array $roles = [];
 
     #[ORM\Column(type: 'string', nullable: true)]
@@ -81,8 +82,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }

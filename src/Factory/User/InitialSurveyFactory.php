@@ -9,7 +9,7 @@ use App\Interface\Factory\BaseFactoryInterface;
 
 class InitialSurveyFactory implements BaseFactoryInterface
 {
-    public static function create(): InitialSurvey
+    public function create(): InitialSurvey
     {
         return new InitialSurvey();
     }
