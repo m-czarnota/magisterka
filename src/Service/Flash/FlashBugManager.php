@@ -3,9 +3,10 @@
 namespace App\Service\Flash;
 
 use App\Enum\Flash\FlashMessageEnum;
+use App\Interface\Flash\FlashBugManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class FlashBugManager
+class FlashBugManager implements FlashBugManagerInterface
 {
     protected RequestStack $requestStack;
 

@@ -6,7 +6,7 @@ namespace App\Controller\User;
 
 use App\Factory\User\InitialSurveyFactory;
 use App\Form\Type\NewInitialSurveyType;
-use App\Service\Flash\FlashBugManager;
+use App\Interface\Flash\FlashBugManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +18,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class InitialSurveyController extends AbstractController
 {
     #[Route(path: '/new', name: 'app_initial_survey_survey')]
-    public function new(Request $request, FlashBugManager $flashBugManager, TranslatorInterface $translator, InitialSurveyFactory $initialSurveyFactory): RedirectResponse|Response
+    public function new(Request $request, FlashBugManagerInterface $flashBugManager, TranslatorInterface $translator, InitialSurveyFactory $initialSurveyFactory): RedirectResponse|Response
     {
         $initialSurvey = $initialSurveyFactory->create();
         $form = $this->createForm(NewInitialSurveyType::class, $initialSurvey)->handleRequest($request);

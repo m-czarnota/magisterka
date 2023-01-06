@@ -24,9 +24,6 @@
             <label for="inputUsername">{{ 'page.login.form.login'|trans }}</label>
             <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control mb-3" required autofocus>
 
-            <label for="inputPassword">{{ 'page.login.form.password'|trans }}</label>
-            <input type="password" name="password" id="inputPassword" class="form-control" required>
-
             <input type="hidden"
                    name="_csrf_token"
                    value="{{ csrf_token('authenticate') }}">

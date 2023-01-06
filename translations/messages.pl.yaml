@@ -37,16 +37,14 @@ page:
   form:
     cancelButton: 'Anuluj'
   choice:
-    login: 'Zaloguj się'
-    register: 'Zarejestruj się'
-    guest: 'Kontynuuj jako gość'
+    login: 'Kontynuuj ze swoją nazwą'
+    register: 'Rozpocznij jako nowy użytkownik'
   login:
-    title: 'Logowanie'
-    header: 'Logowanie'
+    title: 'Kontynuuj ze swoją nazwą'
+    header: 'Kontynuuj ze swoją nazwą'
     form:
-      login: 'Login'
-      password: 'Hasło'
-      signInButton: 'Zaloguj się'
+      login: 'Nazwa'
+      signInButton: 'Kontynuuj'
   initialSurvey:
     flash:
       success: 'Twoja odpowiedź została zapisana pomyślnie.'

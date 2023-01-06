@@ -37,16 +37,14 @@ page:
   form:
     cancelButton: 'Cancel'
   choice:
-    login: 'Login'
-    register: 'Register'
-    guest: 'Continue as guest'
+    login: 'Continue with your name'
+    register: 'Start as a new user'
   login:
-    title: 'Sign in'
-    header: 'Please sign in'
+    title: 'Continue with your name'
+    header: 'Continue with your name'
     form:
-      login: 'Login'
-      password: 'Password'
-      signInButton: 'Sign in'
+      login: 'Name'
+      signInButton: 'Continue'
   initialSurvey:
     flash:
       success: 'Your response has been saved successfully.'

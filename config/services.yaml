@@ -4,7 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-    creating.user.admin_default_email: '%env(CREATING_ADMIN_DEFAULT_EMAIL)%'
+    creating.user.admin_default_username: '%env(CREATING_ADMIN_DEFAULT_USERNAME)%'
     creating.user.admin_default_password: '%env(CREATING_ADMIN_DEFAULT_PASSWORD)%'
 
     creating.system_id: '%env(CREATING_SYSTEM_ID)%'

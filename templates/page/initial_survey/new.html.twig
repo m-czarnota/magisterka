@@ -9,7 +9,7 @@
         <h1>{{ 'page.initialSurvey.new.header'|trans }}</h1>
         <p>{{ 'page.initialSurvey.new.description'|trans }}</p>
 
-        {{ form_start(form, {'attr': {'class': 'needs-validation'}}) }}
+        {{ form_start(form, {'attr': {'class': 'needs-validation' ~ (form.vars.valid == false ? ' was-validated' : ''), 'novalidate': true}}) }}
             {{ form_row(form.age, {'label': 'page.initialSurvey.new.age'|trans}) }}
             {{ form_row(form.gender, {'label': 'enum.initialSurvey.gender.label'|trans}) }}
             {{ form_row(form.workType, {'label': 'enum.initialSurvey.workType.label'|trans}) }}
@@ -20,7 +20,7 @@
 
             <div class="form_buttons d-flex justify-content-between">
                 <div class="mb-3">
-                    <a href="" class="btn-secondary btn">{{ 'page.form.cancelButton'|trans }}</a>
+                    <a href="{{ path('app_choice') }}" class="btn-secondary btn">{{ 'page.form.cancelButton'|trans }}</a>
                 </div>
                 {{ form_row(form.submit, {'label': 'page.initialSurvey.new.submit'|trans}) }}
             </div>

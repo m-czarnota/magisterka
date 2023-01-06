@@ -32,9 +32,9 @@ class UserFactory implements UserFactoryInterface
         $user = $this->create();
 
         return $user
-            ->setEmail($this->parameterBag->get('creating.user.admin_default_email'))
+            ->setUsername($this->parameterBag->get('creating.user.admin_default_username'))
             ->setPassword($this->hashPassword($user, $plainPassword))
-            ->setRoles(RoleEnum::cases());
+            ->setRoles(RoleEnum::getNames());
     }
 
     protected function hashPassword(User $user, string $plainPassword): string

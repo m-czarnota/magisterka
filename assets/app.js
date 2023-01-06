@@ -7,8 +7,8 @@ const bootstrap = require('bootstrap')
 // start the Stimulus application
 // import './bootstrap';
 
+// start bootstrap turned off components
 for (let tooltip of document.querySelectorAll('[data-bs-toggle="tooltip"]')) {
-    console.log('jes')
     new bootstrap.Tooltip(tooltip);
 }
 
