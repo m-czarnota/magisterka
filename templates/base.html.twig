@@ -17,6 +17,7 @@
 </head>
 <body>
 <div class="body-container d-flex">
+    {% if form is defined %}{% form_theme form 'form/form_overrides.html.twig' %}{% endif %}
     {% block aside %}{% endblock %}
 
     <div class="main-container padding-30 w-100">

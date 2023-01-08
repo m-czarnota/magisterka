@@ -1,0 +1,23 @@
+{% for message in app.flashes('info') %}
+    {% include 'component/alert/info.html.twig' with {
+        'message': message,
+    } %}
+{% endfor %}
+
+{% for message in app.flashes('warning') %}
+    {% include 'component/alert/warning.html.twig' with {
+        'message': message,
+    } %}
+{% endfor %}
+
+{% for message in app.flashes('danger') %}
+    {% include 'component/alert/danger.html.twig' with {
+        'message': message,
+    } %}
+{% endfor %}
+
+{% for message in app.flashes('success') %}
+    {% include 'component/alert/success.html.twig' with {
+        'message': message,
+    } %}
+{% endfor %}

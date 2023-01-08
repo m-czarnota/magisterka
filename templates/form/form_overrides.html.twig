@@ -1,0 +1,46 @@
+{% form_theme form _self %}
+
+{% block form_start %}
+    {% do form.setMethodRendered() %}
+
+    {% if action == '' %}
+        {% set action = app.request.uri %}
+    {% endif %}
+
+    {% set method = method|upper %}
+    {% set form_method = method in ["GET", "POST"] ? method : "POST" %}
+
+    <form name="{{ name }}"
+          method="{{ form_method|lower }}"
+          action="{{ action }}"
+          {% for attrname, attrvalue in attr %}
+              {% if attrname == 'class' %}
+                  {{ attrname }}="{{ attrvalue ~ 'needs-validation' ~ (valid == false ? ' was-validated' : '') }}"
+              {% else %}
+                  {{ attrname }}="{{ attrvalue }}"
+              {% endif %}
+          {% endfor %}
+          {% if multipart %} enctype="multipart/form-data"{% endif %}
+          novalidate="novalidate">
+
+    {% if form_method != method %}
+        <input type="hidden" name="_method" value="{{ method }}">
+    {% endif %}
+{% endblock %}
+
+{% block form_errors %}
+    {% if errors|length > 0 %}
+        {% if compound %} {# global form errors (for whole form) #}
+            {% for error in errors %}
+                {% include 'component/alert/danger.html.twig' with {
+                    'message': error.message,
+                    'close': false,
+                } %}
+            {% endfor %}
+        {% else %} {# local form errors (for one field) #}
+            {% for error in errors %}
+                <span class="invalid-feedback" role="alert" id="{{ id ~ '_error_description_' ~ loop.index0 }}">{{ error.message|raw }}</span>
+            {% endfor %}
+        {% endif %}
+    {% endif %}
+{% endblock %}

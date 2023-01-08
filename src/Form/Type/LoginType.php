@@ -14,9 +14,7 @@ class LoginType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('username', TextType::class, [
-                'disabled' => true,
-            ])
+            ->add('username', TextType::class)
             ->add('submit', SubmitType::class);
     }
 
@@ -24,6 +22,13 @@ class LoginType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'csrf_field_name' => '_csrf_token',
+            'csrf_token_id' => 'authenticate',
         ]);
+    }
+
+    public function getBlockPrefix(): string
+    {
+        return '';
     }
 }

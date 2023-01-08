@@ -4,39 +4,19 @@
 
 {% block body %}
     <div id="login-container" class="col-12 small-container">
-        <form method="post" class="col-12 small-container-body" id="form-login">
-            {% if error %}
-                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-            {% endif %}
-
-            {% if app.user %}
-                <div class="mb-3">
-                    You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-                </div>
-            {% endif %}
-
-            {% for message in app.flashes('success') %}
-                <div class="alert alert-success">{{ message }}</div>
-            {% endfor %}
-
+        <div class="col-12 col-sm-12 col-md-10 col-lg-6">
             <h1 class="h3 mb-3 font-weight-normal">{{ 'page.login.header'|trans }}</h1>
 
-            <label for="inputUsername">{{ 'page.login.form.login'|trans }}</label>
-            <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control mb-3" required autofocus>
+            {% include 'component/flashes.html.twig' %}
 
-            <input type="hidden"
-                   name="_csrf_token"
-                   value="{{ csrf_token('authenticate') }}">
+            {{ form_start(form) }}
+                {{ form_errors(form) }}
+                {{ form_row(form.username, {'label': 'page.login.form.login'|trans}) }}
 
-            <div id="login-button-container" class="d-flex justify-content-center">
-                <button class="btn btn-lg btn-primary mt-3 w-50" type="submit">
-                    {{ 'page.login.form.signInButton'|trans }}
-                </button>
-            </div>
-
-            {#            <div id="other-links" class="d-flex justify-content-center">#}
-            {#                <a href="{{ path('app_register') }}">I haven't an account yet!</a>#}
-            {#            </div>#}
-        </form>
+                <div id="login-button-container" class="d-flex justify-content-center">
+                    {{ form_row(form.submit, {'attr': {'class': 'btn btn-lg btn-primary'}}) }}
+                </div>
+            {{ form_end(form) }}
+        </div>
     </div>
 {% endblock %}
