@@ -37,6 +37,7 @@ alert:
   close: 'Zamknij'
 
 page:
+  back: 'Wróć'
   form:
     cancelButton: 'Anuluj'
   choice:
@@ -46,8 +47,15 @@ page:
     title: 'Kontynuuj ze swoją nazwą'
     header: 'Kontynuuj ze swoją nazwą'
     form:
-      login: 'Nazwa'
+      username: 'Nazwa'
       signInButton: 'Kontynuuj'
+  register:
+    title: 'Rozpocznij jako nowy użytkownik'
+    header: 'Rozpocznij jako nowy użytkownik'
+    form:
+      username: 'Nazwa'
+      generateName: 'Generuj nową nazwę'
+      signUpButton: 'Rozpocznij'
   initialSurvey:
     flash:
       success: 'Twoja odpowiedź została zapisana pomyślnie.'

@@ -1,9 +1,44 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}{{ 'page.login.title'|trans }}{% endblock %}
+{% block title %}{{ 'page.register.title'|trans }}{% endblock %}
 
 {% block body %}
     <div id="register-container" class="col-12 small-container">
+        <div class="col-12 col-sm-12 col-md-10 col-lg-6">
+            <div class="d-flex">
+                <a href="{{ path('app_choice') }}"
+                   class="btn-link link-secondary mb-3 pt-0 pt-md-1 me-2 fs-5"
+                   title="{{ 'page.back'|trans }}"
+                   aria-label="{{ 'page.back'|trans }}"
+                >
+                    <i class="fa-solid fa-circle-arrow-left"></i>
+                </a>
+                <h1 class="h3 mb-3 font-weight-normal">{{ 'page.register.header'|trans }}</h1>
+            </div>
 
+            {% include 'component/flashes.html.twig' %}
+
+            {{ form_start(form) }}
+                {{ form_errors(form) }}
+
+                <div class="mb-3">
+                    {{ form_label(form.username, 'page.register.form.username'|trans) }}
+                    <div class="d-flex">
+                        {{ form_widget(form.username) }}
+                        <button type="button"
+                                class="btn btn-link"
+                                title="{{ 'page.register.form.generateName'|trans }}"
+                                aria-label="{{ 'page.register.form.generateName'|trans }}"
+                        >
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="register-button-container" class="d-flex justify-content-center">
+                    {{ form_row(form.submit, {'attr': {'class': 'btn btn-lg btn-primary'}, 'label': 'page.register.form.signUpButton'|trans}) }}
+                </div>
+            {{ form_end(form) }}
+        </div>
     </div>
 {% endblock %}

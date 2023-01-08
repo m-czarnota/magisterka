@@ -37,6 +37,7 @@ alert:
   close: 'Close'
 
 page:
+  back: 'Go back'
   form:
     cancelButton: 'Cancel'
   choice:
@@ -46,8 +47,15 @@ page:
     title: 'Continue with your name'
     header: 'Continue with your name'
     form:
-      login: 'Name'
+      username: 'Name'
       signInButton: 'Continue'
+  register:
+    title: 'Start as a new user'
+    header: 'Start as a new user'
+    form:
+      username: 'Name'
+      generateName: 'Generate a new name'
+      signUpButton: 'Start'
   initialSurvey:
     flash:
       success: 'Your response has been saved successfully.'

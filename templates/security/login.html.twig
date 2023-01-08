@@ -5,16 +5,23 @@
 {% block body %}
     <div id="login-container" class="col-12 small-container">
         <div class="col-12 col-sm-12 col-md-10 col-lg-6">
-            <h1 class="h3 mb-3 font-weight-normal">{{ 'page.login.header'|trans }}</h1>
-
-            {% include 'component/flashes.html.twig' %}
+            <div class="d-flex">
+                <a href="{{ path('app_choice') }}"
+                   class="btn-link link-secondary mb-3 pt-0 pt-md-1 me-2 fs-5"
+                   title="{{ 'page.back'|trans }}"
+                   aria-label="{{ 'page.back'|trans }}"
+                >
+                    <i class="fa-solid fa-circle-arrow-left"></i>
+                </a>
+                <h1 class="h3 mb-3 font-weight-normal">{{ 'page.login.header'|trans }}</h1>
+            </div>
 
             {{ form_start(form) }}
                 {{ form_errors(form) }}
-                {{ form_row(form.username, {'label': 'page.login.form.login'|trans}) }}
+                {{ form_row(form.username, {'label': 'page.login.form.username'|trans}) }}
 
                 <div id="login-button-container" class="d-flex justify-content-center">
-                    {{ form_row(form.submit, {'attr': {'class': 'btn btn-lg btn-primary'}}) }}
+                    {{ form_row(form.submit, {'attr': {'class': 'btn btn-lg btn-primary'}, 'label': 'page.login.form.signInButton'|trans}) }}
                 </div>
             {{ form_end(form) }}
         </div>
