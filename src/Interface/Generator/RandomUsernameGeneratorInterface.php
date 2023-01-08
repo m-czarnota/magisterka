@@ -2,7 +2,7 @@
 
 namespace App\Interface\Generator;
 
-interface RandomNameGeneratorInterface
+interface RandomUsernameGeneratorInterface
 {
     public function generateRandomName(): string;
 }

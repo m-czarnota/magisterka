@@ -2,14 +2,14 @@
 
 namespace App\Service\Generator;
 
-use App\Interface\Generator\RandomNameGeneratorInterface;
+use App\Interface\Generator\RandomUsernameGeneratorInterface;
 use App\Interface\Transformer\StringTransformerInterface;
 use App\Repository\UserRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use SplFileObject;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class RandomNameGenerator implements RandomNameGeneratorInterface
+class RandomUsernameGenerator implements RandomUsernameGeneratorInterface
 {
     private StringTransformerInterface $wordSimplifier;
     private UserRepository $userRepository;

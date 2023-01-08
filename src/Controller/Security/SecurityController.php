@@ -4,7 +4,9 @@ namespace App\Controller\Security;
 
 use App\Factory\Form\LoginFormFactory;
 use App\Factory\Form\RegisterFormFactory;
+use App\Interface\Generator\RandomUsernameGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,5 +41,11 @@ class SecurityController extends AbstractController
         return $this->render('security/register.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    #[Route(path: '/generate_name', name: 'app_generate_name', options: ['expose' => true], methods: [Request::METHOD_GET])]
+    public function generateName(RandomUsernameGeneratorInterface $nameGenerator): Response
+    {
+        return new JsonResponse(['name' => $nameGenerator->generateRandomName()]);
     }
 }

@@ -23,20 +23,24 @@
 
                 <div class="mb-3">
                     {{ form_label(form.username, 'page.register.form.username'|trans) }}
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         {{ form_widget(form.username) }}
                         <button type="button"
+                                id="generate-new-name"
                                 class="btn btn-link"
                                 title="{{ 'page.register.form.generateName'|trans }}"
                                 aria-label="{{ 'page.register.form.generateName'|trans }}"
                         >
                             <i class="fa-solid fa-rotate-right"></i>
+                            <span id="generate-name-spinner" class="spinner-grow spinner-grow-sm text-primary d-none" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </span>
                         </button>
                     </div>
                 </div>
 
                 <div id="register-button-container" class="d-flex justify-content-center">
-                    {{ form_row(form.submit, {'attr': {'class': 'btn btn-lg btn-primary'}, 'label': 'page.register.form.signUpButton'|trans}) }}
+                    {{ form_row(form.submit, {'attr': {'class': 'btn btn-lg btn-primary', 'disabled': true}, 'label': 'page.register.form.signUpButton'|trans}) }}
                 </div>
             {{ form_end(form) }}
         </div>
