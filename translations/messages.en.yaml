@@ -50,10 +50,14 @@ page:
       username: 'Name'
       signInButton: 'Continue'
   register:
+    flash:
+      success: 'You have been successfully registered.'
+      rememberName: "Please, remember your unique username '%username%' to keep your progress when you change your device. you will not continue your progress if you will forget your username."
     title: 'Start as a new user'
     header: 'Start as a new user'
     form:
       username: 'Name'
+      placeholder: 'Click the button on the next'
       generateName: 'Generate a new name'
       signUpButton: 'Start'
       spinner: 'Generating...'

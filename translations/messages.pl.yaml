@@ -50,10 +50,14 @@ page:
       username: 'Nazwa'
       signInButton: 'Kontynuuj'
   register:
+    flash:
+      success: 'Zostałeś pomyślnie zarejestrowany.'
+      rememberName: "Proszę, zapamiętaj swoją unikalną nazwę użytkownika '%username%', aby zachować swój progres kiedy zmienisz urządzenie. Nie będziesz mógł kontynuować swojego progresu, jeżeli zapomnisz swoją nazwę użytkownika."
     title: 'Rozpocznij jako nowy użytkownik'
     header: 'Rozpocznij jako nowy użytkownik'
     form:
       username: 'Nazwa'
+      placeholder: 'Kliknij przycisk obok'
       generateName: 'Generuj nową nazwę'
       signUpButton: 'Rozpocznij'
       spinner: 'Generowanie...'

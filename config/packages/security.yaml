@@ -13,6 +13,9 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+            remember_me:
+                secret: '%kernel.secret%'
+                always_remember_me: true
             custom_authenticator:
                 - App\Security\Authenticator\PasswordlessAuthenticator
             logout:
@@ -27,7 +30,18 @@ security:
         ROLE_SUPER_ADMIN:
             - ROLE_PRIMARY_ADMIN
             - ROLE_ADMIN
+
+        ROLE_ADMIN:
             - ROLE_USER
+
+        ROLE_USER:
+            - ROLE_USER_AG
+
+        ROLE_USER_AG:
+            - ROLE_DASHBOARD_AG
+
+        ROLE_DASHBOARD_AG:
+            - ROLE_DASHBOARD
 
 when@test:
     security:

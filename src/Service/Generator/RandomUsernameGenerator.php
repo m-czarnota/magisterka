@@ -6,15 +6,20 @@ use App\Interface\Generator\RandomUsernameGeneratorInterface;
 use App\Interface\Transformer\StringTransformerInterface;
 use App\Repository\UserRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Exception;
 use SplFileObject;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\String\ByteString;
 
 class RandomUsernameGenerator implements RandomUsernameGeneratorInterface
 {
-    private StringTransformerInterface $wordSimplifier;
-    private UserRepository $userRepository;
+    protected const MIN_GENERATOR_NUMBER = 10;
+    protected const MAX_GENERATOR_NUMBER = 9999;
 
-    readonly private string $wordsDirPath;
+    protected StringTransformerInterface $wordSimplifier;
+    protected UserRepository $userRepository;
+
+    readonly protected string $wordsDirPath;
     readonly public string $nounsPath;
     readonly public string $adjectivesPath;
 
@@ -30,6 +35,7 @@ class RandomUsernameGenerator implements RandomUsernameGeneratorInterface
 
     /**
      * @throws NonUniqueResultException
+     * @throws Exception
      */
     public function generateRandomName(): string
     {
@@ -38,7 +44,7 @@ class RandomUsernameGenerator implements RandomUsernameGeneratorInterface
             $adjective = $this->readRandomWord(new SplFileObject($this->adjectivesPath));
 
             $capitalisedWords = array_map(fn(string $word) => ucfirst(mb_strtolower($word)), [$noun, $adjective]);
-            $username = implode('', $capitalisedWords);
+            $username = implode('', $capitalisedWords) . random_int(self::MIN_GENERATOR_NUMBER, self::MAX_GENERATOR_NUMBER);
 
             $user = $this->userRepository->findOneByUsername($username);
         } while ($user !== null);
@@ -46,7 +52,7 @@ class RandomUsernameGenerator implements RandomUsernameGeneratorInterface
         return $username;
     }
 
-    private function readRandomWord(SplFileObject $fileObject): string
+    protected function readRandomWord(SplFileObject $fileObject): string
     {
         $fileObject->seek(PHP_INT_MAX);
         $linesCount = $fileObject->key();

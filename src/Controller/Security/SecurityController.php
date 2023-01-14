@@ -5,6 +5,7 @@ namespace App\Controller\Security;
 use App\Factory\Form\LoginFormFactory;
 use App\Factory\Form\RegisterFormFactory;
 use App\Interface\Generator\RandomUsernameGeneratorInterface;
+use App\Service\Controller\Security\RegisterService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,9 +35,18 @@ class SecurityController extends AbstractController
     }
 
     #[Route(path: '/register', name: 'app_register', methods: [Request::METHOD_GET, Request::METHOD_POST])]
-    public function register(RegisterFormFactory $registerFormFactory): Response
+    public function register(RegisterFormFactory $registerFormFactory, RegisterService $registerService): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_user_dashboard');
+        }
+
         $form = $registerFormFactory->create();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $registerService->register($form->getViewData());
+
+            return $this->redirectToRoute('app_user_dashboard');
+        }
 
         return $this->render('security/register.html.twig', [
             'form' => $form->createView(),
