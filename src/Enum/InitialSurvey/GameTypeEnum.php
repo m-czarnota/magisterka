@@ -4,21 +4,21 @@ namespace App\Enum\InitialSurvey;
 
 use App\Interface\Enum\TranslatableEnumInterface;
 
-enum GameTypeEnum implements TranslatableEnumInterface
+enum GameTypeEnum: string implements TranslatableEnumInterface
 {
-    case SANDBOX;
-    case RTS;
-    case FPS;
-    case MMO;
-    case MOBA;
-    case RPG;
-    case SIMULATION;
-    case ACTION;
-    case SURVIVAL;
-    case HORROR;
-    case ADVENTURE;
-    case PLATFORM;
-    case LOGIC;
+    case SANDBOX = 'SANDBOX';
+    case RTS = 'RTS';
+    case FPS = 'FPS';
+    case MMO = 'MMO';
+    case MOBA = 'MOBA';
+    case RPG = 'RPG';
+    case SIMULATION = 'SIMULATION';
+    case ACTION = 'ACTION';
+    case SURVIVAL = 'SURVIVAL';
+    case HORROR = 'HORROR';
+    case ADVENTURE = 'ADVENTURE';
+    case PLATFORM = 'PLATFORM';
+    case LOGIC = 'LOGIC';
 
     public function getTransKey(): string
     {

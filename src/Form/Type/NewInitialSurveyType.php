@@ -20,12 +20,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class NewInitialSurveyType extends AbstractType
 {
-    protected TranslatorInterface $translator;
-
-    public function __construct(TranslatorInterface $translator)
-    {
-        $this->translator = $translator;
-    }
+    public function __construct(
+        protected TranslatorInterface $translator,
+    ) {}
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

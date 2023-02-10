@@ -11,16 +11,11 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge
 
 class UserAuthenticatorProgrammatically implements UserAuthenticatorProgrammaticallyInterface
 {
-    protected UserAuthenticatorInterface $authenticatorManager;
-    protected PasswordlessAuthenticator $authenticator;
-    protected RequestStack $requestStack;
-
-    public function __construct(UserAuthenticatorInterface $authenticatorManager, PasswordlessAuthenticator $authenticator, RequestStack $requestStack)
-    {
-        $this->authenticatorManager = $authenticatorManager;
-        $this->authenticator = $authenticator;
-        $this->requestStack = $requestStack;
-    }
+    public function __construct(
+        protected UserAuthenticatorInterface $authenticatorManager,
+        protected PasswordlessAuthenticator $authenticator,
+        protected RequestStack $requestStack,
+    ) {}
 
     public function authenticateUser(User $user): void
     {

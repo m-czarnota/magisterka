@@ -12,14 +12,10 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFactory implements UserFactoryInterface
 {
-    protected ParameterBagInterface $parameterBag;
-    protected UserPasswordHasherInterface $passwordEncoder;
-
-    public function __construct(ParameterBagInterface $parameterBag, UserPasswordHasherInterface $passwordEncoder)
-    {
-        $this->parameterBag = $parameterBag;
-        $this->passwordEncoder = $passwordEncoder;
-    }
+    public function __construct(
+        protected ParameterBagInterface $parameterBag,
+        protected UserPasswordHasherInterface $passwordEncoder,
+    ) {}
 
     public function create(): User
     {

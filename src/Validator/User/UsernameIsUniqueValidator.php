@@ -11,12 +11,9 @@ use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
 class UsernameIsUniqueValidator extends ConstraintValidator
 {
-    protected UserRepository $userRepository;
-
-    public function __construct(UserRepository $userRepository)
-    {
-        $this->userRepository = $userRepository;
-    }
+    public function __construct(
+        protected UserRepository $userRepository,
+    ) {}
 
     /**
      * @throws NonUniqueResultException

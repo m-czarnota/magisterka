@@ -11,16 +11,11 @@ use Symfony\Component\Form\FormFactoryInterface as SymfonyFormFactoryInterface;
 
 class RegisterFormFactory implements FormFactoryInterface
 {
-    protected SymfonyFormFactoryInterface $formFactory;
-    protected UserFactoryInterface $userFactory;
-    protected RequestStack $requestStack;
-
-    public function __construct(SymfonyFormFactoryInterface $formFactory, UserFactoryInterface $userFactory, RequestStack $requestStack)
-    {
-        $this->formFactory = $formFactory;
-        $this->userFactory = $userFactory;
-        $this->requestStack = $requestStack;
-    }
+    public function __construct(
+        protected SymfonyFormFactoryInterface $formFactory,
+        protected UserFactoryInterface $userFactory,
+        protected RequestStack $requestStack,
+    ) {}
 
     public function create(): FormInterface
     {

@@ -8,12 +8,9 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class FlashBugManager implements FlashBugManagerInterface
 {
-    protected RequestStack $requestStack;
-
-    public function __construct(RequestStack $requestStack)
-    {
-        $this->requestStack = $requestStack;
-    }
+    public function __construct(
+        protected RequestStack $requestStack,
+    ) {}
 
     public function push(string $type, string $message): void
     {

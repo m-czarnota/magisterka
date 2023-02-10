@@ -18,9 +18,38 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class UserRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
+    public function __construct(
+        protected GameRepository $gameRepository,
+        ManagerRegistry $registry,
+    ) {
         parent::__construct($registry, User::class);
+    }
+
+    public function save(bool $flash = false, User ...$users): self
+    {
+        foreach ($users as $user) {
+            $this->getEntityManager()->persist($user);
+        }
+
+        if ($flash) {
+            $this->getEntityManager()->flush();
+        }
+
+        return $this;
+    }
+
+    public function remove(bool $flash = false, User ...$users): self
+    {
+        foreach ($users as $user) {
+            $this->removeAllAssociations($user);
+            $this->getEntityManager()->remove($user);
+        }
+
+        if ($flash) {
+            $this->getEntityManager()->flush();
+        }
+
+        return $this;
     }
 
     /**
@@ -47,5 +76,12 @@ class UserRepository extends ServiceEntityRepository
             ->setParameter('username', $username)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    protected function removeAllAssociations(User $user): self
+    {
+        $this->gameRepository->remove(false, ...$user->getGames());
+
+        return $this;
     }
 }

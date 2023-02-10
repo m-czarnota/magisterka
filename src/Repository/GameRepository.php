@@ -20,4 +20,30 @@ class GameRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Game::class);
     }
+
+    public function save(bool $flash = false, Game ...$games): self
+    {
+        foreach ($games as $game) {
+            $this->getEntityManager()->persist($game);
+        }
+
+        if ($flash) {
+            $this->getEntityManager()->flush();
+        }
+
+        return $this;
+    }
+
+    public function remove(bool $flash = false, Game ...$games): self
+    {
+        foreach ($games as $game) {
+            $this->getEntityManager()->remove($game);
+        }
+
+        if ($flash) {
+            $this->getEntityManager()->flush();
+        }
+
+        return $this;
+    }
 }

@@ -20,4 +20,30 @@ class InitialSurveyRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, InitialSurvey::class);
     }
+
+    public function save(bool $flash = false, InitialSurvey ...$initialSurveys): self
+    {
+        foreach ($initialSurveys as $initialSurvey) {
+            $this->getEntityManager()->persist($initialSurvey);
+        }
+
+        if ($flash) {
+            $this->getEntityManager()->flush();
+        }
+
+        return $this;
+    }
+
+    public function remove(bool $flash = false, InitialSurvey ...$initialSurveys): self
+    {
+        foreach ($initialSurveys as $initialSurvey) {
+            $this->getEntityManager()->remove($initialSurvey);
+        }
+
+        if ($flash) {
+            $this->getEntityManager()->flush();
+        }
+
+        return $this;
+    }
 }

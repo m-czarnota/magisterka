@@ -67,7 +67,7 @@ page:
     new:
       title: 'Initial survey'
       header: 'Initial survey'
-      description: 'Before you go next, please fill below short survey. Remember that your data will be anonymous and they are used only for cumulative summary in my master thesis.'
+      description: 'Before you go next, please fill below short survey. Remember that your data remain anonymous and they are used only for cumulative summary in my master thesis.'
       age: 'Age range'
       preferredPlayingStyle: 'Preferred playing Style'
       favouriteGameType: 'Favourite game type'

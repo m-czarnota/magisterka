@@ -3,7 +3,6 @@
 namespace App\Command;
 
 use App\Interface\Factory\User\UserFactoryInterface;
-use App\Interface\Repository\RepositoryModifierInterface;
 use App\Repository\UserRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -17,16 +16,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class CreatePrimaryAdminCommand extends Command
 {
-    protected RepositoryModifierInterface $repositoryModifier;
-    protected UserRepository $userRepository;
-    protected UserFactoryInterface $userFactory;
-
-    public function __construct(RepositoryModifierInterface $repositoryModifier, UserRepository $userRepository, UserFactoryInterface $userFactory)
-    {
-        $this->repositoryModifier = $repositoryModifier;
-        $this->userRepository = $userRepository;
-        $this->userFactory = $userFactory;
-
+    public function __construct(
+        protected UserRepository $userRepository,
+        protected UserFactoryInterface $userFactory,
+    ) {
         parent::__construct();
     }
 
@@ -43,7 +36,7 @@ class CreatePrimaryAdminCommand extends Command
         }
 
         $primaryAdmin = $this->userFactory->createPrimaryAdmin();
-        $this->repositoryModifier->save($primaryAdmin, true);
+        $this->userRepository->save(true, $primaryAdmin);
         $output->writeln('Primary admin successfully created.');
 
         return Command::SUCCESS;

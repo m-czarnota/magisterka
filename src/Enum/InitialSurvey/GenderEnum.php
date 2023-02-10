@@ -4,11 +4,11 @@ namespace App\Enum\InitialSurvey;
 
 use App\Interface\Enum\TranslatableEnumInterface;
 
-enum GenderEnum implements TranslatableEnumInterface
+enum GenderEnum: string implements TranslatableEnumInterface
 {
-    case MALE;
-    case FEMALE;
-    case OTHER;
+    case MALE = 'MALE';
+    case FEMALE = 'FEMALE';
+    case OTHER = 'OTHER';
 
     public function getTransKey(): string
     {

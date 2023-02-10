@@ -67,7 +67,7 @@ page:
     new:
       title: 'Wstępna ankieta'
       header: 'Wstępna ankieta'
-      description: 'Zanim pójdziesz dalej, proszę o wypełnienie krótkiej ankiety poniżej. Pamiętaj, że twoje dane będą anonimowe i zostaną one wykorzystane jedynie do końcowego podsumowania w mojej pracy magisterskiej.'
+      description: 'Zanim pójdziesz dalej, proszę o wypełnienie krótkiej ankiety poniżej. Pamiętaj, że twoje dane pozostaną anonimowe i zostaną one wykorzystane jedynie do końcowego podsumowania w mojej pracy magisterskiej.'
       age: 'Przedział wiekowy'
       preferredPlayingStyle: 'Preferowany styl grania'
       favouriteGameType: 'Ulubiony typ gry'

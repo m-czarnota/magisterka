@@ -23,14 +23,10 @@ class PasswordlessAuthenticator extends AbstractLoginFormAuthenticator
 
     public const LOGIN_ROUTE = 'app_login';
 
-    private UserRepository $userRepository;
-    private UrlGeneratorInterface $urlGenerator;
-
-    public function __construct(UserRepository $userRepository, UrlGeneratorInterface $urlGenerator)
-    {
-        $this->userRepository = $userRepository;
-        $this->urlGenerator = $urlGenerator;
-    }
+    public function __construct(
+        protected UserRepository $userRepository,
+        protected UrlGeneratorInterface $urlGenerator,
+    ) {}
 
     public function authenticate(Request $request): Passport
     {

@@ -4,12 +4,12 @@ namespace App\Enum\InitialSurvey;
 
 use App\Interface\Enum\TranslatableEnumInterface;
 
-enum WorkTypeEnum implements TranslatableEnumInterface
+enum WorkTypeEnum: string implements TranslatableEnumInterface
 {
-    case PHYSICAL;
-    case MENTAL;
-    case MIXED;
-    case NO_WORK;
+    case PHYSICAL = 'PHYSICAL';
+    case MENTAL = 'MENTAL';
+    case MIXED = 'MIXED';
+    case NO_WORK = 'NO_WORK';
 
     public function getTransKey(): string
     {

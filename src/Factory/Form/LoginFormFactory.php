@@ -12,16 +12,11 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginFormFactory implements FormFactoryInterface
 {
-    protected SymfonyFormFactoryInterface $formFactory;
-    protected AuthenticationUtils $authenticationUtils;
-    protected RequestStack $requestStack;
-
-    public function __construct(SymfonyFormFactoryInterface $formFactory, AuthenticationUtils $authenticationUtils, RequestStack $requestStack)
-    {
-        $this->formFactory = $formFactory;
-        $this->authenticationUtils = $authenticationUtils;
-        $this->requestStack = $requestStack;
-    }
+    public function __construct(
+        protected SymfonyFormFactoryInterface $formFactory,
+        protected AuthenticationUtils $authenticationUtils,
+        protected RequestStack $requestStack,
+    ) {}
 
     public function create(): FormInterface
     {
