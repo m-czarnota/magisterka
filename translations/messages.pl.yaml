@@ -48,6 +48,7 @@ page:
     header: 'Kontynuuj ze swoją nazwą'
     form:
       username: 'Nazwa'
+      password: 'Hasło'
       signInButton: 'Kontynuuj'
   register:
     flash:

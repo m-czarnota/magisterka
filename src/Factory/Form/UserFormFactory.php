@@ -10,15 +10,17 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-class LoginFormFactory implements FormFactoryInterface
+class UserFormFactory implements FormFactoryInterface
 {
     public function __construct(
         protected SymfonyFormFactoryInterface $formFactory,
         protected AuthenticationUtils $authenticationUtils,
         protected RequestStack $requestStack,
-    ) {}
+    ) {
 
-    public function create(): FormInterface
+    }
+
+    public function create(array $params = []): FormInterface
     {
         $error = $this->authenticationUtils->getLastAuthenticationError();
         $lastUsername = $this->authenticationUtils->getLastUsername();

@@ -18,6 +18,11 @@
     }
 
     function preSubmitValidate(form, event) {
+        const preventsFromValidatingElem = document.querySelector('#prevent-from-validating');
+        if (parseInt(preventsFromValidatingElem?.value) === 1) {
+            return;
+        }
+
         if (!form.checkValidity()) {
             event.preventDefault();
             event.stopPropagation();
@@ -34,7 +39,10 @@
     }
 
     function elementValidation(element) {
-        if (!element.form.classList.contains('was-validated')) {
+        if (!element.form?.classList.contains('was-validated')) {
+            return;
+        }
+        if (element.parentNode.classList.contains('d-none')) {
             return;
         }
 

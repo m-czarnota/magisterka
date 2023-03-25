@@ -17,11 +17,13 @@
             </div>
 
             {{ form_start(form) }}
+                <input type="hidden" id="prevent-from-validating" value="1">
                 {{ form_errors(form) }}
                 {{ form_row(form.username, {'label': 'page.login.form.username'|trans}) }}
+                {{ form_row(form.password, {'label': 'page.login.form.password'|trans}) }}
 
                 <div id="login-button-container" class="d-flex justify-content-center">
-                    {{ form_row(form.submit, {'attr': {'class': 'btn btn-lg btn-primary'}, 'label': 'page.login.form.signInButton'|trans}) }}
+                    {{ form_row(form.submitButton, {'attr': {'class': 'btn btn-lg btn-primary'}, 'label': 'page.login.form.signInButton'|trans}) }}
                 </div>
             {{ form_end(form) }}
         </div>

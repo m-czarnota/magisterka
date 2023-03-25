@@ -7,5 +7,5 @@ use Symfony\Component\Form\FormInterface;
 
 interface FormFactoryInterface extends BaseFactoryInterface
 {
-    public function create(): FormInterface;
+    public function create(array $params = []): FormInterface;
 }
