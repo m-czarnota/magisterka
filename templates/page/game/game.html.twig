@@ -1,0 +1,16 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ 'page.initialSurvey.new.title'|trans }}{% endblock %}
+
+{% block main %}
+    <div id="initial-survey-new-container">
+        {% include 'component/flashes.html.twig' %}
+
+        <h1>{{ 'Game page'|trans }}</h1>
+        <p class="text-end">{{ 'Game description bla bla'|trans }}</p>
+
+        <div id="game_app"></div>
+
+
+    </div>
+{% endblock %}
