@@ -21,12 +21,19 @@ export class Square {
     constructor(id, parent) {
         this.id = id;
         this.parent = parent;
-        this.element = undefined;
         this.velocity = undefined;
         this.startedHeightAchieve = false;
 
+        this.element = undefined;
+        this.missShotArea = undefined;
+        this.missShotAreaOverSize = 30;
+
         this.createElement();
         this.drawSize();
+
+        this.createMissShotArea();
+        this.missShotArea.appendChild(this.element);
+
         this.drawPosition();
         this.drawVelocity();
         this.drawColor();
@@ -37,6 +44,7 @@ export class Square {
     destructor() {
         this.stopFalling();
         this.element.remove();
+        this.missShotArea.remove();
         this.element = null;
         this.parent = null;
     }
@@ -55,7 +63,29 @@ export class Square {
             event.stopPropagation();
 
             this.element.dispatchEvent(GameEvents["square-clicked"]);
-        })
+        });
+    }
+
+    createMissShotArea() {
+        this.missShotArea = document.createElement('div');
+        this.missShotArea.classList.add('miss-shot-area');
+        this.missShotArea.style.width = `${this.getWidth() + this.missShotAreaOverSize}px`;
+        this.missShotArea.style.height = 0;
+
+        if (this.parent.displayMissShotArea) {
+            this.missShotArea.style.backgroundColor = '#ff000078';
+        }
+
+        this.missShotArea.addEventListener('mousedown', (event) => {
+            if (this.parent.isOver) {
+                return;
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            this.missShotArea.dispatchEvent(GameEvents["miss-shot"]);
+        });
     }
 
     drawSize() {
@@ -65,10 +95,10 @@ export class Square {
     }
 
     drawPosition() {
-        this.element.style.top = 0;
+        this.missShotArea.style.top = `${-this.missShotAreaOverSize / 2}px`;
 
-        const maxStartPositionW = this.parent.width - parseInt(this.element.style.width.replace('px', ''));
-        this.element.style.left = `${_.random(20, maxStartPositionW, false)}px`;
+        const maxStartPositionW = this.parent.width - parseInt(this.element.style.width.replace('px', '')) - this.missShotAreaOverSize / 2;
+        this.missShotArea.style.left = `${_.random(20, maxStartPositionW, false)}px`;
     }
 
     drawVelocity() {
@@ -86,31 +116,31 @@ export class Square {
     }
 
     calcScore() {
-        const width = parseInt(this.element.style.width.replace('px', ''));
-
-        return 100 / width * this.velocity;
+        return 100 / this.getWidth() * this.velocity;
     }
 
     startFalling() {
         this.fallingInterval = setInterval(() => {
             const width = parseInt(this.element.style.width.replace('px', ''));
-            let height = this.element.style.height.replace('px', '');
-            height = this.startedHeightAchieve ? parseInt(height) : parseFloat(height);
+            const height = this.getHeight(!this.startedHeightAchieve);
 
             if (!this.startedHeightAchieve && height < width) {
-                const newHeight = height + this.velocity;
-                this.element.style.height = `${newHeight}px`;
+                this.setHeight(height + this.velocity);
 
                 return;
             }
             this.startedHeightAchieve = true;
 
-            const currentTop = this.element.offsetTop;
-            this.element.style.top = `${currentTop + this.velocity}px`;
+            if (this.parent.disableFalling) {
+                return;
+            }
 
-            if (this.element.offsetTop + height > this.parent.height) {
+            const currentPosition = this.getCurrentPosition();
+            this.setCurrentPosition(currentPosition + this.velocity);
+
+            if (this.getCurrentPosition(true) + height > this.parent.height) {
                 const newHeight = height - this.velocity;
-                this.element.style.height = `${newHeight}px`;
+                this.setHeight(newHeight);
 
                 if (newHeight < 0) {
                     this.overBoard();
@@ -126,5 +156,32 @@ export class Square {
     overBoard() {
         this.element.dispatchEvent(GameEvents["square-out-of-board"]);
         this.stopFalling();
+    }
+
+    getWidth() {
+        return parseInt(this.element.style.width.replace('px', ''));
+    }
+
+    getHeight(asFloat = false) {
+        const height = this.element.style.height.replace('px', '');
+
+        return asFloat ? parseFloat(height) : parseInt(height);
+    }
+
+    setHeight(height) {
+        this.element.style.height = `${height}px`;
+        this.missShotArea.style.height = `${height + this.missShotAreaOverSize}px`;
+    }
+
+    getCurrentPosition(real = false) {
+        return this.missShotArea.offsetTop + (real ? this.missShotAreaOverSize / 2: 0);
+    }
+
+    setCurrentPosition(position) {
+        this.missShotArea.style.top = `${position}px`;
+    }
+
+    getSquareElement(real = false) {
+        return real ? this.element : this.missShotArea;
     }
 }

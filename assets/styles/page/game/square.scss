@@ -1,5 +1,15 @@
 .square {
+  border: 1px solid black;
+}
+
+.miss-shot-area {
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.square, .miss-shot-area {
   user-drag: none;
   -webkit-user-drag: none;
   user-select: none;

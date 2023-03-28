@@ -1,4 +1,26 @@
 .game-window {
   background-color: #ffffff;
   position: relative;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.game-window-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.start-button {
+  position: absolute;
+  bottom: 25%;
+}
+
+.start-message-text {
+  position: absolute;
+  top: 30%;
+  text-align: center;
+  opacity: 0;
 }

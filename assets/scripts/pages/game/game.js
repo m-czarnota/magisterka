@@ -8,5 +8,4 @@ import {GameEngine} from "./GameEngine";
 
     const gameEngine = new GameEngine(800, 600, gameElem);
     gameEngine.drawGameWindow();
-    await gameEngine.newGame();
 })();

@@ -6,7 +6,7 @@ export class GameEngine {
         this.width = width;
         this.height = height;
         this.appContainer = container;
-        this.hud = new HUD();
+        this.hud = new HUD(this);
 
         this.squares = [];
 
@@ -18,22 +18,23 @@ export class GameEngine {
 
         this.debug = true;
         this.isImmortal = false;
+        this.disableFalling = false;
+        this.displayMissShotArea = false;
     }
 
     drawGameWindow() {
         this.gameWindowContainer = document.createElement('div');
+        this.gameWindowContainer.classList.add('game-window-container');
         this.gameWindowContainer.appendChild(this.hud.createHudContainer());
-        // this.gameWindowContainer.style.paddingTop = this.gameWindowContainer.style.paddingBottom = '100px';
-        // this.gameWindowContainer.style.width = `${this.width}px`;
-        // this.gameWindowContainer.style.height = `${this.height + 200}px`;
-        // this.gameWindowContainer.style.zIndex = '1000';
-        // this.gameWindowContainer.style.backgroundColor = '#ffffff';
         this.appContainer.appendChild(this.gameWindowContainer);
 
         this.gameWindow = document.createElement('div');
         this.gameWindow.style.width = `${this.width}px`;
         this.gameWindow.style.height = `${this.height}px`;
         this.gameWindow.classList.add('game-window');
+
+        this.gameWindow.appendChild(this.hud.createStartButton());
+        this.gameWindow.appendChild(this.hud.createStartMessageText());
 
         this.gameWindowContainer.appendChild(this.gameWindow);
     }
@@ -105,7 +106,7 @@ export class GameEngine {
 
             const square = new Square(this.squaresHistoryCount, this);
             this.squares.push(square);
-            this.gameWindow.appendChild(square.element);
+            this.gameWindow.appendChild(square.getSquareElement());
 
             this.setEventListenersForSquare(square);
 
@@ -119,7 +120,7 @@ export class GameEngine {
     }
 
     setEventListenersForSquare(square) {
-        square.element.addEventListener('square-out-of-board', (event) => {
+        square.element.addEventListener('square-out-of-board', event => {
             if (this.isImmortal) {
                 this.destroySquare(square);
 
@@ -137,15 +138,18 @@ export class GameEngine {
             }
         });
 
-        square.element.addEventListener('square-clicked', (event) => {
+        square.element.addEventListener('square-clicked', event => {
             this.score += square.calcScore();
             this.increaseAccurateShot();
 
             this.hud.updateScore(this.score);
 
             this.destroySquare(square);
+        });
 
-            console.log('actual score', this.score);
+        square.missShotArea.addEventListener('miss-shot', event => {
+            this.shotCount += 1;
+            this.printDebugInfo('Miss shot! Actual accurate:', this.calcAccurate());
         });
     }
 
@@ -215,5 +219,9 @@ export class GameEngine {
     increaseAccurateShot() {
         this.shotCount += 1;
         this.accurateShotCount += 1;
+    }
+
+    calcAccurate() {
+        return this.accurateShotCount / this.shotCount;
     }
 }
