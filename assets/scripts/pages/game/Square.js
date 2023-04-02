@@ -1,4 +1,5 @@
 import {GameEvents} from "./GameEvents";
+import {FadeManager} from "../../utils/animations/FadeManager";
 const _ = require('lodash');
 
 const minSize = 45;
@@ -22,11 +23,17 @@ export class Square {
         this.id = id;
         this.parent = parent;
         this.velocity = undefined;
+
         this.startedHeightAchieve = false;
+        this.exitsFromMap = false;
+        this.destroying = false;
 
         this.element = undefined;
         this.missShotArea = undefined;
         this.missShotAreaOverSize = 30;
+
+        this.clicked = false;
+        this.outOfBoard = false;
 
         this.createElement();
         this.drawSize();
@@ -41,9 +48,19 @@ export class Square {
         this.calcScore();
     }
 
-    destructor() {
+    async destructor() {
+        this.destroying = true;
+
+        const fadeManager = new FadeManager(this.element);
+
         this.stopFalling();
-        this.element.remove();
+
+        if (this.outOfBoard) {
+            this.element.remove();
+        } else {
+            await fadeManager.fadeOut(100);
+        }
+
         this.missShotArea.remove();
         this.element = null;
         this.parent = null;
@@ -62,6 +79,7 @@ export class Square {
             event.preventDefault();
             event.stopPropagation();
 
+            this.clicked = true;
             this.element.dispatchEvent(GameEvents["square-clicked"]);
         });
     }
@@ -115,6 +133,10 @@ export class Square {
         this.element.style.backgroundColor = colors[index];
     }
 
+    getColor() {
+        return this.element.style.backgroundColor;
+    }
+
     calcScore() {
         return 100 / this.getWidth() * this.velocity;
     }
@@ -139,6 +161,8 @@ export class Square {
             this.setCurrentPosition(currentPosition + this.velocity);
 
             if (this.getCurrentPosition(true) + height > this.parent.height) {
+                this.exitsFromMap = true;
+
                 const newHeight = height - this.velocity;
                 this.setHeight(newHeight);
 
@@ -154,8 +178,9 @@ export class Square {
     }
 
     overBoard() {
-        this.element.dispatchEvent(GameEvents["square-out-of-board"]);
+        this.outOfBoard = true;
         this.stopFalling();
+        this.element.dispatchEvent(GameEvents["square-out-of-board"]);
     }
 
     getWidth() {
@@ -183,5 +208,21 @@ export class Square {
 
     getSquareElement(real = false) {
         return real ? this.element : this.missShotArea;
+    }
+
+    serialize() {
+        return {
+            id: this.id,
+            size: this.getWidth(),
+            position: this.getCurrentPosition(),
+            actualHeight: this.getHeight(),
+            velocity: this.velocity,
+            score: this.calcScore(),
+            color: this.getColor(),
+            clicked: this.clicked,
+            outOfBoard: this.outOfBoard,
+            startsFromBegin: !this.startedHeightAchieve,
+            existsFromMap: this.exitsFromMap,
+        };
     }
 }

@@ -1,9 +1,9 @@
 export class Timer {
     #timer = null;
 
-    constructor(callback, time = 1000, oneShot = true) {
+    constructor(callback, milliseconds = 1000, oneShot = true) {
         this.callback = callback;
-        this.time = time;
+        this.time = milliseconds;
         this.oneShot = oneShot;
     }
 

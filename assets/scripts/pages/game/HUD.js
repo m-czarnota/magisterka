@@ -2,18 +2,22 @@ import {FadeManager} from "../../utils/animations/FadeManager";
 import {Timer} from "../../utils/game/Timer";
 
 export class HUD {
-    #startMessageTimerText = null;
-
     constructor(parent) {
         this.parent = parent
         this.timeElement = null;
-        this.hpElement = null;
         this.scoreElement = null;
         this.startButton = null;
 
+        this.hpElement = null;
+        this.hpFullIcon = null
+        this.hpEmptyIcon = null;
+
         this.timeText = null;
         this.scoreText = null;
-        this.startMessageText = null;
+
+        this.message = null;
+        this.messageHeader = null;
+        this.messageDescription = null;
 
         this.timerToStart = null;
         this.timeToPrepare = 2;
@@ -52,6 +56,10 @@ export class HUD {
     createHpElement() {
         this.hpElement = document.createElement('div');
 
+        this.hpEmptyIcon = document.createElement('i');
+        this.hpEmptyIcon.classList = 'fa-regular fa-heart';
+        this.hpElement.appendChild(this.hpEmptyIcon);
+
         return this.hpElement;
     }
 
@@ -76,25 +84,33 @@ export class HUD {
         this.startButton.className = 'btn btn-primary start-button';
         this.startButton.innerHTML = `
             <i class="fa-solid fa-play fa-bounce"></i>
-            Play
+            <span>Play</span>
         `;
 
         this.startButton.addEventListener('click', async () => {
-            this.showStartMessage();
+            // disabling button prevents from double click
+            this.startButton.setAttribute('disabled', 'disabled');
+            new Timer(() => this.startButton.removeAttribute('disabled'), 1000).start();
+
+            // prepare game and update hud
+            this.parent.prepareForNewGame();
+            this.updateMessageHeader('Get ready');
+
+            this.showMessage();
             await this.hideStartButton();
 
             let currentTimeToPrepare = this.timeToPrepare;
-            this.updateStartMessageTimerText(currentTimeToPrepare);
+            this.updateMessageDescription(currentTimeToPrepare);
 
             new Timer(() => {
                 this.parent.newGame();
             }, this.timeToPrepare * 1000).start();
             const countingDownTimer = new Timer(() => {
-                this.updateStartMessageTimerText(--currentTimeToPrepare);
+                this.updateMessageDescription(--currentTimeToPrepare);
 
                 if (currentTimeToPrepare <= 0) {
                     countingDownTimer.stop();
-                    this.hideStartMessage();
+                    this.hideMessage();
                 }
             }, 1000, false).start();
         });
@@ -102,21 +118,29 @@ export class HUD {
         return this.startButton;
     }
 
-    createStartMessageText() {
-        this.startMessageText = document.createElement('p');
-        this.startMessageText.classList = 'start-message-text d-none';
-        this.startMessageText.innerText = 'Get ready!'
-        this.startMessageText.appendChild(this.#createStartMessageTimerText());
+    createMessage() {
+        this.message = document.createElement('p');
+        this.message.classList = 'start-message-text d-none';
 
-        return this.startMessageText;
+        this.message.appendChild(this.createMessageHeader());
+        this.message.appendChild(this.createMessageDescription());
+
+        return this.message;
     }
 
-    #createStartMessageTimerText() {
-        this.#startMessageTimerText = document.createElement('p');
-        this.#startMessageTimerText.classList.add('mt-4');
-        this.#startMessageTimerText.innerText = '0';
+    createMessageHeader() {
+        this.messageHeader = document.createElement('span');
+        this.messageHeader.innerText = 'Get ready!'
 
-        return this.#startMessageTimerText;
+        return this.messageHeader;
+    }
+
+    createMessageDescription() {
+        this.messageDescription = document.createElement('p');
+        this.messageDescription.classList.add('mt-4');
+        this.messageDescription.innerText = '0';
+
+        return this.messageDescription;
     }
 
     updateScore(score) {
@@ -134,8 +158,21 @@ export class HUD {
 
     }
 
-    updateStartMessageTimerText(text) {
-        this.#startMessageTimerText.innerText = text;
+    updateMessageHeader(text) {
+        this.messageHeader.innerText = text;
+    }
+
+    updateMessageDescription(text) {
+        this.messageDescription.innerText = text;
+    }
+
+    updateStartButtonText(text) {
+        this.startButton.querySelector('span').innerText = text;
+    }
+
+    async showStartButton() {
+        const fadeManager = new FadeManager(this.startButton);
+        await fadeManager.fadeIn(300);
     }
 
     async hideStartButton() {
@@ -143,13 +180,13 @@ export class HUD {
         await fadeManager.fadeOut(300);
     }
 
-    async showStartMessage() {
-        const fadeManager = new FadeManager(this.startMessageText);
+    async showMessage() {
+        const fadeManager = new FadeManager(this.message);
         await fadeManager.fadeIn(300);
     }
 
-    async hideStartMessage() {
-        const fadeManager = new FadeManager(this.startMessageText);
+    async hideMessage() {
+        const fadeManager = new FadeManager(this.message);
         await fadeManager.fadeOut(300);
     }
 }

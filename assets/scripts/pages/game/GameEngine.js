@@ -1,5 +1,7 @@
 import {Square} from "./Square";
 import {HUD} from "./HUD";
+import {Timer} from "../../utils/game/Timer";
+import {Statistic} from "./Statistic";
 
 export class GameEngine {
     constructor(width, height, container) {
@@ -9,6 +11,7 @@ export class GameEngine {
         this.hud = new HUD(this);
 
         this.squares = [];
+        this.statistics = new Statistic(this);
 
         this.velocityModifierInTime = 0.1;
         this.velocityModifierTimeInterval = 10000;
@@ -34,7 +37,7 @@ export class GameEngine {
         this.gameWindow.classList.add('game-window');
 
         this.gameWindow.appendChild(this.hud.createStartButton());
-        this.gameWindow.appendChild(this.hud.createStartMessageText());
+        this.gameWindow.appendChild(this.hud.createMessage());
 
         this.gameWindowContainer.appendChild(this.gameWindow);
     }
@@ -47,10 +50,14 @@ export class GameEngine {
         this.squaresHistoryCount = 0;
 
         this.hp = 3;
+        this.hud.updateHp(this.hp);
+
         this.score = 0;
+        this.hud.updateScore(this.score);
 
         this.gameSeconds = 0;
         this.gameTimer = null;
+        this.hud.updateTime(this.gameSeconds);
 
         this.currentVelocityModifier = 0;
 
@@ -58,12 +65,11 @@ export class GameEngine {
         this.velocityModifierInterval = null;
         this.squaresCountModifierInterval = null;
 
-        this.shotCount = 0;
-        this.accurateShotCount = 0;
+        this.statistics.reset();
     }
 
     async newGame() {
-        this.prepareForNewGame();
+        // this.prepareForNewGame();
 
         this.startGameTimer();
         this.startVelocityModifierTimer();
@@ -84,7 +90,7 @@ export class GameEngine {
         return false;
     }
 
-    gameOver() {
+    async gameOver() {
         if (this.isOver) {
             return;
         }
@@ -96,6 +102,15 @@ export class GameEngine {
 
         console.log('game over!');
         this.isOver = true;
+
+        this.hud.updateMessageHeader('Game over');
+        this.hud.updateMessageDescription('Your data has been successfully saved.')
+        await this.hud.showMessage();
+
+        new Timer(async () => {
+            this.hud.updateStartButtonText('Maybe again?');
+            await this.hud.showStartButton();
+        }, 2000).start();
     }
 
     async startFillingSquares() {
@@ -120,36 +135,41 @@ export class GameEngine {
     }
 
     setEventListenersForSquare(square) {
-        square.element.addEventListener('square-out-of-board', event => {
+        square.element.addEventListener('square-out-of-board', async () => {
             if (this.isImmortal) {
-                this.destroySquare(square);
+                this.statistics.saveAction();
+                await this.destroySquare(square);
 
                 return;
             }
 
             if (!this.isOver) {
                 this.loseHp();
+                this.statistics.saveAction();
             }
 
-            this.destroySquare(square);
+            await this.destroySquare(square);
 
             if (this.isGameOver()) {
-                this.gameOver();
+                await this.gameOver();
             }
         });
 
-        square.element.addEventListener('square-clicked', event => {
+        square.element.addEventListener('square-clicked', async () => {
             this.score += square.calcScore();
-            this.increaseAccurateShot();
+
+            this.statistics.increaseAccurateShot();
+            this.statistics.saveAction();
 
             this.hud.updateScore(this.score);
 
-            this.destroySquare(square);
+            await this.destroySquare(square);
         });
 
-        square.missShotArea.addEventListener('miss-shot', event => {
-            this.shotCount += 1;
-            this.printDebugInfo('Miss shot! Actual accurate:', this.calcAccurate());
+        square.missShotArea.addEventListener('miss-shot', () => {
+            this.statistics.increaseShotCount();
+            this.statistics.saveAction();
+            this.printDebugInfo('Miss shot! Actual accurate:', this.statistics.calcAccurate());
         });
     }
 
@@ -158,10 +178,10 @@ export class GameEngine {
         this.printDebugInfo('Fail! -1HP, actual HP:', this.hp);
     }
 
-    destroySquare(square) {
+    async destroySquare(square) {
         const index = this.squares.indexOf(square);
 
-        square.destructor();
+        await square.destructor();
         delete this.squares[index];
         this.squares.splice(index, 1);
     }
@@ -189,9 +209,12 @@ export class GameEngine {
     }
 
     startGameTimer() {
+        this.gameStartedDate = new Date();
+
         this.gameTimer = setInterval(() => {
             this.gameSeconds += 1;
             this.hud.updateTime(this.gameSeconds);
+            this.statistics.saveAction();
         }, 1000);
     }
 
@@ -214,14 +237,5 @@ export class GameEngine {
         }
 
         this.squares = [];
-    }
-
-    increaseAccurateShot() {
-        this.shotCount += 1;
-        this.accurateShotCount += 1;
-    }
-
-    calcAccurate() {
-        return this.accurateShotCount / this.shotCount;
     }
 }
