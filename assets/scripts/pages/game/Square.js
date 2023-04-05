@@ -5,7 +5,7 @@ const _ = require('lodash');
 const minSize = 45;
 const maxSize = 95;
 
-// todo: more true random - maybe animation
+const defaultAnimationDuration = 9;
 const minVelocity = 1.1;
 const maxVelocity = 2.0;
 
@@ -24,8 +24,8 @@ export class Square {
         this.parent = parent;
         this.velocity = undefined;
 
-        this.startedHeightAchieve = false;
-        this.exitsFromMap = false;
+        this.isFullSizeOnMap = false;
+        this.isExitsFromMap = false;
         this.destroying = false;
 
         this.element = undefined;
@@ -87,8 +87,7 @@ export class Square {
     createMissShotArea() {
         this.missShotArea = document.createElement('div');
         this.missShotArea.classList.add('miss-shot-area');
-        this.missShotArea.style.width = `${this.getWidth() + this.missShotAreaOverSize}px`;
-        this.missShotArea.style.height = 0;
+        this.missShotArea.style.width = this.missShotArea.style.height = `${this.getSize() + this.missShotAreaOverSize}px`;
 
         if (this.parent.displayMissShotArea) {
             this.missShotArea.style.backgroundColor = '#ff000078';
@@ -108,12 +107,11 @@ export class Square {
 
     drawSize() {
         const size = _.random(minSize, maxSize, false);
-        this.element.style.width = `${size}px`;
-        this.element.style.height = 0;
+        this.element.style.width = this.element.style.height = `${size}px`;
     }
 
     drawPosition() {
-        this.missShotArea.style.top = `${-this.missShotAreaOverSize / 2}px`;
+        this.missShotArea.style.top = `${-this.getSize() - this.missShotAreaOverSize / 2}px`;
 
         const maxStartPositionW = this.parent.width - parseInt(this.element.style.width.replace('px', '')) - this.missShotAreaOverSize / 2;
         this.missShotArea.style.left = `${_.random(20, maxStartPositionW, false)}px`;
@@ -125,7 +123,6 @@ export class Square {
             maxVelocity + this.parent.currentVelocityModifier,
             true,
         );
-        // console.log(this.velocity)
     }
 
     drawColor() {
@@ -138,42 +135,36 @@ export class Square {
     }
 
     calcScore() {
-        return 100 / this.getWidth() * this.velocity;
+        return 100 / this.getSize() * this.velocity;
     }
 
     startFalling() {
+        this.playAnimation();
+
         this.fallingInterval = setInterval(() => {
-            const width = parseInt(this.element.style.width.replace('px', ''));
-            const height = this.getHeight(!this.startedHeightAchieve);
-
-            if (!this.startedHeightAchieve && height < width) {
-                this.setHeight(height + this.velocity);
-
-                return;
-            }
-            this.startedHeightAchieve = true;
-
             if (this.parent.disableFalling) {
                 return;
             }
 
-            const currentPosition = this.getCurrentPosition();
-            this.setCurrentPosition(currentPosition + this.velocity);
+            const height = this.getSize();
+            const realCurrentPosition = this.getCurrentPosition(true);
 
-            if (this.getCurrentPosition(true) + height > this.parent.height) {
-                this.exitsFromMap = true;
+            if (realCurrentPosition - height > 0) {
+                this.isFullSizeOnMap = true;
+            }
 
-                const newHeight = height - this.velocity;
-                this.setHeight(newHeight);
+            if (realCurrentPosition > this.parent.height) {
+                this.isExitsFromMap = true;
+            }
 
-                if (newHeight < 0) {
-                    this.overBoard();
-                }
+            if (realCurrentPosition > this.parent.height) {
+                this.overBoard();
             }
         }, 1000 / 60);
     }
 
     stopFalling() {
+        this.stopAnimation();
         clearInterval(this.fallingInterval);
     }
 
@@ -183,21 +174,15 @@ export class Square {
         this.element.dispatchEvent(GameEvents["square-out-of-board"]);
     }
 
-    getWidth() {
+    getSize() {
         return parseInt(this.element.style.width.replace('px', ''));
     }
 
-    getHeight(asFloat = false) {
-        const height = this.element.style.height.replace('px', '');
-
-        return asFloat ? parseFloat(height) : parseInt(height);
-    }
-
-    setHeight(height) {
-        this.element.style.height = `${height}px`;
-        this.missShotArea.style.height = `${height + this.missShotAreaOverSize}px`;
-    }
-
+    /**
+     * Returns pixels where height of square ends.
+     * @param real
+     * @returns {*}
+     */
     getCurrentPosition(real = false) {
         return this.missShotArea.offsetTop + (real ? this.missShotAreaOverSize / 2: 0);
     }
@@ -213,16 +198,38 @@ export class Square {
     serialize() {
         return {
             id: this.id,
-            size: this.getWidth(),
-            position: this.getCurrentPosition(),
-            actualHeight: this.getHeight(),
+            size: this.getSize(),
+            position: this.getCurrentPosition(true),
             velocity: this.velocity,
             score: this.calcScore(),
             color: this.getColor(),
             clicked: this.clicked,
             outOfBoard: this.outOfBoard,
-            startsFromBegin: !this.startedHeightAchieve,
-            existsFromMap: this.exitsFromMap,
+            isFullSizeOnMap: this.isFullSizeOnMap,
+            existsFromMap: this.isExitsFromMap,
         };
+    }
+
+    playAnimation() {
+        const animation = this.getAnimation();
+
+        if (animation) {
+            animation.play();
+
+            return;
+        }
+
+        this.getSquareElement().animate([
+            { top: `${parseInt(this.getSquareElement().style.top.replace('px', '')) - this.getSize() / 2}px` },
+            { top: `${this.parent.height + this.getSize() + this.missShotAreaOverSize / 2}px` }
+        ], (defaultAnimationDuration - this.velocity) * 1000);
+    }
+
+    stopAnimation() {
+        this.getAnimation()?.pause();
+    }
+
+    getAnimation() {
+        return this.getSquareElement().getAnimations()[0] ?? null;
     }
 }

@@ -35,11 +35,10 @@ export class GameEngine {
         this.gameWindow.style.width = `${this.width}px`;
         this.gameWindow.style.height = `${this.height}px`;
         this.gameWindow.classList.add('game-window');
+        this.gameWindowContainer.appendChild(this.gameWindow);
 
         this.gameWindow.appendChild(this.hud.createStartButton());
         this.gameWindow.appendChild(this.hud.createMessage());
-
-        this.gameWindowContainer.appendChild(this.gameWindow);
     }
 
     prepareForNewGame() {
