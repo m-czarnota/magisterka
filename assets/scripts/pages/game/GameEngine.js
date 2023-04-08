@@ -4,25 +4,49 @@ import {Timer} from "../../utils/game/Timer";
 import {Statistic} from "./Statistic";
 
 export class GameEngine {
+    width = undefined;
+    height = undefined;
+    appContainer = undefined;
+    hud = null;
+
+    squares = [];
+    statistics = null;
+    
+    isOver = false;
+    maxSquares = 4;
+    squaresHistoryCount = 0;
+    hp = 3;
+    score = 0;
+    gameSeconds = 0;
+    gameTimer = 0;
+
+    fillSquaresInterval = null;
+    velocityModifierInterval = null;
+    squaresCountModifierInterval = null;
+
+    currentVelocityModifier = 0;
+
+    velocityModifierInTime = 0.1;
+    velocityModifierTimeInterval = 10000;
+
+    squaresCountModifierInTime = 1;
+    squaresCountModifierTimeInterval = 20000;
+
+    debug = true;
+    isImmortal = false;
+    disableFalling = false;
+    displayMissShotArea = false;
+
+    gameWindowContainer = null;
+    gameWindow = null;
+
     constructor(width, height, container) {
         this.width = width;
         this.height = height;
         this.appContainer = container;
         this.hud = new HUD(this);
 
-        this.squares = [];
         this.statistics = new Statistic(this);
-
-        this.velocityModifierInTime = 0.1;
-        this.velocityModifierTimeInterval = 10000;
-
-        this.squaresCountModifierInTime = 1;
-        this.squaresCountModifierTimeInterval = 20000;
-
-        this.debug = true;
-        this.isImmortal = false;
-        this.disableFalling = false;
-        this.displayMissShotArea = false;
     }
 
     drawGameWindow() {
@@ -99,7 +123,6 @@ export class GameEngine {
         this.stopVelocityModifierTimer();
         this.stopSquaresCountModifierTimer();
 
-        console.log('game over!');
         this.isOver = true;
 
         this.hud.updateMessageHeader('Game over');
@@ -174,6 +197,7 @@ export class GameEngine {
 
     loseHp() {
         this.hp -= 1;
+        this.hud.updateHp(this.hp);
         this.printDebugInfo('Fail! -1HP, actual HP:', this.hp);
     }
 

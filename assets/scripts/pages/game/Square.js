@@ -19,21 +19,27 @@ const colors = [
 ];
 
 export class Square {
+    id = null;
+    parent = null;
+
+    velocity = undefined;
+
+    isFullSizeOnMap = false;
+    isExitsFromMap = false;
+    destroying = false;
+
+    element = undefined;
+    missShotArea = undefined;
+    missShotAreaOverSize = 30;
+
+    clicked = false;
+    outOfBoard = false;
+
+    fallingInterval = null;
+
     constructor(id, parent) {
         this.id = id;
         this.parent = parent;
-        this.velocity = undefined;
-
-        this.isFullSizeOnMap = false;
-        this.isExitsFromMap = false;
-        this.destroying = false;
-
-        this.element = undefined;
-        this.missShotArea = undefined;
-        this.missShotAreaOverSize = 30;
-
-        this.clicked = false;
-        this.outOfBoard = false;
 
         this.createElement();
         this.drawSize();

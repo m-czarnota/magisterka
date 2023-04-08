@@ -1,0 +1,15 @@
+.hp-container {
+  position: relative;
+}
+
+.hp-empty-container, .hp-full-container {
+  position: absolute;
+  display: flex;
+  gap: 0.2em;
+}
+
+.heart-full {
+  color: #bb2d3b;
+  transition: transform 0.3s linear;
+  transform: scale(0, 1);
+}

@@ -1,26 +1,29 @@
 import {FadeManager} from "../../utils/animations/FadeManager";
 import {Timer} from "../../utils/game/Timer";
+import {HP} from "./HP";
 
 export class HUD {
+    parent = undefined;
+
+    hudContainer = undefined;
+
+    timeElement = null;
+    scoreElement = null;
+    startButton = null;
+
+    hp = null;
+
+    timeText = null;
+    scoreText = null;
+
+    message = null;
+    messageHeader = null;
+    messageDescription = null;
+
+    timeToPrepare = 2;
+
     constructor(parent) {
         this.parent = parent
-        this.timeElement = null;
-        this.scoreElement = null;
-        this.startButton = null;
-
-        this.hpElement = null;
-        this.hpFullIcon = null
-        this.hpEmptyIcon = null;
-
-        this.timeText = null;
-        this.scoreText = null;
-
-        this.message = null;
-        this.messageHeader = null;
-        this.messageDescription = null;
-
-        this.timerToStart = null;
-        this.timeToPrepare = 2;
     }
 
     destructor() {
@@ -54,13 +57,9 @@ export class HUD {
     }
 
     createHpElement() {
-        this.hpElement = document.createElement('div');
+        this.hp = new HP();
 
-        this.hpEmptyIcon = document.createElement('i');
-        this.hpEmptyIcon.classList = 'fa-regular fa-heart';
-        this.hpElement.appendChild(this.hpEmptyIcon);
-
-        return this.hpElement;
+        return this.hp.createHpContainer();
     }
 
     createScoreElement() {
@@ -72,7 +71,7 @@ export class HUD {
         this.scoreElement.appendChild(icon);
 
         this.scoreText = document.createElement('span');
-        this.scoreText.innerText = '0';
+        this.updateScore(0);
         this.scoreElement.appendChild(this.scoreText);
 
         return this.scoreElement;
@@ -155,7 +154,7 @@ export class HUD {
     }
 
     updateHp(hp) {
-
+        this.hp.setActualHp(hp);
     }
 
     updateMessageHeader(text) {

@@ -1,7 +1,12 @@
 export class Statistic {
+    parent = null;
+
+    actions = {};
+    shotCount = 0;
+    accurateShotCount = 0;
+
     constructor(parent) {
         this.parent = parent;
-        this.reset();
     }
 
     reset() {
