@@ -16,11 +16,14 @@
     {% endblock %}
 </head>
 <body>
-<div class="body-container d-flex">
+<div class="body-container">
     {% if form is defined %}{% form_theme form 'form/form_overrides.html.twig' %}{% endif %}
-    {% block aside %}{% endblock %}
 
     <div class="main-container padding-30 w-100">
+        {% block nav %}
+            {% include 'component/nav.html.twig' %}
+        {% endblock %}
+
         <main role="main">
             {% block main %}{% endblock %}
         </main>

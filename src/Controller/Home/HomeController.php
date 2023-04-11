@@ -10,13 +10,4 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-    #[Route(path: '/choice', name: 'app_choice')]
-    public function choice(): Response
-    {
-        if ($this->getUser()) {
-            return $this->redirectToRoute('app_user_dashboard');
-        }
-
-        return $this->render('page/home/choice.html.twig');
-    }
 }

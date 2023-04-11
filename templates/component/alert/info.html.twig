@@ -1,5 +1,6 @@
-<div class="alert alert-info alert-dismissible fade show" role="alert">
-    <i class="fa-solid fa-circle-info me-2"></i> {{ message }}
+<div class="alert alert-info alert-dismissible fade show d-flex align-items-center" role="alert">
+    <i class="fa-solid fa-circle-info me-3"></i>
+    <span>{{ message|raw }}</span>
 
     {% if close is defined and close %}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ 'alert.close'|trans }}"></button>

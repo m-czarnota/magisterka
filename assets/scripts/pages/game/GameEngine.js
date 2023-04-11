@@ -129,10 +129,26 @@ export class GameEngine {
         this.hud.updateMessageDescription('Your data has been successfully saved.')
         await this.hud.showMessage();
 
+        await this.saveGameData();
+
         new Timer(async () => {
             this.hud.updateStartButtonText('Maybe again?');
             await this.hud.showStartButton();
         }, 2000).start();
+    }
+
+    async saveGameData() {
+        const formData = new FormData();
+        formData.append('gameData', this.statistics.actions);
+
+        const response = await fetch(Routing.generate('app_game_save_game_data'), {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(this.statistics.actions),
+        });
+        const data = await response.json();
     }
 
     async startFillingSquares() {

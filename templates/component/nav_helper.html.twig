@@ -1,0 +1,27 @@
+{#{% macro isCategoryMenuActive() %}#}
+{#    {% if app.request.attributes.get('_route') in [#}
+{#        'app_user_category_list',#}
+{#        'app_user_category_add',#}
+{#    ] %}current{% endif %}#}
+{#{% endmacro %}#}
+
+{# ------------- single routes ------------- #}
+{% macro isDashboardActive() %}
+    {% if app.request.attributes.get('_route') == 'app_user_dashboard' %}current{% endif %}
+{% endmacro %}
+
+{% macro isGameActive() %}
+    {% if app.request.attributes.get('_route') == 'app_game_index' %}current{% endif %}
+{% endmacro %}
+
+{% macro isSignInActive() %}
+    {% if app.request.attributes.get('_route') == 'app_login' %}current{% endif %}
+{% endmacro %}
+
+{% macro isSignUpActive() %}
+    {% if app.request.attributes.get('_route') == 'app_register' %}current{% endif %}
+{% endmacro %}
+
+{% macro isInfoActive() %}
+    {% if app.request.attributes.get('_route') == 'app_info' %}current{% endif %}
+{% endmacro %}

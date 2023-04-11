@@ -4,8 +4,6 @@ namespace App\Entity;
 
 use App\Repository\GameRepository;
 use DateTime;
-use DateTimeInterface;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: GameRepository::class)]
@@ -20,8 +18,8 @@ class Game
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?DateTimeInterface $time = null;
+    #[ORM\Column]
+    private ?string $time = null;
 
     #[ORM\Column(type: 'json')]
     private array $data = [];
@@ -54,12 +52,12 @@ class Game
         return $this;
     }
 
-    public function getTime(): ?DateTimeInterface
+    public function getTime(): ?string
     {
         return $this->time;
     }
 
-    public function setTime(DateTimeInterface $time): self
+    public function setTime(string $time): self
     {
         $this->time = $time;
 

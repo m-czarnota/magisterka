@@ -21,29 +21,13 @@ class GameRepository extends ServiceEntityRepository
         parent::__construct($registry, Game::class);
     }
 
-    public function save(bool $flash = false, Game ...$games): self
+    public function add(Game $game): void
     {
-        foreach ($games as $game) {
-            $this->getEntityManager()->persist($game);
-        }
-
-        if ($flash) {
-            $this->getEntityManager()->flush();
-        }
-
-        return $this;
+        $this->getEntityManager()->persist($game);
     }
 
-    public function remove(bool $flash = false, Game ...$games): self
+    public function remove(Game $game): void
     {
-        foreach ($games as $game) {
-            $this->getEntityManager()->remove($game);
-        }
-
-        if ($flash) {
-            $this->getEntityManager()->flush();
-        }
-
-        return $this;
+        $this->getEntityManager()->remove($game);
     }
 }

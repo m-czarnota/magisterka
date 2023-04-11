@@ -37,6 +37,7 @@ alert:
   close: 'Zamknij'
 
 page:
+  appName: 'Spadające kwadraciki'
   back: 'Wróć'
   form:
     cancelButton: 'Anuluj'
@@ -78,13 +79,17 @@ page:
       tooltip:
         computerUsagePerDay: 'Włączając w to użytkowanie komputera w pracy, na studiach, granie, oglądanie, opłacanie rachunków itp.'
         gamingPerDay: 'Tylko na komputerze lub konsolach, takich jak PlayStation, Xbox, Nintendo Switch, SteamDeck itp.'
+  dashboard:
+    userNameReminder: 'Witaj <b>%username%</b>! Proszę, zapamiętaj swoją unikalną nazwę użytkownika, aby zachować swój progres kiedy zmienisz urządzenie. Nie będziesz mógł kontynuować swojego progresu, jeżeli zapomnisz swoją nazwę użytkownika.'
 
-aside:
+nav:
   dashboard: 'Kokpit'
-  users:
-    header: 'Użytkownicy'
-    list: 'Lista użytkowników'
-    add: 'Stwórz nowego użytkownika'
+  game: 'Gra'
+  signIn: 'Zaloguj się'
+  signUp: 'Zarejestruj się'
+  info: 'Info'
+  signOut: 'Wyloguj się'
+  creatorNews: 'Wiadomości twórcy'
 
 user_footer:
   description: 'Stworzone i wspierane przez %creator%'

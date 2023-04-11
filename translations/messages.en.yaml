@@ -37,12 +37,10 @@ alert:
   close: 'Close'
 
 page:
+  appName: 'Falling Squares'
   back: 'Go back'
   form:
     cancelButton: 'Cancel'
-  choice:
-    login: 'Continue with your name'
-    register: 'Start as a new user'
   login:
     title: 'Continue with your name'
     header: 'Continue with your name'
@@ -78,13 +76,17 @@ page:
       tooltip:
         computerUsagePerDay: 'Including usage computer for work, studies, gaming, watching, paying bills, etc.'
         gamingPerDay: 'Only on computer or consoles like PlayStation, Xbox, Nintendo Switch, SteamDeck etc.'
+  dashboard:
+    userNameReminder: 'Hello <b>%username%</b>! Please, remember your unique username to keep your progress when you change your device. you will not continue your progress if you will forget your username.'
 
-aside:
+nav:
   dashboard: 'Dashboard'
-  users:
-    header: 'Users'
-    list: 'List of users'
-    add: 'Create a user'
+  game: 'Game'
+  signIn: 'Sign in'
+  signUp: 'Sign up'
+  info: 'Info'
+  signOut: 'Sign out'
+  creatorNews: 'Creator News'
 
 user_footer:
   description: 'Created and supported by %creator%'

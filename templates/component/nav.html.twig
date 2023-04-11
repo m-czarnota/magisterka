@@ -1,0 +1,96 @@
+{% import 'component/nav_helper.html.twig' as helper %}
+
+<nav class="navbar navbar-expand-lg bg-light px-2 mb-4">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#"><i class="fa-solid fa-square-full text-danger"></i> {{ 'page.appName'|trans }}</a>
+        <div class="collapse navbar-collapse" id="navbarToggler">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-fill">
+                {% if app.user %}
+                    <li class="nav-item">
+                        <a href="{{ path('app_user_dashboard') }}" class="btn align-items-center {{ helper.isDashboardActive() }}">
+                            <i class="fa-solid fa-chart-line"></i>
+                            {{ 'nav.dashboard'|trans }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('app_game_index') }}" class="btn align-items-center {{ helper.isGameActive() }}">
+                            <i class="fa-solid fa-gamepad"></i>
+                            {{ 'nav.game'|trans }}
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a href="{{ path('app_login') }}" class="btn align-items-center {{ helper.isSignInActive() }}">
+                            <i class="fa-solid fa-right-to-bracket"></i>
+                            {{ 'nav.signIn'|trans }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('app_register') }}" class="btn align-items-center {{ helper.isSignUpActive() }}">
+                            <i class="fa-solid fa-user-plus"></i>
+                            {{ 'nav.signUp'|trans }}
+                        </a>
+                    </li>
+                {% endif %}
+
+                <li class="nav-item">
+                    <a href="#" class="btn align-items-center {{ helper.isSignUpActive() }}">
+                        <i class="fa-regular fa-circle-question"></i>
+                        {{ 'nav.info'|trans }}
+                    </a>
+                </li>
+
+                {% if app.user %}
+                    <li class="nav-item">
+                        <a href="{{ path('app_logout') }}" class="btn align-items-center">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            {{ 'nav.signOut'|trans }}
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+            <div class="navbar-brand text-center">
+                <i class="fa-solid fa-circle-user"></i>
+                {{ app.user.username }}
+            </div>
+        </div>
+
+
+    </div>
+</nav>
+
+{#<ul class="list-unstyled ps-0">#}
+{#    <li class="mb-1">#}
+{#        <a href="{{ path('app_user_dashboard') }}" class="btn align-items-center ">#}
+{#            <i class="fa-solid fa-chart-line"></i>#}
+{#            {{ 'aside.dashboard'|trans }}#}
+{#        </a>#}
+{#    </li>#}
+
+{#    <li class="mb-1">#}
+{#        <button class="btn btn-toggle align-items-center" data-bs-toggle="collapse" data-bs-target="#users-collapse" aria-expanded="false">#}
+{#            <i class="fa-solid fa-users"></i>#}
+{#            {{ 'aside.users.header'|trans }}#}
+{#        </button>#}
+
+{#        <div class="collapse" id="users-collapse">#}
+{#            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">#}
+{#                <li>#}
+{#                    <a href="#" class="btn align-items-center">#}
+{#                        <i class="fa-solid fa-address-book"></i>#}
+{#                        {{ 'aside.users.list'|trans }}#}
+{#                    </a>#}
+{#                </li>#}
+{#                <li>#}
+{#                    <a href="#" class="btn align-items-center">#}
+{#                        <i class="fa-solid fa-user-plus"></i>#}
+{#                        {{ 'aside.users.add'|trans }}#}
+{#                    </a>#}
+{#                </li>#}
+{#            </ul>#}
+{#        </div>#}
+{#    </li>#}
+{#</ul>#}
