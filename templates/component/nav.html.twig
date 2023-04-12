@@ -8,26 +8,34 @@
         <a class="navbar-brand" href="#"><i class="fa-solid fa-square-full text-danger"></i> {{ 'page.appName'|trans }}</a>
         <div class="collapse navbar-collapse" id="navbarToggler">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-fill">
-                {% if app.user %}
+                {% if is_granted('ROLE_DASHBOARD_AG') %}
                     <li class="nav-item">
                         <a href="{{ path('app_user_dashboard') }}" class="btn align-items-center {{ helper.isDashboardActive() }}">
                             <i class="fa-solid fa-chart-line"></i>
                             {{ 'nav.dashboard'|trans }}
                         </a>
                     </li>
+                {% endif %}
+
+                {% if is_granted('ROLE_GAME') %}
                     <li class="nav-item">
                         <a href="{{ path('app_game_index') }}" class="btn align-items-center {{ helper.isGameActive() }}">
                             <i class="fa-solid fa-gamepad"></i>
                             {{ 'nav.game'|trans }}
                         </a>
                     </li>
-                {% else %}
+                {% endif %}
+
+                {% if not is_granted('ROLE_USER') %}
                     <li class="nav-item">
                         <a href="{{ path('app_login') }}" class="btn align-items-center {{ helper.isSignInActive() }}">
                             <i class="fa-solid fa-right-to-bracket"></i>
                             {{ 'nav.signIn'|trans }}
                         </a>
                     </li>
+                {% endif %}
+
+                {% if not is_granted('ROLE_USER') %}
                     <li class="nav-item">
                         <a href="{{ path('app_register') }}" class="btn align-items-center {{ helper.isSignUpActive() }}">
                             <i class="fa-solid fa-user-plus"></i>
@@ -37,13 +45,13 @@
                 {% endif %}
 
                 <li class="nav-item">
-                    <a href="#" class="btn align-items-center {{ helper.isSignUpActive() }}">
+                    <a href="{{ path('app_info') }}" class="btn align-items-center {{ helper.isSignUpActive() }}">
                         <i class="fa-regular fa-circle-question"></i>
                         {{ 'nav.info'|trans }}
                     </a>
                 </li>
 
-                {% if app.user %}
+                {% if is_granted('ROLE_USER') %}
                     <li class="nav-item">
                         <a href="{{ path('app_logout') }}" class="btn align-items-center">
                             <i class="fa-solid fa-right-from-bracket"></i>
@@ -52,10 +60,13 @@
                     </li>
                 {% endif %}
             </ul>
-            <div class="navbar-brand text-center">
-                <i class="fa-solid fa-circle-user"></i>
-                {{ app.user.username }}
-            </div>
+
+            {% if is_granted('ROLE_USER') %}
+                <div class="navbar-brand text-center">
+                    <i class="fa-solid fa-circle-user"></i>
+                    {{ app.user.username }}
+                </div>
+            {% endif %}
         </div>
 
 

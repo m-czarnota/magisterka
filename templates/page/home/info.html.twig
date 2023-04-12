@@ -1,0 +1,221 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ 'page.info.title'|trans }}{% endblock %}
+
+{% block body %}
+    <div id="info-container">
+        <h3>{{ 'page.info.header'|trans }}</h3>
+        <p>
+            Hej! Mam nadzieję, że dobrze się bawisz. Dziękuję bardzo za wsparcie mojego projektu.
+            Pewnie zastanawiasz się po co to wszytko, jaki ma cel oraz co ja z tym robię. Zapraszam!
+        </p>
+
+        <div class="accordion" id="info-panel">
+            <div class="accordion-item">
+                <h4 class="accordion-header" id="news-1-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#news-1-body" aria-expanded="false" aria-controls="news-1-body">
+                        Co to za projekt?
+                    </button>
+                </h4>
+                <div id="news-1-body" class="accordion-collapse collapse" aria-labelledby="news-1-header">
+                    <div class="accordion-body">
+                        Projekt powstał jako aplikacja do gromadzenia danych potrzebnych do badań w pracy magisterskiej.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h4 class="accordion-header" id="news-2-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#news-2-body" aria-expanded="false" aria-controls="news-2-body">
+                        Kiedy dane są zbierane? Jak je wykorzystuję?
+                    </button>
+                </h4>
+                <div id="news-2-body" class="accordion-collapse collapse" aria-labelledby="news-2-header">
+                    <div class="accordion-body">
+                        <p>
+                            Dane są zbierane w trakcie każdej pojedynczej rozgrywki. Zapisywane są one dopiero po zakończeniu rozgrywki, czyli wyświetleniu napisu "Game Over" 🙂
+                            Dane zbierane są co 1 sekundę oraz dodatkowo przy wystąpieniu poniższych akcji, czyli:
+                            <ul>
+                                <li>kliknięcie w kwadrat,</li>
+                                <li>kliknięcie obok kwadratu (chybienie),</li>
+                                <li>wypadnięcie kwadratu poza mapę w dół.</li>
+                            </ul>
+                        </p>
+                        <p>
+                            Dane zostaną wykorzystane do odtworzenia rozgrywek oraz zbadania, jak często zmienia się zachowanie rozgrywającego przy pewnych założeniach.
+                        </p>
+                        <p>
+                            Założeniami tymi mogą być przekroczenie aktualnego rekordu przy ustalonej liczbie punktów zdrowia oraz czasie rozgrywki.
+                            Może to zostać wykorzystane do zbadania zachowania lub zbadania jak zmienia się celność w okresie czasu po przekroczeniu aktualnego rekordu do zakończenia rozgrywki w stosunku do przedziału czasowego do momentu przekroczenia rekordowego progu punktowego.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h4 class="accordion-header" id="news-3-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#news-3-body" aria-expanded="false" aria-controls="news-3-body">
+                        Jakie konkretnie dane są wykorzystywane?
+                    </button>
+                </h4>
+                <div id="news-3-body" class="accordion-collapse collapse" aria-labelledby="news-3-header">
+                    <div class="accordion-body">
+                        Poniżej szczegółowe przedstawienie wszystkich zbieranych danych:
+                        <ul>
+                            <li>aktualny wynik</li>
+                            <li>aktualny czas gry</li>
+                            <li>liczba punktów zdrowia</li>
+                            <li>
+                                informacje o poszczególnych kwadratach, czyli
+                                <ul>
+                                    <li>aktualne położenie</li>
+                                    <li>rozmiar</li>
+                                    <li>prędkość</li>
+                                    <li>liczba punktów</li>
+                                    <li>kolor</li>
+                                    <li>czy został kliknięty</li>
+                                    <li>czy wyszedł poza planszę</li>
+                                    <li>czy kwardat wyszedł spoza górnej granicy jego tworzenia</li>
+                                    <li>czy jest w trakcie wychodzenia poza planszę</li>
+                                </ul>
+                            </li>
+                            <li>łączna liczba strzałów</li>
+                            <li>liczba celnych strzałów</li>
+                            <li>aktualny dodatkowy modyfikator prędkości generowanych kwadratów</li>
+                            <li>maksymalna liczba kwadratów</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h4 class="accordion-header" id="news-4-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#news-4-body" aria-expanded="false" aria-controls="news-4-body">
+                        Skąd mam mieć pewność, że moje dane są anonimowe i nie zostaną ze mną powiązane?
+                    </button>
+                </h4>
+                <div id="news-4-body" class="accordion-collapse collapse" aria-labelledby="news-4-header">
+                    <div class="accordion-body">
+                        Aplikacja nie przechowuje żadnych wrażliwych danych, typu adres email czy numer telefonu.
+                        Dodatkowo nazwy użytkowników są generowane losowo, więc nie ma możliwości na powiązanie konkretnego użytkownika z daną osobą.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h4 class="accordion-header" id="news-5-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#news-5-body" aria-expanded="false" aria-controls="news-5-body">
+                        Dlaczego nie mogę sam wpisać nazwy użytkownika przy tworzeniu konta?
+                    </button>
+                </h4>
+                <div id="news-5-body" class="accordion-collapse collapse" aria-labelledby="news-5-header">
+                    <div class="accordion-body">
+                        Aby uniknąć rozpisywania się na wiele stron o polityce prywatności, spełnieniu RODO i spraw powiązanych nie możesz podać własnej nazwy użytkownika.
+                        Zapobiega to możliwości powiązania twojego konta oraz nazwy użytkownika z tobą.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h4 class="accordion-header" id="news-6-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#news-6-body" aria-expanded="false" aria-controls="news-6-body">
+                        Dlaczego nie podaje się hasła przy tworzeniu konta?
+                    </button>
+                </h4>
+                <div id="news-6-body" class="accordion-collapse collapse" aria-labelledby="news-6-header">
+                    <div class="accordion-body">
+                        Ponieważ wystarczające jest zapamiętanie nazwy użytkownika. Nie powinien jej znać nikt poza tobą, tak samo jest z hasłami.
+                        Aplikacja nie przechowuje danych wrażliwych, takich jak konwersacje, adresy email itd.
+                        Z tego powodu wystarczająca jest nazwa użytkownika.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h4 class="accordion-header" id="news-9-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#news-9-body" aria-expanded="false" aria-controls="news-9-body">
+                        Jakie są wymagania systemowe gry?
+                    </button>
+                </h4>
+                <div id="news-9-body" class="accordion-collapse collapse" aria-labelledby="news-9-header">
+                    <div class="accordion-body">
+                        <p>
+                            Wymaganiem jest aktualnie wspierana przeglądarka, czyli Internet Explorer nie jest wspierany 😋
+                            Dodatkowo gra została stworzona z myślą o komputerach i wymaga rozdzielczości przynajmniej 800x600 pikseli, ponieważ tak duże jest okno gry.
+                        </p>
+                        <p>
+                            Dlaczego nie wspiera ona smartfonów? Problemem jest podejście do badania.
+                            Z założenia każdy potrafi korzystać z myszki, jedni sprawniej, inni mniej.
+                            Okno o podanych rozmiarach mniej więcej wyrównuje szanse, podczas kiedy telefony mają różne rozdzielczości ekranów.
+                        </p>
+                        <p>
+                            Czy powstanie kiedyś wersja mobilna? Być może, na potrzeby badania przewidziana jest jedynie wersja desktopowa. Po zakończeniu pracy postaram się rozwinąć stronę na wersje mobilne oraz stworzyć aplikację mobilną.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h4 class="accordion-header" id="news-7-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#news-7-body" aria-expanded="false" aria-controls="news-7-body">
+                        Jakie są zasady gry?
+                    </button>
+                </h4>
+                <div id="news-7-body" class="accordion-collapse collapse" aria-labelledby="news-7-header">
+                    <div class="accordion-body">
+                        <p>
+                            Gra polega na klikaniu w spadające kwadraty. Są one generowane różnej wielkości oraz w jednym z wylosowanych kolorów.
+                            Mają one wylosowaną różną wartość prędkości spadania.
+                        </p>
+                        <p>
+                            Im szybszy kwadrat tym więcej punktów za niego dostaniesz, ponieważ trudniej go trafić od wolniejszego.
+                            Im mniejszy kwadrat tym więcej punktów za niego dostaniesz, ponieważ trudniej go trafić od większego.
+                            Generowanie kwadratów jest zawsze losowe, więc czasem możesz trafiać na więcej mniejszych kwadratów, czasem więcej na większe.
+                        </p>
+                        <p>
+                            Gdy kwadrat wypadnie całkowicie poza mapę tracisz jeden punkt zdrowia. Punktów zdrowia masz łącznie 3 i nie ma możliwości ich odzyskać w trakcie pojedynczej rozgrywki.<br>
+                            Możesz kliknąć w kwadrat o ile go widzisz, nawet ten, który do znajduje się całkowicie na planszy (wypada poza nią lub dopiero się generuje).
+                        </p>
+                        <p>
+                            Wraz z upływem czasu zwiększa się poziom trudności.<br>
+                            Co 10 sekund zwiększa się minimalny i maksymalny zakres prędkości spadania kwadratu do wylosowania. Dotyczy to jedynie kwadratów nowo generowanych. Kwadraty istniejące na mapie pozostaną niezmienione.<br>
+                            Co 20 sekund zwiększa się maksymalna liczba kwadratów, które mogą znajdować się jednocześnie na planszy.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h4 class="accordion-header" id="news-8-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#news-8-body" aria-expanded="false" aria-controls="news-8-body">
+                        O czym jest twoja praca dyplomowa?
+                    </button>
+                </h4>
+                <div id="news-8-body" class="accordion-collapse collapse" aria-labelledby="news-8-header">
+                    <div class="accordion-body">
+                        <p>
+                            Dokładny tytuł brzmi "Badanie przyczyn podejmowanych decyzji na przykładzie gry komputerowej".
+                            Zamierzam przy pomocy danych zgromadzonych dzięki tej aplikacji dokonać ich analizy i wysunąć wnioski wskazując na konkretne przyczyny podejmowanych w danej sytuacji decyzji.
+                        </p>
+                        <p>
+                            Przykład: przekroczenie aktualnego rekordu przy ustalonej liczbie punktów zdrowia oraz czasie rozgrywki.
+                            Może to zostać wykorzystane do zbadania zachowania lub zbadania jak zmieniła się celność w okresie czasu po przekroczeniu aktualnego rekordu do zakończenia rozgrywki w stosunku do przedziału czasowego do momentu przekroczenia rekordowego progu punktowego.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h4 class="accordion-header" id="news-10-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#news-10-body" aria-expanded="false" aria-controls="news-10-body">
+                        Może i fajna ta strona z grą, ale trochę uboga. Co dalej?
+                    </button>
+                </h4>
+                <div id="news-10-body" class="accordion-collapse collapse" aria-labelledby="news-10-header">
+                    <div class="accordion-body">
+                        <p>
+                            Do zgromadzenia danych do badania przy określonych założeniach nie jest potrzebna mega współczesna aplikacja.
+                            Ale rozumiem o co chodzi.
+                            Wraz z upływem czasu będę dodawał nowe funkcjonalności, takie jak tablica statystyk, historia rozegranych rozgrywek.
+                        </p>
+                        <p>
+                            Po zakończeniu pisania pracy dyplomowej, jeżeli zostanie wena, to zostanie rozwinięte UI/UX.
+                            Powstanie także wersja mobilna strony wraz z aplikacją mobilną.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

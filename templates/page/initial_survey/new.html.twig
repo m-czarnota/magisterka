@@ -21,7 +21,7 @@
             <div class="form_buttons d-flex {% if app.request.get('_route') != 'app_initial_survey_survey' %}justify-content-between{% else %}justify-content-end{% endif %}">
                 {% if app.request.get('_route') != 'app_initial_survey_survey' %}
                     <div class="mb-3">
-                        <a href="{{ path('app_choice') }}" class="btn-secondary btn">{{ 'page.form.cancelButton'|trans }}</a>
+                        <a href="#" class="btn-secondary btn">{{ 'page.form.cancelButton'|trans }}</a>
                     </div>
                 {% endif %}
                 {{ form_row(form.submit, {'label': 'page.initialSurvey.new.submit'|trans}) }}

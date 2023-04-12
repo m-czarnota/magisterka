@@ -51,7 +51,7 @@ page:
   register:
     flash:
       success: 'You have been successfully registered.'
-      rememberName: "Please, remember your unique username '%username%' to keep your progress when you change your device. you will not continue your progress if you will forget your username."
+      rememberName: "Please, remember your unique username '%username%' to keep your progress when you change your device. You will not continue your progress if you will forget your username."
     title: 'Start as a new user'
     header: 'Start as a new user'
     form:
@@ -77,7 +77,10 @@ page:
         computerUsagePerDay: 'Including usage computer for work, studies, gaming, watching, paying bills, etc.'
         gamingPerDay: 'Only on computer or consoles like PlayStation, Xbox, Nintendo Switch, SteamDeck etc.'
   dashboard:
-    userNameReminder: 'Hello <b>%username%</b>! Please, remember your unique username to keep your progress when you change your device. you will not continue your progress if you will forget your username.'
+    userNameReminder: 'Hello <b>%username%</b>! Please, remember your unique username to keep your progress when you change your device. You will not continue your progress if you will forget your username.'
+  info:
+    title: 'About the project'
+    header: 'About the project'
 
 nav:
   dashboard: 'Dashboard'

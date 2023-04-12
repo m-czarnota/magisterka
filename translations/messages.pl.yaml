@@ -81,6 +81,9 @@ page:
         gamingPerDay: 'Tylko na komputerze lub konsolach, takich jak PlayStation, Xbox, Nintendo Switch, SteamDeck itp.'
   dashboard:
     userNameReminder: 'Witaj <b>%username%</b>! Proszę, zapamiętaj swoją unikalną nazwę użytkownika, aby zachować swój progres kiedy zmienisz urządzenie. Nie będziesz mógł kontynuować swojego progresu, jeżeli zapomnisz swoją nazwę użytkownika.'
+  info:
+    title: 'O projekcie'
+    header: 'O projekcie'
 
 nav:
   dashboard: 'Kokpit'

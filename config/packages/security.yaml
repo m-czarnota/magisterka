@@ -20,7 +20,7 @@ security:
                 - App\Security\Authenticator\PasswordlessAuthenticator
             logout:
                 path: app_logout
-                target: app_choice
+                target: app_login
 
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
@@ -39,9 +39,14 @@ security:
 
         ROLE_USER_AG:
             - ROLE_DASHBOARD_AG
+            - ROLE_GAME_AG
 
         ROLE_DASHBOARD_AG:
             - ROLE_DASHBOARD
+
+        ROLE_GAME_AG:
+            - ROLE_GAME
+            - ROLE_SAVE_GAME_DATA
 
 when@test:
     security:

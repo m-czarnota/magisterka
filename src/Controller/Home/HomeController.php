@@ -10,4 +10,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
+    #[Route('/info', name: 'app_info')]
+    public function info(): Response
+    {
+        return $this->render('page/home/info.html.twig');
+    }
 }
