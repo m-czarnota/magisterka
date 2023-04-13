@@ -6,9 +6,12 @@
     <div id="initial-survey-new-container">
         {% include 'component/flashes.html.twig' %}
 
-        <div>
-            <h1>{{ 'page.game.header'|trans }}</h1>
+        <h1>{{ 'page.game.header'|trans }}</h1>
 
+        <div id="game_app"></div>
+        <hr>
+
+        <div>
             <div class="accordion" id="info-panel">
                 <div class="accordion-item">
                     <h4 class="accordion-header" id="news-1-header">
@@ -72,13 +75,6 @@
                     </div>
                 </div>
             </div>
-
-            <hr>
-
-            <div id="game_app"></div>
         </div>
-
-
-
     </div>
 {% endblock %}
