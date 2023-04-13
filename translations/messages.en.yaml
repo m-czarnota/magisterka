@@ -81,6 +81,9 @@ page:
   info:
     title: 'About the project'
     header: 'About the project'
+  game:
+    title: 'Game'
+    header: 'Game'
 
 nav:
   dashboard: 'Dashboard'

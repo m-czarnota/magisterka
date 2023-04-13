@@ -84,6 +84,9 @@ page:
   info:
     title: 'O projekcie'
     header: 'O projekcie'
+  game:
+    title: 'Gra'
+    header: 'Gra'
 
 nav:
   dashboard: 'Kokpit'

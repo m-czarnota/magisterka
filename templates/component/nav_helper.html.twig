@@ -2,26 +2,26 @@
 {#    {% if app.request.attributes.get('_route') in [#}
 {#        'app_user_category_list',#}
 {#        'app_user_category_add',#}
-{#    ] %}current{% endif %}#}
+{#    ] %}active{% endif %}#}
 {#{% endmacro %}#}
 
 {# ------------- single routes ------------- #}
 {% macro isDashboardActive() %}
-    {% if app.request.attributes.get('_route') == 'app_user_dashboard' %}current{% endif %}
+    {% if app.request.attributes.get('_route') == 'app_user_dashboard' %}active{% endif %}
 {% endmacro %}
 
 {% macro isGameActive() %}
-    {% if app.request.attributes.get('_route') == 'app_game_index' %}current{% endif %}
+    {% if app.request.attributes.get('_route') == 'app_game_index' %}active{% endif %}
 {% endmacro %}
 
 {% macro isSignInActive() %}
-    {% if app.request.attributes.get('_route') == 'app_login' %}current{% endif %}
+    {% if app.request.attributes.get('_route') == 'app_login' %}active{% endif %}
 {% endmacro %}
 
 {% macro isSignUpActive() %}
-    {% if app.request.attributes.get('_route') == 'app_register' %}current{% endif %}
+    {% if app.request.attributes.get('_route') == 'app_register' %}active{% endif %}
 {% endmacro %}
 
 {% macro isInfoActive() %}
-    {% if app.request.attributes.get('_route') == 'app_info' %}current{% endif %}
+    {% if app.request.attributes.get('_route') == 'app_info' %}active{% endif %}
 {% endmacro %}

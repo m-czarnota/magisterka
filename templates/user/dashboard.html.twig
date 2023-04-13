@@ -8,19 +8,35 @@
 
         {% include 'component/flashes.html.twig' %}
 
-        <div class="d-flex align-items-center">
-            <h3>{{ 'nav.creatorNews'|trans }}</h3>
-            <span id="load-more-spinner" class="spinner-grow spinner-grow-sm text-success d-none ms-2" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </span>
+        <div>
+            <div class="d-flex align-items-center">
+                <h3>{{ 'nav.creatorNews'|trans }}</h3>
+                <span id="load-more-spinner" class="spinner-grow spinner-grow-sm text-success d-none ms-2" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </span>
+            </div>
+
+            <div class="accordion" id="news-panel">
+
+            </div>
+
+            <div class="d-flex justify-content-center mt-3">
+                <button type="button" class="btn btn-primary" id="news-load-button">Load more</button>
+            </div>
         </div>
 
-        <div class="accordion" id="news-panel">
+        <hr>
 
+        <div>
+            <h3>Last game</h3>
+            <p>Coming soon..</p>
         </div>
 
-        <div class="d-flex justify-content-center mt-3">
-            <button type="button" class="btn btn-primary" id="news-load-button">Load more</button>
+        <hr>
+
+        <div>
+            <h3>Statistics</h3>
+            <p>Coming soon..</p>
         </div>
 
     </div>
