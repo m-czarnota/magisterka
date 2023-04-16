@@ -1,7 +1,7 @@
 import {Square} from "./Square";
 import {HUD} from "./HUD";
 import {Timer} from "../../utils/game/Timer";
-import {Statistic} from "./Statistic";
+import {GameStatistic} from "./GameStatistic";
 
 export class GameEngine {
     width = undefined;
@@ -10,7 +10,7 @@ export class GameEngine {
     hud = null;
 
     squares = [];
-    statistics = null;
+    gameStatistics = null;
     
     isOver = false;
     maxSquares = 4;
@@ -24,10 +24,10 @@ export class GameEngine {
     velocityModifierInterval = null;
     squaresCountModifierInterval = null;
 
-    currentVelocityModifier = 0;
+    currentReducingFallingTimeModifier = 0;
 
-    velocityModifierInTime = 0.1;
-    velocityModifierTimeInterval = 10000;
+    reducingFallingTimeInTime = 0.2;
+    reducingFallingTimeModifierInterval = 10000;
 
     squaresCountModifierInTime = 1;
     squaresCountModifierTimeInterval = 20000;
@@ -46,7 +46,7 @@ export class GameEngine {
         this.appContainer = container;
         this.hud = new HUD(this);
 
-        this.statistics = new Statistic(this);
+        this.gameStatistics = new GameStatistic(this);
     }
 
     drawGameWindow() {
@@ -82,13 +82,13 @@ export class GameEngine {
         this.gameTimer = null;
         this.hud.updateTime(this.gameSeconds);
 
-        this.currentVelocityModifier = 0;
+        this.currentReducingFallingTimeModifier = 0;
 
         this.fillSquaresInterval = null;
         this.velocityModifierInterval = null;
         this.squaresCountModifierInterval = null;
 
-        this.statistics.reset();
+        this.gameStatistics.reset();
     }
 
     async newGame() {
@@ -138,15 +138,17 @@ export class GameEngine {
     }
 
     async saveGameData() {
-        const formData = new FormData();
-        formData.append('gameData', this.statistics.actions);
+        const form = {
+            'gameData': this.gameStatistics.actions,
+            'squares': this.gameStatistics.historicalSquares,
+        }
 
         const response = await fetch(Routing.generate('app_game_save_game_data'), {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(this.statistics.actions),
+            body: JSON.stringify(form),
         });
         const data = await response.json();
     }
@@ -175,7 +177,7 @@ export class GameEngine {
     setEventListenersForSquare(square) {
         square.element.addEventListener('square-out-of-board', async () => {
             if (this.isImmortal) {
-                this.statistics.saveAction();
+                this.gameStatistics.saveAction();
                 await this.destroySquare(square);
 
                 return;
@@ -183,7 +185,7 @@ export class GameEngine {
 
             if (!this.isOver) {
                 this.loseHp();
-                this.statistics.saveAction();
+                this.gameStatistics.saveAction();
             }
 
             await this.destroySquare(square);
@@ -194,20 +196,22 @@ export class GameEngine {
         });
 
         square.element.addEventListener('square-clicked', async () => {
-            this.score += square.calcScore();
+            const squareScore = square.calcScore();
+            this.score += squareScore;
 
-            this.statistics.increaseAccurateShot();
-            this.statistics.saveAction();
+            this.gameStatistics.increaseAccurateShot();
+            this.gameStatistics.saveAction();
 
             this.hud.updateScore(this.score);
+            this.hud.updateAddedScore(squareScore);
 
             await this.destroySquare(square);
         });
 
         square.missShotArea.addEventListener('miss-shot', () => {
-            this.statistics.increaseShotCount();
-            this.statistics.saveAction();
-            this.printDebugInfo('Miss shot! Actual accurate:', this.statistics.calcAccurate());
+            this.gameStatistics.increaseShotCount();
+            this.gameStatistics.saveAction();
+            this.printDebugInfo('Miss shot! Actual accurate:', this.gameStatistics.calcAccurate());
         });
     }
 
@@ -227,9 +231,9 @@ export class GameEngine {
 
     startVelocityModifierTimer() {
         this.velocityModifierInterval = setInterval(() => {
-            this.currentVelocityModifier += this.velocityModifierInTime;
-            this.printDebugInfo('velocity modifier increased, actual velocity modifier', this.currentVelocityModifier)
-        }, this.velocityModifierTimeInterval);
+            this.currentReducingFallingTimeModifier += this.reducingFallingTimeInTime;
+            this.printDebugInfo('velocity modifier increased, actual velocity modifier', this.currentReducingFallingTimeModifier)
+        }, this.reducingFallingTimeModifierInterval);
     }
 
     stopVelocityModifierTimer() {
@@ -252,9 +256,11 @@ export class GameEngine {
 
         this.gameTimer = setInterval(() => {
             this.gameSeconds += 1;
-            this.hud.updateTime(this.gameSeconds);
-            this.statistics.saveAction();
-        }, 1000);
+            const elapsedTime = Date.now() - this.gameStartedDate;
+
+            this.hud.updateTime(elapsedTime);
+            this.gameStatistics.saveAction();
+        }, 100);
     }
 
     stopGameTimer() {

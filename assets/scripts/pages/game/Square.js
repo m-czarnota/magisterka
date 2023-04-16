@@ -1,13 +1,14 @@
 import {GameEvents} from "./GameEvents";
 import {FadeManager} from "../../utils/animations/FadeManager";
+import {SquareStatistic} from "./SquareStatistic";
 const _ = require('lodash');
 
 const minSize = 45;
 const maxSize = 95;
 
-const defaultAnimationDuration = 9;
-const minVelocity = 1.1;
-const maxVelocity = 2.0;
+export const defaultAnimationDuration = 9;
+const minReducingFallingTime = 1.1;
+const maxReducingFallingTime = 2.0;
 
 const colors = [
     '#f3da3a',
@@ -18,28 +19,38 @@ const colors = [
     '#f3873a',
 ];
 
+const squareStatuses = {
+    notFullySpawn: 'NOT_FULLY_SPAWN',
+    fullySpawned: 'FULLY_SPAWNED',
+    exitsFromMap: 'EXITS_FROM_MAP',
+    overBoard: 'OUT_OF_BOARD',
+}
+
 export class Square {
     id = null;
     parent = null;
+    squareStatistic = null;
 
-    velocity = undefined;
+    reducingFallingTime = undefined;
+    status = squareStatuses.notFullySpawn;
 
-    isFullSizeOnMap = false;
-    isExitsFromMap = false;
+    timeToClick = null;
+    created_at = undefined;
+
     destroying = false;
 
     element = undefined;
     missShotArea = undefined;
     missShotAreaOverSize = 30;
 
-    clicked = false;
-    outOfBoard = false;
-
     fallingInterval = null;
 
     constructor(id, parent) {
         this.id = id;
         this.parent = parent;
+        this.squareStatistic = new SquareStatistic(this);
+
+        this.created_at = new Date();
 
         this.createElement();
         this.drawSize();
@@ -48,28 +59,27 @@ export class Square {
         this.missShotArea.appendChild(this.element);
 
         this.drawPosition();
-        this.drawVelocity();
+        this.drawReducingFallingTime();
         this.drawColor();
 
-        this.calcScore();
+        this.element.innerText = this.calcScore().toFixed(2);
     }
 
     async destructor() {
         this.destroying = true;
-
-        const fadeManager = new FadeManager(this.element);
-
         this.stopFalling();
 
-        if (this.outOfBoard) {
-            this.element.remove();
-        } else {
-            await fadeManager.fadeOut(100);
-        }
+        this.status === squareStatuses.overBoard
+            ? this.element.remove()
+            : await new FadeManager(this.element).fadeOut(100);  // todo: how to do await??
 
         this.missShotArea.remove();
         this.element = null;
         this.parent = null;
+
+        this.squareStatistic.destructor();
+        delete this.squareStatistic;
+        this.squareStatistic = null;
     }
 
     createElement() {
@@ -78,16 +88,23 @@ export class Square {
         this.element.style.zIndex = String(this.id + 10);
 
         this.element.addEventListener('mousedown', (event) => {
-            if (this.parent.isOver) {
+            if (this.parent.isOver || this.timeToClick) {
                 return;
             }
 
             event.preventDefault();
             event.stopPropagation();
 
-            this.clicked = true;
+            this.updateTimeClicked();
             this.element.dispatchEvent(GameEvents["square-clicked"]);
         });
+    }
+
+    updateTimeClicked() {
+        const actionDate = new Date();
+        const elapsedSeconds = (actionDate - this.parent.gameStartedDate) / 1000;
+
+        this.timeToClick = (elapsedSeconds % 60).toFixed(4);
     }
 
     createMissShotArea() {
@@ -107,6 +124,7 @@ export class Square {
             event.preventDefault();
             event.stopPropagation();
 
+            this.squareStatistic.increaseMissShots();
             this.missShotArea.dispatchEvent(GameEvents["miss-shot"]);
         });
     }
@@ -123,10 +141,10 @@ export class Square {
         this.missShotArea.style.left = `${_.random(20, maxStartPositionW, false)}px`;
     }
 
-    drawVelocity() {
-        this.velocity = _.random(
-            minVelocity + this.parent.currentVelocityModifier,
-            maxVelocity + this.parent.currentVelocityModifier,
+    drawReducingFallingTime() {
+        this.reducingFallingTime = _.random(
+            minReducingFallingTime + this.parent.currentReducingFallingTimeModifier,
+            maxReducingFallingTime + this.parent.currentReducingFallingTimeModifier,
             true,
         );
     }
@@ -141,7 +159,7 @@ export class Square {
     }
 
     calcScore() {
-        return 100 / this.getSize() * this.velocity;
+        return 100 / this.getSize() * this.reducingFallingTime;
     }
 
     startFalling() {
@@ -156,11 +174,11 @@ export class Square {
             const realCurrentPosition = this.getCurrentPosition(true);
 
             if (realCurrentPosition - height > 0) {
-                this.isFullSizeOnMap = true;
+                this.status = squareStatuses.fullySpawned;
             }
 
             if (realCurrentPosition > this.parent.height) {
-                this.isExitsFromMap = true;
+                this.status = squareStatuses.exitsFromMap;
             }
 
             if (realCurrentPosition > this.parent.height) {
@@ -175,7 +193,7 @@ export class Square {
     }
 
     overBoard() {
-        this.outOfBoard = true;
+        this.status = squareStatuses.overBoard;
         this.stopFalling();
         this.element.dispatchEvent(GameEvents["square-out-of-board"]);
     }
@@ -202,18 +220,7 @@ export class Square {
     }
 
     serialize() {
-        return {
-            id: this.id,
-            size: this.getSize(),
-            position: this.getCurrentPosition(true),
-            velocity: this.velocity,
-            score: this.calcScore(),
-            color: this.getColor(),
-            clicked: this.clicked,
-            outOfBoard: this.outOfBoard,
-            isFullSizeOnMap: this.isFullSizeOnMap,
-            existsFromMap: this.isExitsFromMap,
-        };
+        return this.squareStatistic.getStatistics();
     }
 
     playAnimation() {
@@ -228,7 +235,7 @@ export class Square {
         this.getSquareElement().animate([
             { top: `${parseInt(this.getSquareElement().style.top.replace('px', '')) - this.getSize() / 2}px` },
             { top: `${this.parent.height + this.getSize() + this.missShotAreaOverSize / 2}px` }
-        ], (defaultAnimationDuration - this.velocity) * 1000);
+        ], (defaultAnimationDuration - this.reducingFallingTime) * 1000);
     }
 
     stopAnimation() {

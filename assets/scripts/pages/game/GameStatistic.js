@@ -1,9 +1,11 @@
-export class Statistic {
+export class GameStatistic {
     parent = null;
 
     actions = {};
     shotCount = 0;
     accurateShotCount = 0;
+
+    historicalSquares = {};
 
     constructor(parent) {
         this.parent = parent;
@@ -33,20 +35,27 @@ export class Statistic {
         const elapsedSeconds = (actionDate - this.parent.gameStartedDate) / 1000;
 
         const minutes = Math.floor(elapsedSeconds / 60);
-        const seconds = (elapsedSeconds % 60).toFixed(4);
+        const seconds = (elapsedSeconds % 60);
+        const secondsFixed = seconds.toFixed(4);
 
-        const key = `${minutes}:${seconds}`;
+        const livingSquares = this.parent.squares.filter(square => square.destroying === false);
+
+        const key = `${minutes}:${seconds < 10 ? '0' + secondsFixed : secondsFixed}`;
         const data = {
             score: this.parent.score,
             hp: this.parent.hp,
             totalShots: this.shotCount,
             accurateShots: this.accurateShotCount,
-            squares: this.parent.squares.filter(square => square.destroying === false).map(square => square.serialize()),
-            currentVelocityModifier: this.parent.currentVelocityModifier,
+            squares: livingSquares.map(square => square.serialize()),
+            currentReducingFallingTimeModifier: this.parent.currentReducingFallingTimeModifier,
             maxSquares: this.parent.maxSquares,
         };
 
         this.actions[key] = data;
         this.parent.printDebugInfo(elapsedSeconds, key, data);
+
+        for (const square of livingSquares) {
+            this.historicalSquares[square.id] = square.serialize();
+        }
     }
 }

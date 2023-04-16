@@ -11,6 +11,9 @@ export class HUD {
     scoreElement = null;
     startButton = null;
 
+    addedScoreElement = null;
+    addedScoreElementTimer = null;
+
     hp = null;
 
     timeText = null;
@@ -43,7 +46,7 @@ export class HUD {
 
     createTimeElement() {
         this.timeElement = document.createElement('div');
-        // this.timeElement.classList.add('invisible');
+        this.timeElement.classList.add('time-container');
 
         const icon = document.createElement('i');
         icon.className = 'fa-regular fa-clock me-1';
@@ -64,7 +67,12 @@ export class HUD {
 
     createScoreElement() {
         this.scoreElement = document.createElement('div');
-        this.scoreElement.classList.add('text-end');
+        this.scoreElement.classList.add('text-end', 'score-container');
+
+        this.addedScoreElement = document.createElement('span');
+        this.addedScoreElement.innerText = '+ 1.3';
+        this.addedScoreElement.classList.add('d-none', 'me-2');
+        this.scoreElement.appendChild(this.addedScoreElement);
 
         const icon = document.createElement('i');
         icon.className = 'fa-regular fa-star me-1';
@@ -146,11 +154,32 @@ export class HUD {
         this.scoreText.innerText = score.toFixed(2);
     }
 
-    updateTime(gameSeconds) {
-        const minutes = Math.floor(gameSeconds / 60);
-        const seconds = gameSeconds % 60;
+    async updateAddedScore(score) {
+        this.addedScoreElement.innerText = `+ ${score.toFixed(2)}`;
+        const fadeManager = new FadeManager(this.addedScoreElement);
 
-        this.timeText.innerText = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+        await fadeManager.fadeIn(100);
+
+        if (this.addedScoreElementTimer) {
+            this.addedScoreElementTimer.start();
+
+            return;
+        }
+
+        // todo: reset animation when animation is play again
+        this.addedScoreElementTimer = new Timer(async () => {
+            await fadeManager.fadeOut(100);
+            this.addedScoreElementTimer = null;
+        }, 500, true).start();
+    }
+
+    updateTime(elapsedTime) {
+        const milliseconds = elapsedTime / 1000;
+        const minutes = Math.floor(milliseconds / 60);
+        const seconds = milliseconds % 60;
+        const secondsFixed = seconds.toFixed(3)
+
+        this.timeText.innerText = `${minutes}:${seconds < 10 ? '0' + secondsFixed : secondsFixed}`;
     }
 
     updateHp(hp) {

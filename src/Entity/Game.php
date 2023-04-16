@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\GameRepository;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: GameRepository::class)]
@@ -30,9 +32,13 @@ class Game
     #[ORM\Column(type: 'datetime')]
     private DateTime $createdAt;
 
+    #[ORM\OneToMany(mappedBy: 'Game', targetEntity: Square::class)]
+    private Collection $squares;
+
     public function __construct()
     {
         $this->createdAt = new DateTime();
+        $this->squares = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -96,6 +102,36 @@ class Game
     public function setCreatedAt(DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Square>
+     */
+    public function getSquares(): Collection
+    {
+        return $this->squares;
+    }
+
+    public function addSquare(Square $square): self
+    {
+        if (!$this->squares->contains($square)) {
+            $this->squares->add($square);
+            $square->setGame($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSquare(Square $square): self
+    {
+        if ($this->squares->removeElement($square)) {
+            // set the owning side to null (unless already changed)
+            if ($square->getGame() === $this) {
+                $square->setGame(null);
+            }
+        }
 
         return $this;
     }
