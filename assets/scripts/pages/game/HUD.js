@@ -1,6 +1,7 @@
 import {FadeManager} from "../../utils/animations/FadeManager";
 import {Timer} from "../../utils/game/Timer";
 import {HP} from "./HP";
+import {formatTimeToGameTime} from "../../utils/general/functions";
 
 export class HUD {
     parent = undefined;
@@ -53,7 +54,7 @@ export class HUD {
         this.timeElement.appendChild(icon);
 
         this.timeText = document.createElement('span');
-        this.timeText.innerText = '0:00';
+        this.timeText.innerText = '0:00:000';
         this.timeElement.appendChild(this.timeText);
 
         return this.timeElement;
@@ -127,7 +128,7 @@ export class HUD {
 
     createMessage() {
         this.message = document.createElement('p');
-        this.message.classList = 'start-message-text d-none';
+        this.message.className = 'start-message-text d-none';
 
         this.message.appendChild(this.createMessageHeader());
         this.message.appendChild(this.createMessageDescription());
@@ -148,6 +149,33 @@ export class HUD {
         this.messageDescription.innerText = '0';
 
         return this.messageDescription;
+    }
+
+    createEndGameStatistics() {
+        this.endGameStatisticsElement = document.createElement('div');
+        this.endGameStatisticsElement.className = 'end-game-statistics d-none';
+        this.endGameStatisticsElement.innerText = 'dupa';
+
+        return this.endGameStatisticsElement;
+    }
+
+    updateEndGameStatistics(data) {
+        const template = document.createElement('template');
+        template.innerHTML = `
+            <div class="d-flex flex-column">
+                <span class="mb-1">
+                    <i class="fa-regular fa-star me-1"></i>
+                    Score: ${data.score.toFixed(2)}
+                </span>
+                <span>
+                    <i class="fa-regular fa-clock me-1"></i>
+                    Time: ${data.time}s
+                </span>
+            </div>
+        `.trim();
+
+        this.endGameStatisticsElement.innerHTML = '';
+        this.endGameStatisticsElement.appendChild(template.content.firstChild);
     }
 
     updateScore(score) {
@@ -173,12 +201,7 @@ export class HUD {
     }
 
     updateTime(elapsedTime) {
-        const milliseconds = elapsedTime / 1000;
-        const minutes = Math.floor(milliseconds / 60);
-        const seconds = milliseconds % 60;
-        const secondsFixed = seconds.toFixed(3)
-
-        this.timeText.innerText = `${minutes}:${seconds < 10 ? '0' + secondsFixed : secondsFixed}`;
+        this.timeText.innerText = formatTimeToGameTime(elapsedTime);
     }
 
     updateHp(hp) {
@@ -215,5 +238,13 @@ export class HUD {
     async hideMessage() {
         const fadeManager = new FadeManager(this.message);
         await fadeManager.fadeOut(300);
+    }
+
+    async showEndGameStatistics() {
+        await new FadeManager(this.endGameStatisticsElement).fadeIn(300);
+    }
+
+    async hideEndGameStatistics() {
+        await new FadeManager(this.endGameStatisticsElement).fadeOut(300);
     }
 }

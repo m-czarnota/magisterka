@@ -1,3 +1,5 @@
+import {formatTimeToGameTime} from "../../utils/general/functions";
+
 export class GameStatistic {
     parent = null;
 
@@ -32,15 +34,11 @@ export class GameStatistic {
 
     saveAction() {
         const actionDate = new Date();
-        const elapsedSeconds = (actionDate - this.parent.gameStartedDate) / 1000;
-
-        const minutes = Math.floor(elapsedSeconds / 60);
-        const seconds = (elapsedSeconds % 60);
-        const secondsFixed = seconds.toFixed(4);
+        const elapsedSeconds = actionDate - this.parent.gameStartedDate;
 
         const livingSquares = this.parent.squares.filter(square => square.destroying === false);
 
-        const key = `${minutes}:${seconds < 10 ? '0' + secondsFixed : secondsFixed}`;
+        const key = formatTimeToGameTime(elapsedSeconds);
         const data = {
             score: this.parent.score,
             hp: this.parent.hp,

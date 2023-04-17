@@ -63,6 +63,7 @@ export class GameEngine {
 
         this.gameWindow.appendChild(this.hud.createStartButton());
         this.gameWindow.appendChild(this.hud.createMessage());
+        this.gameWindow.appendChild(this.hud.createEndGameStatistics());
     }
 
     prepareForNewGame() {
@@ -127,6 +128,13 @@ export class GameEngine {
 
         this.hud.updateMessageHeader('Game over');
         this.hud.updateMessageDescription('Your data has been successfully saved.')
+
+        const lastKey = Object.keys(this.gameStatistics.actions).at(-1);
+        this.hud.updateEndGameStatistics({
+            ...this.gameStatistics.actions[lastKey],
+            time: Object.keys(this.gameStatistics.actions).at(-1),
+        });
+        this.hud.showEndGameStatistics();
         await this.hud.showMessage();
 
         await this.saveGameData();

@@ -12,3 +12,22 @@
 .score-container, .time-container {
   flex: 33%;
 }
+
+.start-message-text, .end-game-statistics {
+  position: absolute;
+  top: 30%;
+  text-align: center;
+  opacity: 0;
+}
+
+.end-game-statistics {
+  top: 45%;
+  border: 1px solid rgba(255, 255, 255, 0.02);
+  padding: 10px;
+  border-radius: 5px;
+
+  opacity: 0.2;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5.2px);
+  -webkit-backdrop-filter: blur(5.2px);
+}
