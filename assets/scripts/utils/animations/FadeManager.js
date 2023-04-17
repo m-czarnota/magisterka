@@ -1,5 +1,4 @@
 import {delay} from "../general/functions";
-import {defaultAnimationDuration} from "../../pages/game/Square";
 
 export class FadeManager {
     #element = undefined;
@@ -15,7 +14,7 @@ export class FadeManager {
      */
     async fadeOut(milliseconds) {
         this.#element.onfinish = () => this.#element.classList.add('d-none');
-        this.#element.animate([
+        const animation = this.#element.animate([
             { opacity: 1 },
             { opacity: 0 }
         ], {
@@ -23,15 +22,7 @@ export class FadeManager {
             fill: 'forwards',
         });
 
-        // return new Promise(resolve => setTimeout(() => {
-        //     this.element.classList.add('d-none');
-        //
-        //     // if (typeof (callback) === 'function') {
-        //     //     callback();
-        //     // }
-        //
-        //     resolve();
-        // }, milliseconds));
+        return animation.finished;
     }
 
     /**
@@ -45,7 +36,7 @@ export class FadeManager {
         await delay(1);
 
         this.#element.onfinish = null;
-        this.#element.animate([
+        const animation = this.#element.animate([
             { opacity: 0 },
             { opacity: 1 }
         ], {
@@ -53,11 +44,6 @@ export class FadeManager {
             fill: 'forwards',
         });
 
-        // return new Promise(resolve => setTimeout(() => {
-        //     // if (typeof (callback) === 'function') {
-        //     //     callback();
-        //     // }
-        //     resolve();
-        // }, milliseconds));
+        return animation.finished;
     }
 }

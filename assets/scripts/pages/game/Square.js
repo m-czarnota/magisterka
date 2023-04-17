@@ -71,7 +71,7 @@ export class Square {
 
         this.status === squareStatuses.overBoard
             ? this.element.remove()
-            : await new FadeManager(this.element).fadeOut(100);  // todo: how to do await??
+            : await new FadeManager(this.element).fadeOut(100);
 
         this.missShotArea.remove();
         this.element = null;

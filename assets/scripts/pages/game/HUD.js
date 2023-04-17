@@ -71,7 +71,7 @@ export class HUD {
 
         this.addedScoreElement = document.createElement('span');
         this.addedScoreElement.innerText = '+ 1.3';
-        this.addedScoreElement.classList.add('d-none', 'me-2');
+        this.addedScoreElement.classList.add('d-none', 'me-2', 'text-success', 'fw-semibold');
         this.scoreElement.appendChild(this.addedScoreElement);
 
         const icon = document.createElement('i');
@@ -166,11 +166,10 @@ export class HUD {
             return;
         }
 
-        // todo: reset animation when animation is play again
         this.addedScoreElementTimer = new Timer(async () => {
             await fadeManager.fadeOut(100);
             this.addedScoreElementTimer = null;
-        }, 500, true).start();
+        }, 1000, true).start();
     }
 
     updateTime(elapsedTime) {
