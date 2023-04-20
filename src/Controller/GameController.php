@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\GameRepository;
 use App\Security\Exception\ValidationException;
 use App\Service\Controller\Game\GameService;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,17 +25,31 @@ class GameController extends AbstractController
     ) {
     }
 
-    #[Route('/', name: 'app_game_index')]
-    public function game(): Response
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    #[Route('/', name: 'app_game_index', methods: Request::METHOD_GET)]
+    public function game(GameRepository $gameRepository): Response
     {
-        return $this->render('page/game/game.html.twig');
+        /** @var User $user */
+        $user = $this->getUser();
+        $userId = $user->getId();
+
+        $maxTime = $gameRepository->getMaxTimeByUserId($userId);
+        $maxScore = $gameRepository->getMaxScoreByUserId($userId);
+
+        return $this->render('page/game/game.html.twig', [
+            'maxTime' => $maxTime,
+            'maxScore' => $maxScore,
+        ]);
     }
 
     /**
      * @throws Exception
      */
     #[Route('/save-game-data', name: 'app_game_save_game_data', options: ['expose' => true], methods: Request::METHOD_POST)]
-    public function saveGameData(Request $request): JsonResponse
+    public function saveGameData(Request $request, GameRepository $gameRepository): JsonResponse
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -50,6 +67,15 @@ class GameController extends AbstractController
 
         $this->entityManager->flush();
 
-        return $this->json(['status' => 'ok', 'game' => $game->getId()]);
+        $userId = $user->getId();
+        $maxTime = $gameRepository->getMaxTimeByUserId($userId);
+        $maxScore = $gameRepository->getMaxScoreByUserId($userId);
+
+        return $this->json([
+            'status' => 'ok',
+            'game' => $game->getId(),
+            'maxTime' => $maxTime,
+            'maxScore' => $maxScore,
+        ]);
     }
 }

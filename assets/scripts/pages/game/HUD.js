@@ -49,13 +49,21 @@ export class HUD {
         this.timeElement = document.createElement('div');
         this.timeElement.classList.add('time-container');
 
-        const icon = document.createElement('i');
-        icon.className = 'fa-regular fa-clock me-1';
-        this.timeElement.appendChild(icon);
+        const subContainer = document.createElement('span');
+        subContainer.title = 'Time';
+        this.timeElement.appendChild(subContainer);
+
+        const timeIcon = document.createElement('i');
+        timeIcon.className = 'fa-regular fa-clock me-1';
+        subContainer.appendChild(timeIcon);
 
         this.timeText = document.createElement('span');
         this.timeText.innerText = '0:00:000';
-        this.timeElement.appendChild(this.timeText);
+        subContainer.appendChild(this.timeText);
+
+        this.timeTrophyIcon = document.createElement('i');
+        this.timeTrophyIcon.className = 'fa-solid fa-trophy ms-2 d-none text-success';
+        subContainer.appendChild(this.timeTrophyIcon);
 
         return this.timeElement;
     }
@@ -70,18 +78,26 @@ export class HUD {
         this.scoreElement = document.createElement('div');
         this.scoreElement.classList.add('text-end', 'score-container');
 
+        const subContainer = document.createElement('span');
+        subContainer.title = 'Score';
+        this.scoreElement.appendChild(subContainer);
+
         this.addedScoreElement = document.createElement('span');
         this.addedScoreElement.innerText = '+ 1.3';
         this.addedScoreElement.classList.add('d-none', 'me-2', 'text-success', 'fw-semibold');
-        this.scoreElement.appendChild(this.addedScoreElement);
+        subContainer.appendChild(this.addedScoreElement);
 
-        const icon = document.createElement('i');
-        icon.className = 'fa-regular fa-star me-1';
-        this.scoreElement.appendChild(icon);
+        const starIcon = document.createElement('i');
+        starIcon.className = 'fa-regular fa-star me-1';
+        subContainer.appendChild(starIcon);
 
         this.scoreText = document.createElement('span');
         this.updateScore(0);
-        this.scoreElement.appendChild(this.scoreText);
+        subContainer.appendChild(this.scoreText);
+
+        this.scoreTrophyIcon = document.createElement('i');
+        this.scoreTrophyIcon.className = 'fa-solid fa-trophy ms-2 d-none text-success';
+        subContainer.appendChild(this.scoreTrophyIcon);
 
         return this.scoreElement;
     }
@@ -246,5 +262,29 @@ export class HUD {
 
     async hideEndGameStatistics() {
         await new FadeManager(this.endGameStatisticsElement).fadeOut(300);
+    }
+
+    showTimeTrophyIcon() {
+        if (!this.timeTrophyIcon.classList.contains('d-none')) {
+            return;
+        }
+
+        new FadeManager(this.timeTrophyIcon).fadeIn(100);
+    }
+
+    hideTimeTrophyIcon() {
+        new FadeManager(this.timeTrophyIcon).fadeOut(100);
+    }
+
+    showScoreTrophyIcon() {
+        if (!this.scoreTrophyIcon.classList.contains('d-none')) {
+            return;
+        }
+
+        new FadeManager(this.scoreTrophyIcon).fadeIn(100);
+    }
+
+    hideScoreTrophyIcon() {
+        new FadeManager(this.scoreTrophyIcon).fadeOut(100);
     }
 }

@@ -9,6 +9,12 @@ export class GameEngine {
     appContainer = undefined;
     hud = null;
 
+    maxTime = null;
+    maxScore = null;
+
+    showedRecordTime = false;
+    showedRecordScore = false;
+
     squares = [];
     gameStatistics = null;
     
@@ -17,7 +23,6 @@ export class GameEngine {
     squaresHistoryCount = 0;
     hp = 3;
     score = 0;
-    gameSeconds = 0;
     gameTimer = 0;
 
     fillSquaresInterval = null;
@@ -45,6 +50,9 @@ export class GameEngine {
         this.height = height;
         this.appContainer = container;
         this.hud = new HUD(this);
+
+        this.maxScore = parseFloat(container.getAttribute('data-max-score'));
+        this.maxTime = container.getAttribute('data-max-time');
 
         this.gameStatistics = new GameStatistic(this);
     }
@@ -78,10 +86,14 @@ export class GameEngine {
 
         this.score = 0;
         this.hud.updateScore(this.score);
+        this.hud.hideScoreTrophyIcon();
 
-        this.gameSeconds = 0;
         this.gameTimer = null;
-        this.hud.updateTime(this.gameSeconds);
+        this.hud.updateTime(0);
+        this.hud.hideTimeTrophyIcon();
+
+        this.showedRecordTime = false;
+        this.showedRecordScore = false;
 
         this.currentReducingFallingTimeModifier = 0;
 
@@ -159,6 +171,9 @@ export class GameEngine {
             body: JSON.stringify(form),
         });
         const data = await response.json();
+
+        this.maxTime = data.maxTime;
+        this.maxScore = data.maxScore;
     }
 
     async startFillingSquares() {
@@ -214,6 +229,12 @@ export class GameEngine {
             this.hud.updateAddedScore(squareScore);
 
             await this.destroySquare(square);
+
+            if (!this.showedRecordScore && this.score > this.maxScore) {
+                this.showedRecordScore = true;
+                this.hud.showScoreTrophyIcon();
+                this.showInfo('🏆 New Score record ⭐');
+            }
         });
 
         square.missShotArea.addEventListener('miss-shot', () => {
@@ -263,11 +284,17 @@ export class GameEngine {
         this.gameStartedDate = new Date();
 
         this.gameTimer = setInterval(() => {
-            this.gameSeconds += 1;
             const elapsedTime = Date.now() - this.gameStartedDate;
 
             this.hud.updateTime(elapsedTime);
             this.gameStatistics.saveAction();
+
+            const elapsedTimeKey = Object.keys(this.gameStatistics.actions).at(-1);
+            if (!this.showedRecordTime && elapsedTimeKey > this.maxTime) {
+                this.showedRecordTime = true;
+                this.hud.showTimeTrophyIcon();
+                this.showInfo('🏆 New Time record ⏲');
+            }
         }, 100);
     }
 
@@ -290,5 +317,13 @@ export class GameEngine {
         }
 
         this.squares = [];
+    }
+
+    async showInfo(text) {
+        this.hud.updateMessageHeader(text);
+        this.hud.updateMessageDescription(null)
+        await this.hud.showMessage();
+
+        new Timer(() => this.hud.hideMessage(), 2000, true).start();
     }
 }

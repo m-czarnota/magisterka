@@ -13,8 +13,13 @@ export class HP {
         this.hpContainer = document.createElement('div');
         this.hpContainer.classList = 'hp-container';
 
-        this.hpContainer.appendChild(this.createHpEmptyElements());
-        this.hpContainer.appendChild(this.createHpFullElements());
+        const subContainer = document.createElement('div');
+        subContainer.title = 'Health points';
+        subContainer.className = 'd-flex justify-content-center align-items-center'
+        this.hpContainer.appendChild(subContainer);
+
+        subContainer.appendChild(this.createHpEmptyElements());
+        subContainer.appendChild(this.createHpFullElements());
 
         return this.hpContainer;
     }
