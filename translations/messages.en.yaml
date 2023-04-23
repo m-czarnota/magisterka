@@ -4,19 +4,27 @@ enum:
       label: 'Age'
     gender:
       label: 'Gender'
-      male: 'Male'
-      female: 'Female'
-      other: 'Other'
+      male: 'I feel like a man'
+      female: 'I feel like a woman'
+      both: 'I feel both'
+      notKnow: "I don't know"
+      notAnswer: "I don't want to answer"
+      other: 'I feel different'
     workType:
       label: 'Work type'
       physical: 'Physical'
       mental: 'Mental'
       mixed: 'Mixed'
+      student: 'Student'
+      workingStudentPhysical: 'Student working physically'
+      workingStudentMental: 'Student working mentally'
+      burntOut: 'Burnt out professionally, disassembled'
       noWork: "I'm not working"
     playingStyle:
       label: 'Playing style'
       mouseAndKeyboard: 'Mouse & Keyboard'
       gamepad: 'Gamepad'
+      phone: 'Smartphone'
     gameType:
       label: 'Game type'
       sandbox: 'Sandbox'
@@ -32,6 +40,9 @@ enum:
       adventure: 'Adventure'
       platform: 'Platform'
       logic: 'Logic'
+      hackAndSlash: 'Hack&Slash'
+      stealth: 'Stealth'
+      storyRich: 'Story Rich'
 
 alert:
   close: 'Close'

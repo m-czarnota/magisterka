@@ -36,7 +36,22 @@
 
         <div>
             <h3>Statistics</h3>
-            <p>Coming soon..</p>
+
+            <div class="d-flex mb-4">
+                <div class="statistic-card me-3">
+                    <span class="title">Max score</span>
+                    <div class="results">
+                        {{ maxScore|number_format(2) }}
+                    </div>
+                </div>
+                <div class="statistic-card">
+                    <span class="title">Max Time</span>
+                    <div class="results fs-5">
+                        {{ maxTime }}s
+                    </div>
+                </div>
+            </div>
+            <p>More coming soon..</p>
         </div>
 
     </div>

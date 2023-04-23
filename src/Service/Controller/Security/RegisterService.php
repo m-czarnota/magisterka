@@ -17,7 +17,8 @@ class RegisterService implements RegisterServiceInterface
         protected FlashBugManagerInterface $flashBugManager,
         protected TranslatorInterface $translator,
         protected UserAuthenticatorProgrammaticallyInterface $userAuthenticatorProgrammatically,
-    ) {}
+    ) {
+    }
 
     public function register(User $user): void
     {

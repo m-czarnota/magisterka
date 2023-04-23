@@ -1,0 +1,40 @@
+:root {
+  --clr-primary-hsl-500: 256, 72%, 46%;
+  --clr-secondary-hsl-500: 241, 72%, 46%;
+
+  --clr-neutral-hsl-100: 0, 0%, 100%;
+
+  --clr-primary-500: hsla(var(--clr-primary-hsl-500));
+
+  --gradient-to-transparent: linear-gradient(
+                  var(--clr-primary-500),
+                  hsl(var(--clr-secondary-hsl-500), 0));
+}
+
+.statistic-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3em;
+  background-color: #6e50fb;
+  color: white;
+  width: 14rem;
+  border-radius: 1rem;
+
+  .title {
+    margin-bottom: 1rem;
+    font-size: 1.5em;
+  }
+
+  .results {
+    background: var(--clr-primary-500);
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    width: 7rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+  }
+}

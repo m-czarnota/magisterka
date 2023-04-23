@@ -4,19 +4,27 @@ enum:
       label: 'Wiek'
     gender:
       label: 'Płeć'
-      male: 'Mężczyzna'
-      female: 'Kobieta'
-      other: 'Inna'
+      male: 'Poczuwam się mężczyzną'
+      female: 'Poczuwam się kobietą'
+      both: 'Poczuwam się obydwoma'
+      notKnow: "Nie wiem"
+      notAnswer: 'Nie chcę odpowiadać'
+      other: 'Poczuwam się inaczej'
     workType:
       label: 'Typ pracy'
       physical: 'Fizyczna'
       mental: 'Umysłowa'
       mixed: 'Mieszana'
+      student: 'Student'
+      workingStudentPhysical: 'Student pracujący fizycznie'
+      workingStudentMental: 'Student pracujący umysłowo'
+      burntOut: 'Wypalony zawodowo, rozmontowany'
       noWork: 'Nie pracuję'
     playingStyle:
       label: 'Styl grania'
       mouseAndKeyboard: 'Myszka i Klawiatura'
       gamepad: 'Kontroler'
+      phone: 'Smartfon'
     gameType:
       label: 'Typ gry'
       sandbox: 'Sandbox'
@@ -32,6 +40,9 @@ enum:
       adventure: 'Przygodowe'
       platform: 'Platformowe'
       logic: 'Logiczne'
+      hackAndSlash: 'Hack&Slash'
+      stealth: 'Skradanki'
+      storyRich: 'Bogata historia'
 
 alert:
   close: 'Zamknij'
