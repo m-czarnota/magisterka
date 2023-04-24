@@ -44,6 +44,15 @@
                     </li>
                 {% endif %}
 
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item">
+                        <a href="{{ path('app_statistics_adminstatistics_dashboard') }}" class="btn align-items-center {{ helper.isAdminStatisticsActive() }}">
+                            <i class="fa-solid fa-chart-column"></i>
+                            {{ 'nav.adminStatistics'|trans }}
+                        </a>
+                    </li>
+                {% endif %}
+
                 <li class="nav-item">
                     <a href="{{ path('app_info') }}" class="btn align-items-center {{ helper.isInfoActive() }}">
                         <i class="fa-regular fa-circle-question"></i>

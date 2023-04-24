@@ -121,6 +121,7 @@ export class HUD {
             this.updateMessageHeader('Get ready');
 
             this.showMessage();
+            this.hideEndGameStatistics();
             await this.hideStartButton();
 
             let currentTimeToPrepare = this.timeToPrepare;
@@ -182,10 +183,12 @@ export class HUD {
                 <span class="mb-1">
                     <i class="fa-regular fa-star me-1"></i>
                     Score: ${data.score.toFixed(2)}
+                    ${data.isScoreRecord ? '🏆' : ''}
                 </span>
                 <span>
                     <i class="fa-regular fa-clock me-1"></i>
                     Time: ${data.time}s
+                    ${data.isNewTimeRecord ? '🏆' : ''}
                 </span>
             </div>
         `.trim();

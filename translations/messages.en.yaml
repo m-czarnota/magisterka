@@ -104,6 +104,7 @@ nav:
   info: 'Info'
   signOut: 'Sign out'
   creatorNews: 'Creator News'
+  adminStatistics: 'Admin Statistics'
 
 user_footer:
   description: 'Created and supported by %creator%'

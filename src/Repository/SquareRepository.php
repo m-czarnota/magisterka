@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Square;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -29,5 +31,20 @@ class SquareRepository extends ServiceEntityRepository
     public function remove(Square $square): void
     {
         $this->getEntityManager()->remove($square);
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function getAvgTimeToClick(): float
+    {
+        $qb = $this->createQueryBuilder('s');
+
+        return $qb
+            ->select($qb->expr()->avg('s.timeToClick'))
+            ->where($qb->expr()->isNotNull('s.timeToClick'))
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

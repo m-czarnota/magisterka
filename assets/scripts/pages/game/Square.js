@@ -102,9 +102,9 @@ export class Square {
 
     updateTimeClicked() {
         const actionDate = new Date();
-        const elapsedSeconds = (actionDate - this.parent.gameStartedDate) / 1000;
+        const elapsedSeconds = (actionDate - this.created_at) / 1000;
 
-        this.timeToClick = (elapsedSeconds % 60).toFixed(4);
+        this.timeToClick = (elapsedSeconds % 60);
     }
 
     createMissShotArea() {

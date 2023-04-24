@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Enum\User\RoleEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -76,6 +77,40 @@ class UserRepository extends ServiceEntityRepository
             ->setParameter('username', $username)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function getNumberOfRegisteredUsers(): ?int
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        return $qb
+            ->select($qb->expr()->count('u.id'))
+            ->where($qb->expr()->notLike('u.roles', ':adminRole'))
+            ->setParameter('adminRole', '%' . RoleEnum::ROLE_ADMIN->name . '%')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function getNumberOfUsersWithSurveyAndGame(): ?int
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        return $qb
+            ->select($qb->expr()->count('u.id'))
+            ->join('u.games', 'g')
+            ->join('u.initialSurvey', 'is')
+            ->where($qb->expr()->notLike('u.roles', ':adminRole'))
+            ->setParameter('adminRole', '%' . RoleEnum::ROLE_ADMIN->name . '%')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 
     protected function removeAllAssociations(User $user): self

@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Game;
+use App\Enum\User\RoleEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Exception;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -37,7 +39,7 @@ class GameRepository extends ServiceEntityRepository
      * @throws NonUniqueResultException
      * @throws NoResultException
      */
-    public function getMaxTimeByUserId(int $userId): string
+    public function getMaxTimeByUserId(int $userId): ?string
     {
         $qb = $this->createQueryBuilder('g');
 
@@ -53,7 +55,7 @@ class GameRepository extends ServiceEntityRepository
      * @throws NonUniqueResultException
      * @throws NoResultException
      */
-    public function getMaxScoreByUserId(int $userId): float
+    public function getMaxScoreByUserId(int $userId): ?float
     {
         $qb = $this->createQueryBuilder('g');
 
@@ -61,6 +63,69 @@ class GameRepository extends ServiceEntityRepository
             ->select($qb->expr()->max('g.score'))
             ->where('g.user = :id')
             ->setParameter('id', $userId)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function getMaxTime(): ?string
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        return $qb
+            ->select($qb->expr()->max('g.time'))
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function getMaxScore(): ?float
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        return $qb
+            ->select($qb->expr()->max('g.score'))
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getMaxGamesByOneUser(): ?int
+    {
+        $adminRole = RoleEnum::ROLE_ADMIN->name;
+        $results = $this->getEntityManager()->getConnection()->executeQuery("
+            SELECT COUNT(g.id) 
+            FROM game g 
+            JOIN user u ON g.user_id = u.id
+            WHERE u.roles NOT LIKE '%$adminRole%'
+            GROUP BY g.`user_id` 
+            WITH ROLLUP
+        ")->fetchFirstColumn();
+
+        return empty($results) ? null: $results[array_key_last($results)];
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function getNumberOfGames(): ?int
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        return $qb
+            ->select($qb->expr()->count('g.id'))
+            ->join('g.user', 'u')
+            ->where($qb->expr()->notLike('u.roles', ':adminRole'))
+            ->setParameter('adminRole', '%' . RoleEnum::ROLE_ADMIN->name . '%')
             ->getQuery()
             ->getSingleScalarResult();
     }

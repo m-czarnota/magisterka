@@ -107,6 +107,7 @@ nav:
   info: 'Info'
   signOut: 'Wyloguj się'
   creatorNews: 'Wiadomości twórcy'
+  adminStatistics: 'Statystyki admina'
 
 user_footer:
   description: 'Stworzone i wspierane przez %creator%'

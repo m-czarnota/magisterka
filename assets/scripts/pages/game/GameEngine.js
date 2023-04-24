@@ -142,12 +142,16 @@ export class GameEngine {
         this.hud.updateMessageDescription('Your data has been successfully saved.')
 
         const lastKey = Object.keys(this.gameStatistics.actions).at(-1);
+        const time = Object.keys(this.gameStatistics.actions).at(-1);
+
         this.hud.updateEndGameStatistics({
             ...this.gameStatistics.actions[lastKey],
-            time: Object.keys(this.gameStatistics.actions).at(-1),
+            time: time,
+            isScoreRecord: this.isNewScoreRecord(),
+            isNewTimeRecord: this.isNewTimeRecord(time),
         });
-        this.hud.showEndGameStatistics();
         await this.hud.showMessage();
+        await this.hud.showEndGameStatistics();
 
         await this.saveGameData();
 
@@ -230,7 +234,7 @@ export class GameEngine {
 
             await this.destroySquare(square);
 
-            if (!this.showedRecordScore && this.score > this.maxScore) {
+            if (!this.showedRecordScore && this.isNewScoreRecord()) {
                 this.showedRecordScore = true;
                 this.hud.showScoreTrophyIcon();
                 this.showInfo('🏆 New Score record ⭐');
@@ -290,7 +294,7 @@ export class GameEngine {
             this.gameStatistics.saveAction();
 
             const elapsedTimeKey = Object.keys(this.gameStatistics.actions).at(-1);
-            if (!this.showedRecordTime && elapsedTimeKey > this.maxTime) {
+            if (!this.showedRecordTime && this.isNewTimeRecord(elapsedTimeKey)) {
                 this.showedRecordTime = true;
                 this.hud.showTimeTrophyIcon();
                 this.showInfo('🏆 New Time record ⏲');
@@ -325,5 +329,21 @@ export class GameEngine {
         await this.hud.showMessage();
 
         new Timer(() => this.hud.hideMessage(), 2000, true).start();
+    }
+
+    isNewScoreRecord() {
+        if (!this.maxScore) {
+            return false;
+        }
+
+        return this.score > this.maxScore;
+    }
+
+    isNewTimeRecord(time) {
+        if (!this.maxTime) {
+            return false;
+        }
+
+        return time > this.maxTime;
     }
 }

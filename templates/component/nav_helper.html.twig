@@ -25,3 +25,7 @@
 {% macro isInfoActive() %}
     {% if app.request.attributes.get('_route') == 'app_info' %}active{% endif %}
 {% endmacro %}
+
+{% macro isAdminStatisticsActive() %}
+    {% if app.request.attributes.get('_route') == 'app_statistics_adminstatistics_dashboard' %}active{% endif %}
+{% endmacro %}

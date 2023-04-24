@@ -1,0 +1,62 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    <div class="panel-admin-dashboard-statistics d-flex flex-column align-items-center">
+        {% include 'component/flashes.html.twig' %}
+
+        <div class="d-flex mb-4 gap-4">
+            <div class="statistic-card">
+                <span class="title">Max score</span>
+                <div class="results fw-bold">
+                    {{ maxScore|number_format(2) }}
+                </div>
+            </div>
+
+            <div class="statistic-card">
+                <span class="title">Max Time (s)</span>
+                <div class="results fs-5 fw-bold">
+                    {{ maxTime }}
+                </div>
+            </div>
+
+            <div class="statistic-card">
+                <span class="title">Registered Users</span>
+                <div class="results fw-bold">
+                    {{ numbersOfRegisteredUsers }}
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex mb-4 gap-4">
+            <div class="statistic-card">
+                <span class="title">Max games by 1 user</span>
+                <div class="results fw-bold">
+                    {{ getMaxGamesByOneUser }}
+                </div>
+            </div>
+
+            <div class="statistic-card">
+                <span class="title">Users with survey and minimum 1 game</span>
+                <div class="results fw-bold">
+                    {{ numberOfUsersWithSurveyAndGame }}
+                </div>
+            </div>
+
+            <div class="statistic-card">
+                <span class="title">Number of games</span>
+                <div class="results fw-bold">
+                    {{ numberOfGames }}
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex mb-4 gap-4">
+            <div class="statistic-card">
+                <span class="title">Average time to click (s)</span>
+                <div class="results fw-bold">
+                    {{ avgTimeToClick|number_format(2) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
