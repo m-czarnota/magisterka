@@ -179,8 +179,8 @@ export class GameEngine {
         });
         const data = await response.json();
 
-        this.maxTime = data.maxTime;
-        this.maxScore = data.maxScore;
+        this.maxTime = parseFloat(data.maxTime);
+        this.maxScore = parseFloat(data.maxScore);
     }
 
     async startFillingSquares() {
