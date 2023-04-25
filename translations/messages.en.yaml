@@ -241,7 +241,7 @@ page:
               Every 20 seconds ⏳ increases by 1 1️⃣ the maximum number of squares that can be on the board at the same time 🗺.
       aboutWinning:
         title: 'Is it possible to win? 🏆'
-        text: 'It is impossible to win in this game. You play until you lose, which means you lose all your health points ❤.'
+        text: 'It is impossible to win in this game. You play until you lose, which means when you lose all your health points ❤.'
       aboutPrize:
         title: 'Is there any reward for playing regularly? 🏅'
         text:

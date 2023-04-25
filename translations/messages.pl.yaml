@@ -244,7 +244,7 @@ page:
               Co 20 sekund ⏳ zwiększa się o 1 1️⃣ maksymalna ilość kwadratów, które mogą jednocześnie znajdować się na planszy 🗺.
       aboutWinning:
         title: 'Czy da się wygrać? 🏆'
-        text: 'Nie da się wygrać w tej grze. Grasz, dopóki nie przegrasz, czyli stracisz wszystkie punkty zdrowia ❤.'
+        text: 'Nie da się wygrać w tej grze. Grasz, dopóki nie przegrasz, czyli kiedy stracisz wszystkie punkty zdrowia ❤.'
       aboutPrize:
         title: 'Czy jest jakaś nagroda za regularne granie? 🏅'
         text:
