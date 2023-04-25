@@ -13,7 +13,6 @@ export class FadeManager {
      * @returns {Promise<unknown>}
      */
     async fadeOut(milliseconds) {
-        this.#element.onfinish = () => this.#element.classList.add('d-none');
         const animation = this.#element.animate([
             { opacity: 1 },
             { opacity: 0 }
@@ -21,6 +20,7 @@ export class FadeManager {
             duration: milliseconds,
             fill: 'forwards',
         });
+        animation.onfinish = () => this.#element.classList.add('d-none');
 
         return animation.finished;
     }
@@ -35,7 +35,6 @@ export class FadeManager {
 
         await delay(1);
 
-        this.#element.onfinish = null;
         const animation = this.#element.animate([
             { opacity: 0 },
             { opacity: 1 }
@@ -43,6 +42,7 @@ export class FadeManager {
             duration: milliseconds,
             fill: 'forwards',
         });
+        animation.onfinish = null;
 
         return animation.finished;
     }

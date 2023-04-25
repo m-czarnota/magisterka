@@ -37,7 +37,7 @@ class SquareRepository extends ServiceEntityRepository
      * @throws NonUniqueResultException
      * @throws NoResultException
      */
-    public function getAvgTimeToClick(): float
+    public function getAvgTimeToClick(): ?float
     {
         $qb = $this->createQueryBuilder('s');
 
