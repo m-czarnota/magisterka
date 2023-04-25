@@ -52,7 +52,7 @@ export class GameEngine {
         this.hud = new HUD(this);
 
         this.maxScore = parseFloat(container.getAttribute('data-max-score'));
-        this.maxTime = container.getAttribute('data-max-time');
+        this.maxTime = parseFloat(container.getAttribute('data-max-time'));
 
         this.gameStatistics = new GameStatistic(this);
     }
@@ -91,6 +91,9 @@ export class GameEngine {
         this.gameTimer = null;
         this.hud.updateTime(0);
         this.hud.hideTimeTrophyIcon();
+
+        this.gameStatistics.timeToNewTimeRecord = null;
+        this.gameStatistics.timeToNewScoreRecord = null;
 
         this.showedRecordTime = false;
         this.showedRecordScore = false;
@@ -236,6 +239,8 @@ export class GameEngine {
 
             if (!this.showedRecordScore && this.isNewScoreRecord()) {
                 this.showedRecordScore = true;
+                this.gameStatistics.timeToNewScoreRecord = this.getElapsedSeconds();
+
                 this.hud.showScoreTrophyIcon();
                 this.showInfo('🏆 New Score record ⭐');
             }
@@ -296,8 +301,10 @@ export class GameEngine {
             const elapsedTimeKey = Object.keys(this.gameStatistics.actions).at(-1);
             if (!this.showedRecordTime && this.isNewTimeRecord(elapsedTimeKey)) {
                 this.showedRecordTime = true;
-                this.hud.showTimeTrophyIcon();
+                this.gameStatistics.timeToNewTimeRecord = this.getElapsedSeconds();
+
                 this.showInfo('🏆 New Time record ⏲');
+                this.hud.showTimeTrophyIcon();
             }
         }, 100);
     }
@@ -345,5 +352,11 @@ export class GameEngine {
         }
 
         return time > this.maxTime;
+    }
+
+    getElapsedSeconds() {
+        const elapsedTime = Date.now() - this.gameStartedDate;
+
+        return elapsedTime / 1000;
     }
 }

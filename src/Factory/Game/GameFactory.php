@@ -21,6 +21,8 @@ class GameFactory
             ->setData($data)
             ->setUser($user)
             ->setScore($lastAction['score'])
+            ->setTimeToNewScoreRecord($lastAction['timeToNewScoreRecord'])
+            ->setTimeToNewTimeRecord($lastAction['timeToNewTimeRecord'])
             ->setTime($lastActionKey);
     }
 }

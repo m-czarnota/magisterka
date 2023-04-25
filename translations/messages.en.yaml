@@ -89,12 +89,167 @@ page:
         gamingPerDay: 'Only on computer or consoles like PlayStation, Xbox, Nintendo Switch, SteamDeck etc.'
   dashboard:
     userNameReminder: 'Hello <b>%username%</b>! Please, remember your unique username to keep your progress when you change your device. You will not continue your progress if you will forget your username.'
+    creatorNews:
+      header: 'Creator News'
+      loadMoreButton: 'Load more'
+    lastGame:
+      header: 'Last game'
+      description: 'Coming soon..'
+    statistics:
+      header: 'Statistics'
+      description: 'More coming soon..'
+      bestScore: 'Best score'
+      bestTime: 'Best time'
   info:
     title: 'About the project'
     header: 'About the project'
+    description: |
+      Hey, I hope you have a great time. Thank you very much for supporting my project. 
+      You're probably wondering why all this is happening, what its purpose is and what I'm doing with it. I invite you to join me!
+    aboutProject:
+      title: 'What is the project?'
+      text: "The project was created as an application to collect data needed for research in a master's thesis."
+    aboutData:
+      title: 'When is the data collected? How do I use them?'
+      text1:
+        content: |
+          The data is collected during every single game. They are saved only after the end of the gameplay, i.e. when the "Game Over" sign is displayed 🙂
+          Data is collected every 100 milliseconds and additionally when the following actions occur, that is:
+        actions:
+          clickOnSquare: 'square on the click'
+          clickNextToSquare: 'click next to the square (miss)'
+          squareOutOfBoard: 'square falling off the map downward'
+      text2: |
+        The data will be used to recreate the games and study how often the behavior of the quarterback changes under certain assumptions.
+      text3: |
+        These assumptions could be exceeding the current record at a fixed number of health points and time of gameplay.
+        This can be used to study behavior or examine how accuracy changes in the time period after the current record is exceeded until the end of gameplay relative to the time interval until the record point threshold is exceeded.
+    dataUsage:
+      title: 'What specific data is used?'
+      text:
+        content: 'Below is a detailed presentation of all the data collected:'
+        list:
+          actualScore: 'current score'
+          actualTime: 'current game time'
+          countOfHp: 'number of health points'
+          infoAboutSquares:
+            content: 'information about individual squares, i.e.'
+            list:
+              actualPosition: 'current position'
+              size: 'size'
+              timeToFall: 'time to fall off the board'
+              score: 'score'
+              color: 'color'
+              status:
+                content: 'one of the states'
+                notFullySpawn: 'coming out of the beginning of the board, not being on it completely'
+                fullySpawned: 'fully on the board'
+                exitingFromMap: 'going beyond the board'
+                overBoard: 'off the board'
+              missShots: 'number of missed shots'
+              timeToClick: 'time to click'
+          totalShots: 'total number of shots'
+          totalAccurateShots: 'total number of accurate shots'
+          timeToFallModifier: 'current modifier to reduce drop time for generated squares'
+          maxSquaresCount: 'maximum number of squares at any given time on the board'
+    aboutAnonymous:
+      title: 'How can I be sure that my data is anonymous and will not be linked to me?'
+      text: |
+        The application does not store any sensitive data, such as email address or phone number.
+        In addition, usernames are randomly generated, so there is no way to associate a particular user with a particular person.
+    aboutUsername:
+      title: "Why can't I enter a username myself when creating an account?"
+      text: |
+        In order to avoid being spread over many pages about privacy policies, meeting RODO and related matters, you cannot provide your own username.
+        This prevents the possibility of associating your account and username with you.
+    aboutPassword:
+      title: "Why isn't a password entered when creating an account?"
+      text: |
+        Because it is sufficient to remember the username. No one but you should know it, and the same is true for passwords.
+        The application does not store sensitive data, such as conversations, email addresses, etc.
+        For this reason, the username is sufficient.
+    systemRequirements:
+      title: 'What are the system requirements of the game?'
+      text:
+        content1: |
+          The requirement is a currently supported browser, that is, Internet Explorer is not supported 😋
+          In addition, the game was developed with computers in mind and requires a resolution of at least 800x600 pixels, since that's how big the game window is.
+        content2: |
+          Why doesn't it support smartphones? The problem is the approach to the study.
+          The assumption is that everyone can use a mouse, some more proficiently, others less so.
+          A window of the given size more or less levels the playing field, while phones have different screen resolutions.
+        content3: |
+          Will there ever be a mobile version? Perhaps, for the purpose of the study only a desktop version is envisaged. Once completed, I will try to develop the site for mobile versions and create a mobile application.
+    aboutRules:
+      title: 'What are the rules?'
+      text:
+        content1: |
+          The game involves clicking on falling squares. They are generated of different sizes and in one of the drawn colors.
+          They have a drawn different value of falling speed.
+        content2: |
+          The faster the square the more points you get for it because it's harder to hit than a slower one.
+          The smaller the square, the more points you get for it, because it's harder to hit than a larger one.
+          The generation of squares is always random, so sometimes you may hit on more smaller squares, sometimes more on larger ones.
+        content3:
+          text1: 'When a square falls completely off the map you lose one health point. You have a total of 3 health points and there is no way to regain them during a single game.'
+          text2: 'You can click on a square as long as you can see it, even one that is not completely on the board (it falls outside the board or is just being generated).'
+        content4:
+          text1: 'As time passes, the level of difficulty increases.'
+          text2: |
+            Every 10 seconds, the minimum and maximum range of the fall speed of the square to be drawn is increased. This applies only to squares newly generated. Existing squares on the map will remain unchanged.
+            Every 20 seconds, the maximum number of squares that can be on the board at the same time is increased.
+    yourDiploma:
+      title: 'What is your thesis about?'
+      text:
+        content1: |
+          The exact title is "Investigation of the causes of decision-making on the example of a computer game".
+          I intend, with the help of the data collected through this application, to analyze it and make conclusions pointing out the specific reasons for the decisions made in a given situation.
+        content2: |
+          Example: exceeding the current record at a fixed number of health points and gameplay time.
+          This can be used to study the behavior or examine how the accuracy changed in the time period after the current record was exceeded until the end of the game compared to the time interval until the record point threshold was exceeded.
+    futureWorks:
+      title: "Maybe this game site is cool, but a bit poor. What's next?"
+      text:
+        content1: |
+          You don't need a mega-contemporary application to collect data for a study under certain assumptions.
+          But I understand the point.
+          As time goes by, I will add new functionalities, such as a table of statistics, history of played games.
+        content2: |
+          Once the thesis is completed, the UI/UX will be developed, if there is any inspiration left.
+          A mobile version of the site will also be created, along with a mobile app.
   game:
     title: 'Game'
     header: 'Game'
+    info:
+      aboutRules:
+        title: 'Rules of the game'
+        text:
+          content1: 'Click on the falling squares. 🟧'
+          content2:
+            text1: 'The ⭐ points awarded for a clicked square are inversely proportional to the size and directly proportional to the fall speed.'
+            text2: |
+              The smaller the square ◻ the harder it is to hit, therefore the more points you will get for it.
+              The faster the square falls 💨 the harder it is to hit, therefore more points you will get for it.
+          content3: |
+            You have 3 health points ❤. You lose 1 health point 🤍 for every square that falls off the board.
+            When you lose all your health points - you lose.
+          content4:
+            text1: |
+              Every 10 seconds ⏲ the minimum and maximum range of the fall speed of newly generated squares is increased.
+              This applies only to new squares.
+            text2: |
+              Every 20 seconds ⏳ increases by 1 1️⃣ the maximum number of squares that can be on the board at the same time 🗺.
+      aboutWinning:
+        title: 'Is it possible to win? 🏆'
+        text: 'It is impossible to win in this game. You play until you lose, which means you lose all your health points ❤.'
+      aboutPrize:
+        title: 'Is there any reward for playing regularly? 🏅'
+        text:
+          content1: "It doesn't. Currently, the reward is the gameplay itself. 🎮"
+          content2:
+            text1: 'However, the data from the games you play is still collected, so it will be used later to show your performance and progress. 📈'
+            text2: 'This will be presented in the form of charts and comparisons with other games in terms of highest score or longest playing time. 📊'
+            
 
 nav:
   dashboard: 'Dashboard'
@@ -103,7 +258,6 @@ nav:
   signUp: 'Sign up'
   info: 'Info'
   signOut: 'Sign out'
-  creatorNews: 'Creator News'
   adminStatistics: 'Admin Statistics'
 
 user_footer:

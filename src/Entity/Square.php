@@ -50,7 +50,7 @@ class Square
     #[ORM\ManyToOne(inversedBy: 'squares')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank]
-    private ?Game $Game = null;
+    private ?Game $game = null;
 
     #[ORM\Column]
     #[Assert\GreaterThanOrEqual(0, message: 'Order ID in Game cannot be negative')]
@@ -164,12 +164,12 @@ class Square
 
     public function getGame(): ?Game
     {
-        return $this->Game;
+        return $this->game;
     }
 
-    public function setGame(?Game $Game): self
+    public function setGame(?Game $game): self
     {
-        $this->Game = $Game;
+        $this->game = $game;
 
         return $this;
     }

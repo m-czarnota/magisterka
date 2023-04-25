@@ -1,11 +1,12 @@
-import {formatTimeToGameTime} from "../../utils/general/functions";
-
 export class GameStatistic {
     parent = null;
 
     actions = {};
     shotCount = 0;
     accurateShotCount = 0;
+
+    timeToNewScoreRecord = null;
+    timeToNewTimeRecord = null;
 
     historicalSquares = {};
 
@@ -33,12 +34,10 @@ export class GameStatistic {
     }
 
     saveAction() {
-        const actionDate = new Date();
-        const elapsedSeconds = actionDate - this.parent.gameStartedDate;
-
+        const elapsedSeconds = this.parent.getElapsedSeconds();
         const livingSquares = this.parent.squares.filter(square => square.destroying === false);
 
-        const key = formatTimeToGameTime(elapsedSeconds);
+        const key = elapsedSeconds;
         const data = {
             score: this.parent.score,
             hp: this.parent.hp,
@@ -47,6 +46,8 @@ export class GameStatistic {
             squares: livingSquares.map(square => square.serialize()),
             currentReducingFallingTimeModifier: this.parent.currentReducingFallingTimeModifier,
             maxSquares: this.parent.maxSquares,
+            timeToNewScoreRecord: this.timeToNewScoreRecord,
+            timeToNewTimeRecord: this.timeToNewTimeRecord,
         };
 
         this.actions[key] = data;

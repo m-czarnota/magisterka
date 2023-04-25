@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Square;
+use App\Enum\User\RoleEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -43,7 +44,11 @@ class SquareRepository extends ServiceEntityRepository
 
         return $qb
             ->select($qb->expr()->avg('s.timeToClick'))
+            ->join('s.game', 'g')
+            ->join('g.user', 'u')
             ->where($qb->expr()->isNotNull('s.timeToClick'))
+            ->andWhere($qb->expr()->notLike('u.roles', ':adminRole'))
+            ->setParameter('adminRole', '%' . RoleEnum::ROLE_ADMIN->name . '%')
             ->getQuery()
             ->getSingleScalarResult();
     }

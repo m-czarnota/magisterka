@@ -92,12 +92,166 @@ page:
         gamingPerDay: 'Tylko na komputerze lub konsolach, takich jak PlayStation, Xbox, Nintendo Switch, SteamDeck itp.'
   dashboard:
     userNameReminder: 'Witaj <b>%username%</b>! Proszę, zapamiętaj swoją unikalną nazwę użytkownika, aby zachować swój progres kiedy zmienisz urządzenie. Nie będziesz mógł kontynuować swojego progresu, jeżeli zapomnisz swoją nazwę użytkownika.'
+    creatorNews:
+      header: 'Wiadomości twórcy'
+      loadMoreButton: 'Załaduj więcej'
+    lastGame:
+      header: 'Ostatnia gra'
+      description: 'Wkrótce..'
+    statistics:
+      header: 'Statystyki'
+      description: 'Więcej wkrótce..'
+      bestScore: 'Najlepszy wynik'
+      bestTime: 'Najlepszy czas'
   info:
     title: 'O projekcie'
     header: 'O projekcie'
+    description: |
+      Hej! Mam nadzieję, że dobrze się bawisz. Dziękuję bardzo za wsparcie mojego projektu. 
+      Pewnie zastanawiasz się po co to wszytko, jaki ma cel oraz co ja z tym robię. Zapraszam!
+    aboutProject:
+      title: 'Co to za projekt?'
+      text: 'Projekt powstał jako aplikacja do gromadzenia danych potrzebnych do badań w pracy magisterskiej.'
+    aboutData:
+      title: 'Kiedy dane są zbierane? Jak je wykorzystuję?'
+      text1:
+        content: |
+          Dane są zbierane w trakcie każdej pojedynczej rozgrywki. Zapisywane są one dopiero po zakończeniu rozgrywki, czyli wyświetleniu napisu "Game Over" 🙂
+          Dane zbierane są co 100 milisekund oraz dodatkowo przy wystąpieniu poniższych akcji, czyli:
+        actions:
+          clickOnSquare: 'kliknięcie w kwadrat'
+          clickNextToSquare: 'kliknięcie obok kwadratu (chybienie)'
+          squareOutOfBoard: 'wypadnięcie kwadratu poza mapę w dół'
+      text2: |
+        Dane zostaną wykorzystane do odtworzenia rozgrywek oraz zbadania, jak często zmienia się zachowanie rozgrywającego przy pewnych założeniach.
+      text3: |
+        Założeniami tymi mogą być przekroczenie aktualnego rekordu przy ustalonej liczbie punktów zdrowia oraz czasie rozgrywki.
+        Może to zostać wykorzystane do zbadania zachowania lub zbadania jak zmienia się celność w okresie czasu po przekroczeniu aktualnego rekordu do zakończenia rozgrywki w stosunku do przedziału czasowego do momentu przekroczenia rekordowego progu punktowego.
+    dataUsage:
+      title: 'Jakie konkretnie dane są wykorzystywane?'
+      text:
+        content: 'Poniżej szczegółowe przedstawienie wszystkich zbieranych danych:'
+        list:
+          actualScore: 'aktualny wynik'
+          actualTime: 'aktualny czas gry'
+          countOfHp: 'liczba punktów zdrowia'
+          infoAboutSquares:
+            content: 'informacje o poszczególnych kwadratach, czyli'
+            list:
+              actualPosition: 'aktualne położenie'
+              size: 'rozmiar'
+              timeToFall: 'czas do wypadnięcia poza planszę'
+              score: 'liczba punktów'
+              color: 'kolor'
+              status:
+                content: 'jeden ze stanów'
+                notFullySpawn: 'wychodzący z początku planszy, nie znajdujący się na niej całkowicie'
+                fullySpawned: 'znajdujący się w pełni na planszy'
+                exitingFromMap: 'wychodzący poza planszę'
+                overBoard: 'poza planszą'
+              missShots: 'liczba niecelnych strzałów'
+              timeToClick: 'czas do kliknięcia'
+          totalShots: 'łączna liczba strzałów'
+          totalAccurateShots: 'łączna liczba celnych strzałów'
+          timeToFallModifier: 'aktualny modyfikator zmniejszający czas spadania dla generowanych kwadratów'
+          maxSquaresCount: 'maksymalna liczba kwadratów w danym momencie na planszy'
+    aboutAnonymous:
+      title: 'Skąd mam mieć pewność, że moje dane są anonimowe i nie zostaną ze mną powiązane?'
+      text: |
+        Aplikacja nie przechowuje żadnych wrażliwych danych, typu adres email czy numer telefonu.
+        Dodatkowo nazwy użytkowników są generowane losowo, więc nie ma możliwości na powiązanie konkretnego użytkownika z daną osobą.
+    aboutUsername:
+      title: 'Dlaczego nie mogę sam wpisać nazwy użytkownika przy tworzeniu konta?'
+      text: |
+        Aby uniknąć rozpisywania się na wiele stron o polityce prywatności, spełnieniu RODO i spraw powiązanych nie możesz podać własnej nazwy użytkownika.
+        Zapobiega to możliwości powiązania twojego konta oraz nazwy użytkownika z tobą.
+    aboutPassword:
+      title: 'Dlaczego nie podaje się hasła przy tworzeniu konta?'
+      text: |
+        Ponieważ wystarczające jest zapamiętanie nazwy użytkownika. Nie powinien jej znać nikt poza tobą, tak samo jest z hasłami.
+        Aplikacja nie przechowuje danych wrażliwych, takich jak konwersacje, adresy email itd.
+        Z tego powodu wystarczająca jest nazwa użytkownika.
+    systemRequirements:
+      title: 'Jakie są wymagania systemowe gry?'
+      text:
+        content1: |
+          Wymaganiem jest aktualnie wspierana przeglądarka, czyli Internet Explorer nie jest wspierany 😋
+          Dodatkowo gra została stworzona z myślą o komputerach i wymaga rozdzielczości przynajmniej 800x600 pikseli, ponieważ tak duże jest okno gry.
+        content2: |
+          Dlaczego nie wspiera ona smartfonów? Problemem jest podejście do badania.
+          Z założenia każdy potrafi korzystać z myszki, jedni sprawniej, inni mniej.
+          Okno o podanych rozmiarach mniej więcej wyrównuje szanse, podczas kiedy telefony mają różne rozdzielczości ekranów.
+        content3: |
+          Czy powstanie kiedyś wersja mobilna? Być może, na potrzeby badania przewidziana jest jedynie wersja desktopowa. Po zakończeniu pracy postaram się rozwinąć stronę na wersje mobilne oraz stworzyć aplikację mobilną.
+    aboutRules:
+      title: 'Jakie są zasady?'
+      text:
+        content1: |
+          Gra polega na klikaniu w spadające kwadraty. Są one generowane różnej wielkości oraz w jednym z wylosowanych kolorów.
+          Mają one wylosowaną różną wartość prędkości spadania.
+        content2: |
+          Im szybszy kwadrat tym więcej punktów za niego dostaniesz, ponieważ trudniej go trafić od wolniejszego.
+          Im mniejszy kwadrat tym więcej punktów za niego dostaniesz, ponieważ trudniej go trafić od większego.
+          Generowanie kwadratów jest zawsze losowe, więc czasem możesz trafiać na więcej mniejszych kwadratów, czasem więcej na większe.
+        content3:
+          text1: 'Gdy kwadrat wypadnie całkowicie poza mapę tracisz jeden punkt zdrowia. Punktów zdrowia masz łącznie 3 i nie ma możliwości ich odzyskać w trakcie pojedynczej rozgrywki.'
+          text2: 'Możesz kliknąć w kwadrat o ile go widzisz, nawet ten, który nie znajduje się całkowicie na planszy (wypada poza nią lub dopiero się generuje).'
+        content4:
+          text1: 'Wraz z upływem czasu zwiększa się poziom trudności.'
+          text2: |
+            Co 10 sekund zwiększa się minimalny i maksymalny zakres prędkości spadania kwadratu do wylosowania. Dotyczy to jedynie kwadratów nowo generowanych. Kwadraty istniejące na mapie pozostaną niezmienione.
+            Co 20 sekund zwiększa się maksymalna liczba kwadratów, które mogą znajdować się jednocześnie na planszy.
+    yourDiploma:
+      title: 'O czym jest twoja praca dyplomowa?'
+      text:
+        content1: |
+          Dokładny tytuł brzmi "Badanie przyczyn podejmowanych decyzji na przykładzie gry komputerowej".
+          Zamierzam przy pomocy danych zgromadzonych dzięki tej aplikacji dokonać ich analizy i wysunąć wnioski wskazując na konkretne przyczyny podejmowanych w danej sytuacji decyzji.
+        content2: |
+          Przykład: przekroczenie aktualnego rekordu przy ustalonej liczbie punktów zdrowia oraz czasie rozgrywki.
+          Może to zostać wykorzystane do zbadania zachowania lub zbadania jak zmieniła się celność w okresie czasu po przekroczeniu aktualnego rekordu do zakończenia rozgrywki w stosunku do przedziału czasowego do momentu przekroczenia rekordowego progu punktowego.
+    futureWorks:
+      title: 'Może i fajna ta stronka z grą, ale trochę uboga. Co dalej?'
+      text:
+        content1: |
+          Do zgromadzenia danych do badania przy określonych założeniach nie jest potrzebna mega współczesna aplikacja.
+          Ale rozumiem o co chodzi.
+          Wraz z upływem czasu będę dodawał nowe funkcjonalności, takie jak tablica statystyk, historia rozegranych rozgrywek.
+        content2: |
+          Po zakończeniu pisania pracy dyplomowej zostanie rozwinięte UI/UX, jeżeli zostanie wena.
+          Powstanie także wersja mobilna strony wraz z aplikacją mobilną.
   game:
     title: 'Gra'
     header: 'Gra'
+    info:
+      aboutRules:
+        title: 'Zasady gry'
+        text:
+          content1: 'Klikaj w spadające kwadraty. 🟧'
+          content2:
+            text1: 'Punkty ⭐ przyznawane za kliknięty kwadrat są odwrotnie proporcjonalne do rozmiaru i wprost proporcjonalne do prędkości spadania.'
+            text2: |
+              Im mniejszy kwadrat ◻ tym trudniej go trafić, zatem więcej punktów za niego otrzymasz.
+              Im szybciej kwadrat spada 💨, tym trudniej go trafić, zatem więcej punktów za niego otrzymasz.
+          content3: |
+            Masz 3 punkty zdrowia ❤. Tracisz 1 punkt zdrowia 🤍 za każdy kwadrat, który wypadnie poza planszę.
+            Gdy stracisz wszystkie punkty zdrowia - przegrywasz.
+          content4:
+            text1: |
+              Co 10 sekund ⏲ zwiększa się minimalny i maksymalny zakres prędkości spadania nowo generowanych kwadratów.
+              Dotyczy to tylko nowych kwadratów.
+            text2: |
+              Co 20 sekund ⏳ zwiększa się o 1 1️⃣ maksymalna ilość kwadratów, które mogą jednocześnie znajdować się na planszy 🗺.
+      aboutWinning:
+        title: 'Czy da się wygrać? 🏆'
+        text: 'Nie da się wygrać w tej grze. Grasz, dopóki nie przegrasz, czyli stracisz wszystkie punkty zdrowia ❤.'
+      aboutPrize:
+        title: 'Czy jest jakaś nagroda za regularne granie? 🏅'
+        text:
+          content1: 'Nie ma. Obecnie nagrodą jest rozgrywka sama w sobie. 🎮'
+          content2:
+            text1: 'Jednak dane z przeprowadzanych rozgrywek są wciąż zbierane, więc zostaną one później wykorzystane do przedstawienia twoich wyników oraz postępów. 📈'
+            text2: 'Przedstawione to będzie w postaci wykresów oraz porównań z innymi rozgrywkami pod kątem największego wyniku czy najdłuższego czasu gry. 📊'
 
 nav:
   dashboard: 'Kokpit'
@@ -106,7 +260,6 @@ nav:
   signUp: 'Zarejestruj się'
   info: 'Info'
   signOut: 'Wyloguj się'
-  creatorNews: 'Wiadomości twórcy'
   adminStatistics: 'Statystyki admina'
 
 user_footer:

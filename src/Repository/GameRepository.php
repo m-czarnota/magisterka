@@ -77,6 +77,9 @@ class GameRepository extends ServiceEntityRepository
 
         return $qb
             ->select($qb->expr()->max('g.time'))
+            ->join('g.user', 'u')
+            ->where($qb->expr()->notLike('u.roles', ':adminRole'))
+            ->setParameter('adminRole', '%' . RoleEnum::ROLE_ADMIN->name . '%')
             ->getQuery()
             ->getSingleScalarResult();
     }
@@ -91,6 +94,9 @@ class GameRepository extends ServiceEntityRepository
 
         return $qb
             ->select($qb->expr()->max('g.score'))
+            ->join('g.user', 'u')
+            ->where($qb->expr()->notLike('u.roles', ':adminRole'))
+            ->setParameter('adminRole', '%' . RoleEnum::ROLE_ADMIN->name . '%')
             ->getQuery()
             ->getSingleScalarResult();
     }

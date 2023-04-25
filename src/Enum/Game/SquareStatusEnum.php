@@ -6,6 +6,6 @@ enum SquareStatusEnum: string
 {
     case NOT_FULLY_SPAWN = 'NOT_FULLY_SPAWN';
     case FULLY_SPAWNED = 'FULLY_SPAWNED' ;
-    case EXITS_FROM_MAP = 'EXITS_FROM_MAP' ;
+    case EXITING_FROM_MAP = 'EXITING_FROM_MAP' ;
     case OUT_OF_BOARD = 'OUT_OF_BOARD' ;
 }

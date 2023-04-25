@@ -10,7 +10,7 @@
 
         <div>
             <div class="d-flex align-items-center">
-                <h3>{{ 'nav.creatorNews'|trans }}</h3>
+                <h3>{{ 'page.dashboard.creatorNews.header'|trans }}</h3>
                 <span id="load-more-spinner" class="spinner-grow spinner-grow-sm text-success d-none ms-2" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </span>
@@ -21,37 +21,37 @@
             </div>
 
             <div class="d-flex justify-content-center mt-3">
-                <button type="button" class="btn btn-primary" id="news-load-button">Load more</button>
+                <button type="button" class="btn btn-primary" id="news-load-button">{{ 'page.dashboard.creatorNews.loadMoreButton'|trans }}</button>
             </div>
         </div>
 
         <hr>
 
         <div>
-            <h3>Last game</h3>
-            <p>Coming soon..</p>
+            <h3>{{ 'page.dashboard.lastGame.header'|trans }}</h3>
+            <p>{{ 'page.dashboard.lastGame.description'|trans }}</p>
         </div>
 
         <hr>
 
         <div>
-            <h3>Statistics</h3>
+            <h3>{{ 'page.dashboard.statistics.header'|trans }}</h3>
 
             <div class="d-flex mb-4 gap-4">
                 <div class="statistic-card">
-                    <span class="title">Max score</span>
-                    <div class="results fw-bold">
+                    <span class="title">{{ 'page.dashboard.statistics.bestScore'|trans }}</span>
+                    <div class="results fs-4 fw-bold">
                         {{ maxScore|number_format(2) }}
                     </div>
                 </div>
                 <div class="statistic-card">
-                    <span class="title">Max Time (s)</span>
-                    <div class="results fs-5 fw-bold">
-                        {{ maxTime }}
+                    <span class="title">{{ 'page.dashboard.statistics.bestTime'|trans }}</span>
+                    <div class="results fw-bold">
+                        {{ maxTime|default('-') }}
                     </div>
                 </div>
             </div>
-            <p>More coming soon..</p>
+            <p>{{ 'page.dashboard.statistics.description'|trans }}</p>
         </div>
 
     </div>

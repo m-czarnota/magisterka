@@ -26,9 +26,14 @@ class DashboardController extends AbstractController
         $user = $this->getUser();
         $userId = $user->getId();
 
+        $maxTime = $gameRepository->getMaxTimeByUserId($userId);
+        $minutes = floor($maxTime / 60);
+        $seconds = $maxTime % 60;
+        $seconds = $seconds < 10 ? "0$seconds" : $seconds;
+
         return $this->render('user/dashboard.html.twig', [
             'maxScore' => $gameRepository->getMaxScoreByUserId($userId),
-            'maxTime' => $gameRepository->getMaxTimeByUserId($userId),
+            'maxTime' => "$minutes:$seconds",
         ]);
     }
 }

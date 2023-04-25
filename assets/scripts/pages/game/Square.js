@@ -22,7 +22,7 @@ const colors = [
 const squareStatuses = {
     notFullySpawn: 'NOT_FULLY_SPAWN',
     fullySpawned: 'FULLY_SPAWNED',
-    exitsFromMap: 'EXITS_FROM_MAP',
+    exitingFromMap: 'EXITING_FROM_MAP',
     overBoard: 'OUT_OF_BOARD',
 }
 
@@ -178,7 +178,7 @@ export class Square {
             }
 
             if (realCurrentPosition > this.parent.height) {
-                this.status = squareStatuses.exitsFromMap;
+                this.status = squareStatuses.exitingFromMap;
             }
 
             if (realCurrentPosition > this.parent.height) {

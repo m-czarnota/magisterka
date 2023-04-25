@@ -25,8 +25,13 @@ class AdminStatisticsService
      */
     public function dashboard(): array
     {
+        $maxTime = $this->gameRepository->getMaxTime();
+        $minutes = floor($maxTime / 60);
+        $seconds = $maxTime % 60;
+        $seconds = $seconds < 10 ? "0$seconds" : $seconds;
+
         return [
-            'maxTime' => $this->gameRepository->getMaxTime(),
+            'maxTime' => "$minutes:$seconds",
             'maxScore' => $this->gameRepository->getMaxScore(),
             'numbersOfRegisteredUsers' => $this->userRepository->getNumberOfRegisteredUsers(),
             'getMaxGamesByOneUser' => $this->gameRepository->getMaxGamesByOneUser(),

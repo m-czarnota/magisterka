@@ -20,7 +20,7 @@ class Game
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'float')]
     private ?string $time = null;
 
     #[ORM\Column(type: 'json')]
@@ -34,6 +34,12 @@ class Game
 
     #[ORM\OneToMany(mappedBy: 'Game', targetEntity: Square::class)]
     private Collection $squares;
+
+    #[ORM\Column(type: 'float', nullable: true)]
+    private ?float $timeToNewScoreRecord = null;
+
+    #[ORM\Column(type: 'float', nullable: true)]
+    private ?float $timeToNewTimeRecord = null;
 
     public function __construct()
     {
@@ -132,6 +138,30 @@ class Game
                 $square->setGame(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTimeToNewScoreRecord(): ?float
+    {
+        return $this->timeToNewScoreRecord;
+    }
+
+    public function setTimeToNewScoreRecord(?float $timeToNewScoreRecord): self
+    {
+        $this->timeToNewScoreRecord = $timeToNewScoreRecord;
+
+        return $this;
+    }
+
+    public function getTimeToNewTimeRecord(): ?float
+    {
+        return $this->timeToNewTimeRecord;
+    }
+
+    public function setTimeToNewTimeRecord(?float $timeToNewTimeRecord): self
+    {
+        $this->timeToNewTimeRecord = $timeToNewTimeRecord;
 
         return $this;
     }
