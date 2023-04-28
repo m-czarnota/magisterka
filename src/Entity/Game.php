@@ -23,8 +23,8 @@ class Game
     #[ORM\Column(type: 'float')]
     private ?string $time = null;
 
-    #[ORM\Column(type: 'json')]
-    private array $data = [];
+    #[ORM\Column(nullable: true)]
+    private ?string $data = null;
 
     #[ORM\Column(type: 'float')]
     private ?float $score = null;
@@ -32,7 +32,7 @@ class Game
     #[ORM\Column(type: 'datetime')]
     private DateTime $createdAt;
 
-    #[ORM\OneToMany(mappedBy: 'Game', targetEntity: Square::class)]
+    #[ORM\OneToMany(mappedBy: 'game', targetEntity: Square::class)]
     private Collection $squares;
 
     #[ORM\Column(type: 'float', nullable: true)]
@@ -76,12 +76,12 @@ class Game
         return $this;
     }
 
-    public function getData(): array
+    public function getData(): ?string
     {
         return $this->data;
     }
 
-    public function setData(array $data): self
+    public function setData(?string $data): self
     {
         $this->data = $data;
 

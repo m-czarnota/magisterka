@@ -10,6 +10,8 @@ parameters:
     creating.system_id: '%env(CREATING_SYSTEM_ID)%'
     creator_name: '%env(CREATOR_NAME)%'
 
+    game.collecting_all_data: '%env(GAME_COLLECTING_ALL_DATA)%'
+
 services:
     # default configuration for services in *this* file
     _defaults:

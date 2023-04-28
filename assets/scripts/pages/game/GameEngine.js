@@ -55,6 +55,8 @@ export class GameEngine {
         this.maxTime = parseFloat(container.getAttribute('data-max-time'));
 
         this.gameStatistics = new GameStatistic(this);
+
+        this.debug = container.getAttribute('data-env') === 'dev';
     }
 
     drawGameWindow() {
