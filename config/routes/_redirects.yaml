@@ -1,0 +1,7 @@
+homepage:
+  path: /
+  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+  defaults:
+    route: 'app_login'
+    version: 'current'
+    permanent: true

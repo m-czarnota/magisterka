@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/game')]
 class GameController extends AbstractController
@@ -30,6 +31,7 @@ class GameController extends AbstractController
      * @throws NoResultException
      */
     #[Route('/', name: 'app_game_index', methods: Request::METHOD_GET)]
+    #[IsGranted('ROLE_GAME')]
     public function game(GameRepository $gameRepository): Response
     {
         /** @var User $user */
@@ -49,6 +51,7 @@ class GameController extends AbstractController
      * @throws Exception
      */
     #[Route('/save-game-data', name: 'app_game_save_game_data', options: ['expose' => true], methods: Request::METHOD_POST)]
+    #[IsGranted('ROLE_SAVE_GAME_DATA')]
     public function saveGameData(Request $request, GameRepository $gameRepository): JsonResponse
     {
         /** @var User $user */

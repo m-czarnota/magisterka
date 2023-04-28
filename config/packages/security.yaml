@@ -40,6 +40,7 @@ security:
         ROLE_USER_AG:
             - ROLE_DASHBOARD_AG
             - ROLE_GAME_AG
+            - ROLE_NEWS_AG
 
         ROLE_DASHBOARD_AG:
             - ROLE_DASHBOARD
@@ -47,6 +48,9 @@ security:
         ROLE_GAME_AG:
             - ROLE_GAME
             - ROLE_SAVE_GAME_DATA
+
+        ROLE_NEWS_AG:
+            - ROLE_NEWS_LIST
 
 when@test:
     security:

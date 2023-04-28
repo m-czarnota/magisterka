@@ -13,11 +13,13 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/initial_survey')]
 class InitialSurveyController extends AbstractController
 {
     #[Route(path: '/new', name: 'app_initial_survey_survey')]
+    #[IsGranted('ROLE_USER')]
     public function new(Request $request, InitialSurveyServiceInterface $initialSurveyService, InitialSurveyFactory $initialSurveyFactory): RedirectResponse|Response
     {
         /** @var User $user */
