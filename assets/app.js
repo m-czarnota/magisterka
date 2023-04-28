@@ -13,3 +13,8 @@ for (let tooltip of document.querySelectorAll('[data-bs-toggle="tooltip"]')) {
 }
 
 import './scripts';
+import {isMobile} from "./scripts/utils/general/functions";
+
+if (isMobile()) {
+    document.querySelector('#mobile-device-danger')?.classList.remove('d-none');
+}

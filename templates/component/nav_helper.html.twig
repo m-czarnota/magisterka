@@ -29,3 +29,7 @@
 {% macro isAdminStatisticsActive() %}
     {% if app.request.attributes.get('_route') == 'app_statistics_adminstatistics_dashboard' %}active{% endif %}
 {% endmacro %}
+
+{% macro isAdminNewsActive() %}
+    {% if app.request.attributes.get('_route') == 'app_admin_news_list' %}active{% endif %}
+{% endmacro %}

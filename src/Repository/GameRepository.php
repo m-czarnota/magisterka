@@ -108,12 +108,12 @@ class GameRepository extends ServiceEntityRepository
     {
         $adminRole = RoleEnum::ROLE_ADMIN->name;
         $results = $this->getEntityManager()->getConnection()->executeQuery("
-            SELECT COUNT(g.id) 
+            SELECT COUNT(g.id) as count 
             FROM game g 
             JOIN user u ON g.user_id = u.id
             WHERE u.roles NOT LIKE '%$adminRole%'
             GROUP BY g.`user_id` 
-            WITH ROLLUP
+            ORDER BY count
         ")->fetchFirstColumn();
 
         return empty($results) ? null: $results[array_key_last($results)];
@@ -134,5 +134,35 @@ class GameRepository extends ServiceEntityRepository
             ->setParameter('adminRole', '%' . RoleEnum::ROLE_ADMIN->name . '%')
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function getNumberOfGamesByUserId(int $userId): ?int
+    {
+        $qb = $this->createQueryBuilder('g');
+
+        return $qb
+            ->select($qb->expr()->count('g.id'))
+            ->where('g.user = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findOneLastGameForUserId(int $userId): ?Game
+    {
+        return $this->createQueryBuilder('g')
+            ->where('g.user = :userId')
+            ->setParameter('userId', $userId)
+            ->orderBy('g.createdAt', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

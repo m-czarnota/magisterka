@@ -43,9 +43,18 @@ enum:
       hackAndSlash: 'Hack&Slash'
       stealth: 'Skradanki'
       storyRich: 'Bogata historia'
+      sport: 'Sportowe'
+      coop: 'Kooperacyjne'
 
 alert:
   close: 'Zamknij'
+  mobileDeviceDanger:
+    context1: |
+      Korzystasz z urządzenia mobilnego 📱, w związku z czym możesz doświadczyć braków w działaniu aplikacji.
+    context2: |
+      PAMIĘTAJ!
+    context3: |
+      Gra 🟧 jest niegrywalna na urządzeniach mobilnych.
 
 page:
   appName: 'Spadające kwadraciki'
@@ -62,6 +71,7 @@ page:
       username: 'Nazwa'
       password: 'Hasło'
       signInButton: 'Kontynuuj'
+      registerLink: "Kliknij tutaj jeśli to twój pierwszy raz!"
   register:
     flash:
       success: 'Zostałeś pomyślnie zarejestrowany.'
@@ -74,6 +84,7 @@ page:
       generateName: 'Generuj nową nazwę'
       signUpButton: 'Rozpocznij'
       spinner: 'Generowanie...'
+      loginLink: 'Kliknij tutaj jeśli masz już nazwę!'
   initialSurvey:
     flash:
       success: 'Twoja odpowiedź została zapisana pomyślnie.'
@@ -97,12 +108,21 @@ page:
       loadMoreButton: 'Załaduj więcej'
     lastGame:
       header: 'Ostatnia gra'
-      description: 'Wkrótce..'
+      description: 'Więcej wkrótce..'
+      score: 'Punkty'
+      time: 'Czas'
+      records:
+        title: 'Został ustanowiony nowy rekord?'
+        score: 'Punkty'
+        time: 'Czas'
     statistics:
       header: 'Statystyki'
       description: 'Więcej wkrótce..'
       bestScore: 'Najlepszy wynik'
       bestTime: 'Najlepszy czas'
+      numberOfGames: 'Liczba gier'
+      beatYourRecord: 'Aby ustanowić nowy rekord'
+      playMoreButton: 'Graj więcej'
   info:
     title: 'O projekcie'
     header: 'O projekcie'
@@ -252,6 +272,26 @@ page:
           content2:
             text1: 'Jednak dane z przeprowadzanych rozgrywek są wciąż zbierane, więc zostaną one później wykorzystane do przedstawienia twoich wyników oraz postępów. 📈'
             text2: 'Przedstawione to będzie w postaci wykresów oraz porównań z innymi rozgrywkami pod kątem największego wyniku czy najdłuższego czasu gry. 📊'
+      unplayable:
+        title: "'Ta gra jest niegrywalna!'"
+        text:
+          content1: |
+            „Ta gra jest niegrywalna!” myślisz, kiedy używasz urządzenia mobilnego do grania w tę grę.
+            I masz rację, w tę grę nie można grać na urządzeniach mobilnych. Założenia badawcze są takie, że użytkownicy będą używać myszki do grania.
+          content2: |
+            W przyszłości aplikacja zostanie dostosowana do urządzeń mobilnych.
+  newsManaging:
+    title: 'Wiadomości'
+    list:
+      header: 'Lista'
+    add:
+      header: 'Stwórz nową informacja'
+      form:
+        title: 'Tytuł'
+        description: 'Opis'
+        submitButton: 'Stwórz'
+      flash:
+        success: 'Informacja została dodana pomyślnie.'
 
 nav:
   dashboard: 'Kokpit'
@@ -261,6 +301,7 @@ nav:
   info: 'Info'
   signOut: 'Wyloguj się'
   adminStatistics: 'Statystyki admina'
+  news: 'Zarządzaj wiadomościami'
 
 user_footer:
   description: 'Stworzone i wspierane przez %creator%'

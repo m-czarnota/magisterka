@@ -61,7 +61,7 @@ class Square
         $this->id = Uuid::uuid7();
     }
 
-    public function getId(): ?int
+    public function getId(): string
     {
         return $this->id;
     }

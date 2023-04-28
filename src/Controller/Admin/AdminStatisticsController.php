@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller\Statistics;
+namespace App\Controller\Admin;
 
-use App\Service\Controller\Statistics\AdminStatisticsService;
+use App\Service\Controller\Admin\AdminStatisticsService;
 use Doctrine\DBAL\Exception;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -28,6 +28,6 @@ class AdminStatisticsController extends AbstractController
     #[Route('/', name: 'app_statistics_adminstatistics_dashboard')]
     public function dashboard(): Response
     {
-        return $this->render('page/statistics/admin_dashboard_statistics.html.twig', $this->service->dashboard());
+        return $this->render('page/admin/admin_dashboard_statistics.html.twig', $this->service->dashboard());
     }
 }

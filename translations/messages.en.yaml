@@ -43,9 +43,18 @@ enum:
       hackAndSlash: 'Hack&Slash'
       stealth: 'Stealth'
       storyRich: 'Story Rich'
+      sport: 'Sports'
+      coop: 'Cooperative'
 
 alert:
   close: 'Close'
+  mobileDeviceDanger:
+    context1: |
+      You are using a mobile device 📱 and therefore you may experience shortcomings in the performance of the application.
+    context2: |
+      REMEMBER!
+    context3: |
+      The game 🟧 is unplayable on a mobile device.
 
 page:
   appName: 'Falling Squares'
@@ -59,6 +68,7 @@ page:
       username: 'Name'
       password: 'Password'
       signInButton: 'Continue'
+      registerLink: "Click here if you're here first time!"
   register:
     flash:
       success: 'You have been successfully registered.'
@@ -71,6 +81,7 @@ page:
       generateName: 'Generate a new name'
       signUpButton: 'Start'
       spinner: 'Generating...'
+      loginLink: 'Click here if if you have already name!'
   initialSurvey:
     flash:
       success: 'Your response has been saved successfully.'
@@ -94,12 +105,21 @@ page:
       loadMoreButton: 'Load more'
     lastGame:
       header: 'Last game'
-      description: 'Coming soon..'
+      description: 'More coming soon..'
+      score: 'Score'
+      time: 'Time'
+      records:
+        title: 'Was set a new record?'
+        score: 'Score'
+        time: 'Time'
     statistics:
       header: 'Statistics'
       description: 'More coming soon..'
       bestScore: 'Best score'
       bestTime: 'Best time'
+      numberOfGames: 'Number of games'
+      beatYourRecord: 'To set up a new record'
+      playMoreButton: 'Play more'
   info:
     title: 'About the project'
     header: 'About the project'
@@ -249,6 +269,26 @@ page:
           content2:
             text1: 'However, the data from the games you play is still collected, so it will be used later to show your performance and progress. 📈'
             text2: 'This will be presented in the form of charts and comparisons with other games in terms of highest score or longest playing time. 📊'
+      unplayable:
+        title: "Important note for mobile devices users 📱"
+        text:
+          content1: |
+            'This game is unplayable!' - you think when you use mobile device to play into this game.
+            And you have right, this game is unplayable on mobile devices. The research assumptions are that users will use mouse to play.
+          content2: |
+            In future app will be adjusted to use on mobile devices.
+  newsManaging:
+    title: 'News'
+    list:
+      header: 'List'
+    add:
+      header: 'Create a new Info'
+      form:
+        title: 'Title'
+        description: 'Description'
+        submitButton: 'Create'
+      flash:
+        success: 'Info has been successfully added.'
             
 
 nav:
@@ -259,6 +299,7 @@ nav:
   info: 'Info'
   signOut: 'Sign out'
   adminStatistics: 'Admin Statistics'
+  news: 'Manage News'
 
 user_footer:
   description: 'Created and supported by %creator%'

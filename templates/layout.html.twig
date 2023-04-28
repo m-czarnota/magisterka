@@ -3,6 +3,12 @@
 {% block main %}
     <div class="container container-fluid">
         <div class="">
+            {%  include 'component/alert/danger.html.twig' with {
+                'message': 'alert.mobileDeviceDanger.context1'|trans ~ '<br><strong>' ~ 'alert.mobileDeviceDanger.context2'|trans ~ '</strong> ' ~ 'alert.mobileDeviceDanger.context3'|trans,
+                'id': 'mobile-device-danger',
+                'hidden': true,
+            } %}
+
             {% block body %}{% endblock %}
         </div>
     </div>

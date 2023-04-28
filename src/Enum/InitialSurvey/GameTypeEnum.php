@@ -22,6 +22,8 @@ enum GameTypeEnum: string implements TranslatableEnumInterface
     case HACK_AND_SLASH = 'HACK_AND_SLASH';
     case STEALTH = 'STEALTH';
     case STORY_RICH = 'STORY_RICH';
+    case SPORT = 'SPORT';
+    case COOP = 'COOP';
 
     public function getTransKey(): string
     {
@@ -42,6 +44,8 @@ enum GameTypeEnum: string implements TranslatableEnumInterface
             self::HACK_AND_SLASH => 'enum.initialSurvey.gameType.hackAndSlash',
             self::STEALTH => 'enum.initialSurvey.gameType.stealth',
             self::STORY_RICH => 'enum.initialSurvey.gameType.storyRich',
+            self::SPORT => 'enum.initialSurvey.gameType.sport',
+            self::COOP => 'enum.initialSurvey.gameType.coop',
         };
     }
 
@@ -64,6 +68,8 @@ enum GameTypeEnum: string implements TranslatableEnumInterface
             self::HACK_AND_SLASH => ['Diablo', 'Torchlight'],
             self::STEALTH => ['Dishonored', 'Hitman'],
             self::STORY_RICH => ['Detroit: Become Human', 'This War of Mine'],
+            self::SPORT => ['FIFA', 'NBA', 'WWE', 'Football Manager', 'Madden'],
+            self::COOP => ['Overcooked!', 'A Way Out', 'It Takes Two', "Don't Starve Together"],
         };
     }
 }

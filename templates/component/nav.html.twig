@@ -53,6 +53,15 @@
                     </li>
                 {% endif %}
 
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item">
+                        <a href="{{ path('app_admin_news_list') }}" class="btn align-items-center {{ helper.isAdminNewsActive() }}">
+                            <i class="fa-solid fa-newspaper"></i>
+                            {{ 'nav.news'|trans }}
+                        </a>
+                    </li>
+                {% endif %}
+
                 <li class="nav-item">
                     <a href="{{ path('app_info') }}" class="btn align-items-center {{ helper.isInfoActive() }}">
                         <i class="fa-regular fa-circle-question"></i>

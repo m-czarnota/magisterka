@@ -9,6 +9,45 @@
         {% include 'component/flashes.html.twig' %}
 
         <div>
+            <h3>{{ 'page.dashboard.statistics.header'|trans }}</h3>
+
+            <div class="d-flex justify-content-center mb-4 gap-4">
+                <div class="statistic-card">
+                    <span class="title">{{ 'page.dashboard.statistics.bestScore'|trans }}</span>
+                    <div class="results fs-4 fw-bold">
+                        {{ maxScore|number_format(2) }}
+                    </div>
+                </div>
+                <div class="statistic-card">
+                    <span class="title">{{ 'page.dashboard.statistics.bestTime'|trans }}</span>
+                    <div class="results fw-bold">
+                        {{ maxTime|default('-') }}
+                    </div>
+                </div>
+                <div class="statistic-card">
+                    <span class="title">{{ 'page.dashboard.statistics.numberOfGames'|trans }}</span>
+                    <div class="results fw-bold">
+                        {{ numberOfGames|default('-') }}
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-center">{{ 'page.dashboard.statistics.description'|trans }}</p>
+
+            <hr class="w-25 mx-auto">
+
+            <div class="text-center align-middle">
+                <span class="fs-5">{{ 'page.dashboard.statistics.beatYourRecord'|trans }}</span>
+                <a href="{{ path('app_game_index') }}" class="btn btn-primary btn-sm">
+                    <i class="fa-solid fa-play fa-bounce"></i>
+                    {{ 'page.dashboard.statistics.playMoreButton'|trans }}
+                </a>
+            </div>
+        </div>
+
+        <hr>
+
+        <div>
             <div class="d-flex align-items-center">
                 <h3>{{ 'page.dashboard.creatorNews.header'|trans }}</h3>
                 <span id="load-more-spinner" class="spinner-grow spinner-grow-sm text-success d-none ms-2" role="status">
@@ -29,29 +68,32 @@
 
         <div>
             <h3>{{ 'page.dashboard.lastGame.header'|trans }}</h3>
-            <p>{{ 'page.dashboard.lastGame.description'|trans }}</p>
-        </div>
 
-        <hr>
-
-        <div>
-            <h3>{{ 'page.dashboard.statistics.header'|trans }}</h3>
-
-            <div class="d-flex mb-4 gap-4">
+            <div class="d-flex justify-content-center mb-4 gap-4">
                 <div class="statistic-card">
-                    <span class="title">{{ 'page.dashboard.statistics.bestScore'|trans }}</span>
+                    <span class="title">{{ 'page.dashboard.lastGame.score'|trans }}</span>
                     <div class="results fs-4 fw-bold">
-                        {{ maxScore|number_format(2) }}
+                        {{ lastGame.score|default('-')|number_format(2) }}
                     </div>
                 </div>
+
                 <div class="statistic-card">
-                    <span class="title">{{ 'page.dashboard.statistics.bestTime'|trans }}</span>
+                    <span class="title">{{ 'page.dashboard.lastGame.time'|trans }}</span>
                     <div class="results fw-bold">
-                        {{ maxTime|default('-') }}
+                        {{ lastGame.time|default('-') }}
+                    </div>
+                </div>
+
+                <div class="statistic-card">
+                    <span class="title">{{ 'page.dashboard.lastGame.records.title'|trans }}</span>
+                    <div class="results results-details fs-5 fw-bold">
+                        <span>{{ 'page.dashboard.lastGame.records.score'|trans }} ⭐: {% if lastGame.timeToNewScoreRecord is defined and lastGame.timeToNewScoreRecord %}✔{% else %}❌{% endif %}</span>
+                        <span>{{ 'page.dashboard.lastGame.records.time'|trans }} ⏲: {% if lastGame.timeToNewTimeRecord is defined and lastGame.timeToNewTimeRecord %}✔{% else %}❌{% endif %}</span>
                     </div>
                 </div>
             </div>
-            <p>{{ 'page.dashboard.statistics.description'|trans }}</p>
+
+            <p>{{ 'page.dashboard.lastGame.description'|trans }}</p>
         </div>
 
     </div>

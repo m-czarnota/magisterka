@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Controller\Statistics;
+namespace App\Service\Controller\Admin;
 
 use App\Repository\GameRepository;
 use App\Repository\SquareRepository;

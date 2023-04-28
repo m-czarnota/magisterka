@@ -16,3 +16,7 @@ export function formatTimeToGameTime(elapsedTime) {
 
     return `${minutes}:${secondsToShow}:${millisecondsToShow}`;
 }
+
+export function isMobile() {
+    return window.navigator.maxTouchPoints > 1;
+}
