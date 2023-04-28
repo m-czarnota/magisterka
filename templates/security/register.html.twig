@@ -35,6 +35,10 @@
                 <div id="register-button-container" class="d-flex justify-content-center">
                     {{ form_row(form.submit, {'attr': {'class': 'btn btn-lg btn-primary', 'disabled': true}, 'label': 'page.register.form.signUpButton'|trans}) }}
                 </div>
+
+                <div class="text-center mt-3 fs-5">
+                    <a href="{{ path('app_login') }}">Click here if if you have already name!</a>
+                </div>
             {{ form_end(form) }}
         </div>
     </div>
