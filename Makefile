@@ -39,7 +39,8 @@ clear-cache:
 
 build-npm:
 	@$(NPM_CONT) sh -c "\
-			yarn build \
+			yarn install; \
+			yarn build; \
 		"
 
 import-data:  ## Import data to db
