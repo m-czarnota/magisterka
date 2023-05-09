@@ -12,4 +12,6 @@ if __name__ == '__main__':
     ) as connection:
         analyzer = Analyzer(connection)
 
-        analyzer.mean_score_by_fav_game_type()
+        # analyzer.mean_score_by_fav_game_type()
+        analyzer.dependency_score_on_time()
+        # analyzer.best_score_by_age()
