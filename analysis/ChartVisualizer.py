@@ -1,5 +1,6 @@
 import numpy as np
 from matplotlib import pyplot as plt
+from matplotlib.patches import Patch
 from unidecode import unidecode
 import random
 
@@ -46,13 +47,27 @@ class ChartVisualizer:
         colors, labels = ChartVisualizer.__generate_colors_amd(chart_params.classes.to_numpy()) if chart_params.classes is not None else (None, None)
 
         if chart_type == ChartTypeEnum.BAR:
-            bars = plt.bar(list(map(str.capitalize, chart_params.x)), y, width=chart_params.bar_width)
+            x = list(map(str.capitalize, x))
+
+            if colors is not None:
+                # not working, not labels. works probably with axis
+                uniques_colors = np.unique(colors)
+                rgb_colors = ChartVisualizer.__get_random_colors(len(uniques_colors))
+
+                bars = plt.bar(x, y, width=chart_params.bar_width, color=rgb_colors._segmentdata)
+
+                handles = [plt.Rectangle((0, 0), 1, 1, color=rgb_color) for rgb_color in rgb_colors._segmentdata]
+                plt.legend(handles, labels)
+            else:
+                bars = plt.bar(x, y, width=chart_params.bar_width)
 
             if chart_params.y_val_bar_label:
+                max_height = np.max([bar.get_height() for bar in bars])
+
                 for bar in bars:
                     plt.text(
                         bar.get_x() + bar.get_width() / 2,
-                        bar.get_height() + 10,
+                        bar.get_height() + max_height * 0.01,
                         round(bar.get_height(), 1),
                         horizontalalignment='center',
                     )
@@ -65,7 +80,7 @@ class ChartVisualizer:
                 rgb_colors = ChartVisualizer.__get_random_colors(len(uniques_colors))
 
                 for color_unique in np.unique(colors):
-                    plt.scatter(x[color_unique == colors], y[color_unique == colors], color=rgb_colors[color_unique],
+                    plt.scatter(x[color_unique == colors], y[color_unique == colors], color=rgb_colors(color_unique),
                                 label=labels[color_unique == colors][0], cmap=plt.get_cmap('magma'))
             else:
                 plt.scatter(x, y, c=colors, cmap=plt.get_cmap('rainbow'))
@@ -91,4 +106,5 @@ class ChartVisualizer:
 
     @staticmethod
     def __get_random_colors(n: int) -> np.array:
-        return np.array(["#%06x" % random.randint(0, 0xFFFFFF) for _ in range(n)])
+        # return np.array(["#%06x" % random.randint(0, 0xFFFFFF) for _ in range(n)])
+        return plt.cm.get_cmap('hsv', n)
