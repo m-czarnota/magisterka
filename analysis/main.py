@@ -21,3 +21,7 @@ if __name__ == '__main__':
         analyzer.count_of_preferred_playing_style()
         analyzer.mean_accurate_by_fav_game_type()
         analyzer.mean_accurate_by_preferred_playing_style_with_best_score()
+        analyzer.mean_time_to_click_by_fav_game_type()
+        analyzer.mean_time_to_click_by_age()
+        analyzer.count_of_games_to_best_score_by_fav_game_type()
+        analyzer.accurate_by_score()
