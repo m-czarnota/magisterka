@@ -116,13 +116,29 @@ class SqlQueries:
     """
 
     accurate_by_score = f"""
-    SELECT 
-        g.score AS score,
-        (
-            SELECT ((COUNT(s.miss_shots) - SUM(s.miss_shots)) / COUNT(s.miss_shots)) * 100
-            FROM square s
-            WHERE s.game_id = g.id
-        ) AS accurate
-    {__from_game_join_user_survey}
-        AND g.score > 100
+        SELECT 
+            g.score AS score,
+            (
+                SELECT ((COUNT(s.miss_shots) - SUM(s.miss_shots)) / COUNT(s.miss_shots)) * 100
+                FROM square s
+                WHERE s.game_id = g.id
+            ) AS accurate
+        {__from_game_join_user_survey}
+            AND g.score > 100
+    """
+
+    mediocre_game_count_to_best_score_on_fav_game_type = f"""
+        SELECT 
+            i.favourite_game_type AS fav_game_type, 
+            AVG(
+                SELECT best_scores.number_of_game FROM (SELECT MAX(score_numbers.score) AS best_score, score_numbers.number_of_game AS number_of_game 
+                FROM (
+                    SELECT g2.score AS score, ROW_NUMBER() over (ORDER BY (SELECT NULL)) AS number_of_game
+                    FROM game g2
+                    WHERE g2.user_id IN (SELECT g3.user_id FROM game g3 WHERE g3.id = g.id)
+                ) AS score_numbers) AS best_scores
+            ) AS mediocre_game_count
+        {__from_game_join_user_survey}
+            AND g.score > 100
+        GROUP BY i.favourite_game_type
     """

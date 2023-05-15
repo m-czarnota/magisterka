@@ -284,6 +284,16 @@ class Analyzer:
                 y_label='Celność [%]',
             ), save_visualization)
 
+    def mediocre_game_count_to_best_score_on_fav_game_type(self, show_result: bool = True, result_to_file: bool = True) -> None:
+        result_pd = pd.read_sql(SqlQueries.mediocre_game_count_to_best_score_on_fav_game_type, self.connection)
+        title = 'Przeciętna liczba gier do najlepszego wyniku na typ gry'
+
+        if show_result:
+            print(result_pd.to_markdown())
+
+        if result_to_file:
+            Analyzer.__save_to_file(result_pd, title)
+
     @staticmethod
     def __save_to_file(data: pd.DataFrame, title: str) -> None:
         filename = title.replace(' ', '_')
