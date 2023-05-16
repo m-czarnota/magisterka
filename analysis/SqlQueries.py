@@ -115,30 +115,152 @@ class SqlQueries:
         GROUP BY i.favourite_game_type
     """
 
-    accurate_by_score = f"""
+    accurate_by_score_with_gender = f"""
         SELECT 
             g.score AS score,
             (
                 SELECT ((COUNT(s.miss_shots) - SUM(s.miss_shots)) / COUNT(s.miss_shots)) * 100
                 FROM square s
                 WHERE s.game_id = g.id
-            ) AS accurate
+            ) AS accurate,
+            i.gender AS gender
+        {__from_game_join_user_survey}
+            AND g.score > 100
+    """
+
+    accurate_by_score_with_fav_game_type = f"""
+        SELECT 
+            g.score AS score,
+            (
+                SELECT ((COUNT(s.miss_shots) - SUM(s.miss_shots)) / COUNT(s.miss_shots)) * 100
+                FROM square s
+                WHERE s.game_id = g.id
+            ) AS accurate,
+            i.favourite_game_type as fav_game_type
         {__from_game_join_user_survey}
             AND g.score > 100
     """
 
     mediocre_game_count_to_best_score_on_fav_game_type = f"""
+        SELECT
+            user_id,
+            COUNT(*) AS game_count,
+            MAX(score) AS best_score,
+            (
+                SELECT COUNT(*) + 1
+                FROM game g2
+                WHERE g2.user_id = g1.user_id AND g2.score > g1.score
+            ) AS best_game_order
+        FROM
+            game g1
+        GROUP BY
+            user_id
+    """
+
+    time_to_click_by_square_size_by_age = f"""
         SELECT 
-            i.favourite_game_type AS fav_game_type, 
-            AVG(
-                SELECT best_scores.number_of_game FROM (SELECT MAX(score_numbers.score) AS best_score, score_numbers.number_of_game AS number_of_game 
-                FROM (
-                    SELECT g2.score AS score, ROW_NUMBER() over (ORDER BY (SELECT NULL)) AS number_of_game
-                    FROM game g2
-                    WHERE g2.user_id IN (SELECT g3.user_id FROM game g3 WHERE g3.id = g.id)
-                ) AS score_numbers) AS best_scores
-            ) AS mediocre_game_count
+            i.age AS age,
+            s.time_to_click AS time_to_click,
+            s.size AS square_size
+        FROM game g
+        JOIN `user` u ON g.user_id = u.id
+        JOIN initial_survey i ON u.id = i.user_id
+        JOIN square s ON s.game_id = g.id
+        WHERE u.roles NOT LIKE '%ROLE_ADMIN%'
+            AND g.score > 100
+            AND s.time_to_click IS NOT NULL
+        GROUP BY g.id
+    """
+
+    time_to_click_by_square_size_by_fav_game_type = f"""
+        SELECT 
+            i.favourite_game_type AS fav_game_type,
+            s.time_to_click AS time_to_click,
+            s.size AS square_size
+        FROM game g
+        JOIN `user` u ON g.user_id = u.id
+        JOIN initial_survey i ON u.id = i.user_id
+        JOIN square s ON s.game_id = g.id
+        WHERE u.roles NOT LIKE '%ROLE_ADMIN%'
+            AND g.score > 100
+            AND s.time_to_click IS NOT NULL
+        GROUP BY g.id
+    """
+
+    mean_time_to_click_by_square_size = f"""
+        SELECT 
+            s.size AS square_size,
+            AVG(s.time_to_click) as mean_time_to_click
+        FROM game g
+        JOIN `user` u ON g.user_id = u.id
+        JOIN initial_survey i ON u.id = i.user_id
+        JOIN square s ON s.game_id = g.id
+        WHERE u.roles NOT LIKE '%ROLE_ADMIN%'
+            AND g.score > 100
+            AND s.time_to_click IS NOT NULL
+        GROUP BY s.size
+    """
+
+    time_to_click_by_square_velocity_by_age = f"""
+        SELECT 
+            i.age AS age,
+            s.time_to_click AS time_to_click,
+            s.time_to_fall AS time_to_fall
+        FROM game g
+        JOIN `user` u ON g.user_id = u.id
+        JOIN initial_survey i ON u.id = i.user_id
+        JOIN square s ON s.game_id = g.id
+        WHERE u.roles NOT LIKE '%ROLE_ADMIN%'
+            AND g.score > 100
+            AND s.time_to_click IS NOT NULL
+        GROUP BY g.id
+    """
+
+    time_to_click_by_square_velocity_by_fav_game_type = f"""
+        SELECT 
+            i.favourite_game_type AS fav_game_type,
+            s.time_to_click AS time_to_click,
+            s.time_to_fall AS time_to_fall
+        FROM game g
+        JOIN `user` u ON g.user_id = u.id
+        JOIN initial_survey i ON u.id = i.user_id
+        JOIN square s ON s.game_id = g.id
+        WHERE u.roles NOT LIKE '%ROLE_ADMIN%'
+            AND g.score > 100
+            AND s.time_to_click IS NOT NULL
+        GROUP BY g.id
+    """
+
+    mean_time_to_click_by_square_velocity = f"""
+        SELECT 
+            s.time_to_fall AS time_to_fall,
+            AVG(s.time_to_click) as mean_time_to_click
+        FROM game g
+        JOIN `user` u ON g.user_id = u.id
+        JOIN initial_survey i ON u.id = i.user_id
+        JOIN square s ON s.game_id = g.id
+        WHERE u.roles NOT LIKE '%ROLE_ADMIN%'
+            AND g.score > 100
+            AND s.time_to_click IS NOT NULL
+        GROUP BY s.time_to_fall
+    """
+
+    score_with_fav_game_type = f"""
+        SELECT g.score AS score, i.favourite_game_type AS fav_game_type
         {__from_game_join_user_survey}
             AND g.score > 100
-        GROUP BY i.favourite_game_type
+    """
+
+    squares_size_and_time_to_fall_taking_away_hp = f"""
+        SELECT 
+            s.size AS size,
+            s.time_to_fall AS time_to_fall
+        FROM game g
+        JOIN `user` u ON g.user_id = u.id
+        JOIN initial_survey i ON u.id = i.user_id
+        JOIN square s ON s.game_id = g.id
+        WHERE u.roles NOT LIKE '%ROLE_ADMIN%'
+            AND g.score > 100
+            AND s.time_to_click IS NULL
+            AND s.status = 'OUT_OF_BOARD'
     """

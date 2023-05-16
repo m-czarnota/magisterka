@@ -264,9 +264,9 @@ class Analyzer:
                 bar_width=0.3,
             ), save_visualization)
 
-    def accurate_by_score(self, show_result: bool = True, result_to_file: bool = True, visualize: bool = True, save_visualization: bool = True) -> None:
-        result_pd = pd.read_sql(SqlQueries.accurate_by_score, self.connection)
-        title = 'Zależność celności od liczby punktów'
+    def accurate_by_score_with_gender(self, show_result: bool = True, result_to_file: bool = True, visualize: bool = True, save_visualization: bool = True) -> None:
+        result_pd = pd.read_sql(SqlQueries.accurate_by_score_with_gender, self.connection)
+        title = 'Zależność celności od liczby punktów z podziałem na płeć'
 
         if show_result:
             print(result_pd.to_markdown())
@@ -282,6 +282,28 @@ class Analyzer:
                 fig_size=(20, 10),
                 x_label='Liczba punktów',
                 y_label='Celność [%]',
+                classes=result_pd['gender'],
+            ), save_visualization)
+
+    def accurate_by_score_with_fav_game_type(self, show_result: bool = True, result_to_file: bool = True, visualize: bool = True, save_visualization: bool = True) -> None:
+        result_pd = pd.read_sql(SqlQueries.accurate_by_score_with_fav_game_type, self.connection)
+        title = 'Zależność celności od liczby punktów z podziałem na typ ulubionej gry'
+
+        if show_result:
+            print(result_pd.to_markdown())
+
+        if result_to_file:
+            Analyzer.__save_to_file(result_pd, title)
+
+        if visualize or save_visualization:
+            ChartVisualizer.visualize(ChartTypeEnum.SCATTER, ChartParams(
+                x=result_pd['score'],
+                y=result_pd['accurate'],
+                fig_title=title,
+                fig_size=(20, 10),
+                x_label='Liczba punktów',
+                y_label='Celność [%]',
+                classes=result_pd['fav_game_type'],
             ), save_visualization)
 
     def mediocre_game_count_to_best_score_on_fav_game_type(self, show_result: bool = True, result_to_file: bool = True) -> None:
@@ -293,6 +315,172 @@ class Analyzer:
 
         if result_to_file:
             Analyzer.__save_to_file(result_pd, title)
+
+    def time_to_click_by_square_size_by_age(self, show_result: bool = True, result_to_file: bool = True, visualize: bool = True, save_visualization: bool = True) -> None:
+        result_pd = pd.read_sql(SqlQueries.time_to_click_by_square_size_by_age, self.connection)
+        title = 'Zależność czasu do kliknięcia kwadratu w zależności od jego rozmiaru na wiek'
+
+        if show_result:
+            print(result_pd.to_markdown())
+
+        if result_to_file:
+            Analyzer.__save_to_file(result_pd, title)
+
+        if visualize or save_visualization:
+            ChartVisualizer.visualize(ChartTypeEnum.SCATTER, ChartParams(
+                x=result_pd['square_size'],
+                y=result_pd['time_to_click'],
+                fig_title=title,
+                fig_size=(20, 10),
+                x_label='Wielkość kwadratu [px]',
+                y_label='Czas do kliknięcia [s]',
+                classes=result_pd['age'],
+            ), save_visualization)
+
+    def time_to_click_by_square_size_by_fav_game_type(self, show_result: bool = True, result_to_file: bool = True, visualize: bool = True, save_visualization: bool = True) -> None:
+        result_pd = pd.read_sql(SqlQueries.time_to_click_by_square_size_by_fav_game_type, self.connection)
+        title = 'Zależność czasu do kliknięcia kwadratu w zależności od jego rozmiaru na typ ulubionej gry'
+
+        if show_result:
+            print(result_pd.to_markdown())
+
+        if result_to_file:
+            Analyzer.__save_to_file(result_pd, title)
+
+        if visualize or save_visualization:
+            ChartVisualizer.visualize(ChartTypeEnum.SCATTER, ChartParams(
+                x=result_pd['square_size'],
+                y=result_pd['time_to_click'],
+                fig_title=title,
+                fig_size=(20, 10),
+                x_label='Wielkość kwadratu [px]',
+                y_label='Czas do kliknięcia [s]',
+                classes=result_pd['fav_game_type'],
+            ), save_visualization)
+
+    def mean_time_to_click_by_square_size(self, show_result: bool = True, result_to_file: bool = True, visualize: bool = True, save_visualization: bool = True) -> None:
+        result_pd = pd.read_sql(SqlQueries.mean_time_to_click_by_square_size, self.connection)
+        title = 'Zależność średniego czasu do kliknięcia kwadratu w zależności od jego rozmiaru'
+
+        if show_result:
+            print(result_pd.to_markdown())
+
+        if result_to_file:
+            Analyzer.__save_to_file(result_pd, title)
+
+        if visualize or save_visualization:
+            ChartVisualizer.visualize(ChartTypeEnum.SCATTER, ChartParams(
+                x=result_pd['square_size'],
+                y=result_pd['mean_time_to_click'],
+                fig_title=title,
+                fig_size=(20, 10),
+                x_label='Wielkość kwadratu [px]',
+                y_label='Średni czas do kliknięcia [s]',
+            ), save_visualization)
+
+    def time_to_click_by_square_velocity_by_age(self, show_result: bool = True, result_to_file: bool = True, visualize: bool = True, save_visualization: bool = True) -> None:
+        result_pd = pd.read_sql(SqlQueries.time_to_click_by_square_velocity_by_age, self.connection)
+        title = 'Zależność czasu do kliknięcia kwadratu w zależności od jego czasu spadania na wiek'
+
+        if show_result:
+            print(result_pd.to_markdown())
+
+        if result_to_file:
+            Analyzer.__save_to_file(result_pd, title)
+
+        if visualize or save_visualization:
+            ChartVisualizer.visualize(ChartTypeEnum.SCATTER, ChartParams(
+                x=result_pd['time_to_fall'],
+                y=result_pd['time_to_click'],
+                fig_title=title,
+                fig_size=(20, 10),
+                x_label='Czas do spadnięcia kwadratu [s]',
+                y_label='Czas do kliknięcia [s]',
+                classes=result_pd['age'],
+            ), save_visualization)
+
+    def time_to_click_by_square_velocity_by_fav_game_type(self, show_result: bool = True, result_to_file: bool = True, visualize: bool = True, save_visualization: bool = True) -> None:
+        result_pd = pd.read_sql(SqlQueries.time_to_click_by_square_velocity_by_fav_game_type, self.connection)
+        title = 'Zależność czasu do kliknięcia kwadratu w zależności od jego czasu spadania na typ ulubionej gry'
+
+        if show_result:
+            print(result_pd.to_markdown())
+
+        if result_to_file:
+            Analyzer.__save_to_file(result_pd, title)
+
+        if visualize or save_visualization:
+            ChartVisualizer.visualize(ChartTypeEnum.SCATTER, ChartParams(
+                x=result_pd['time_to_fall'],
+                y=result_pd['time_to_click'],
+                fig_title=title,
+                fig_size=(20, 10),
+                x_label='Czas do spadnięcia kwadratu [s]',
+                y_label='Czas do kliknięcia [s]',
+                classes=result_pd['fav_game_type'],
+            ), save_visualization)
+
+    def mean_time_to_click_by_square_velocity(self, show_result: bool = True, result_to_file: bool = True, visualize: bool = True, save_visualization: bool = True) -> None:
+        result_pd = pd.read_sql(SqlQueries.mean_time_to_click_by_square_velocity, self.connection)
+        title = 'Zależność średniego czasu do kliknięcia kwadratu w zależności od jego czasu spadania'
+
+        if show_result:
+            print(result_pd.to_markdown())
+
+        if result_to_file:
+            Analyzer.__save_to_file(result_pd, title)
+
+        if visualize or save_visualization:
+            ChartVisualizer.visualize(ChartTypeEnum.SCATTER, ChartParams(
+                x=result_pd['time_to_fall'],
+                y=result_pd['mean_time_to_click'],
+                fig_title=title,
+                fig_size=(20, 10),
+                x_label='Czas do spadnięcia kwadratu [s]',
+                y_label='Średni czas do kliknięcia [s]',
+            ), save_visualization)
+
+    def median_of_score_by_fav_game_type(self, show_result: bool = True, result_to_file: bool = True, visualize: bool = True, save_visualization: bool = True) -> None:
+        result_pd = pd.read_sql(SqlQueries.score_with_fav_game_type, self.connection)
+        result_pd = result_pd.groupby('fav_game_type')['score'].median()
+        title = 'Mediana wyniku na typ ulubionej gry'
+
+        if show_result:
+            print(result_pd.to_markdown())
+
+        if result_to_file:
+            Analyzer.__save_to_file(result_pd, title)
+
+        if visualize or save_visualization:
+            ChartVisualizer.visualize(ChartTypeEnum.BAR, ChartParams(
+                x=result_pd.keys(),
+                y=result_pd.values,
+                fig_title=title,
+                fig_size=(20, 10),
+                x_label='Typ ulubionej gry',
+                y_label='Mediana wyniku',
+            ), save_visualization)
+
+    def squares_size_and_time_to_fall_taking_away_hp(self, show_result: bool = True, result_to_file: bool = True) -> None:
+        result_pd = pd.read_sql(SqlQueries.squares_size_and_time_to_fall_taking_away_hp, self.connection)
+        title = 'Rozkład kwadratów zabierających punkty życia'
+
+        small_squares_count = result_pd[result_pd['size'] < 60].shape[0]
+        big_squares_count = result_pd.shape[0] - small_squares_count
+
+        fast_squares_count = result_pd[result_pd['time_to_fall'] < 7].shape[0]
+        slow_squares_count = result_pd.shape[0] - fast_squares_count
+
+        new_result = pd.DataFrame([
+            [small_squares_count + slow_squares_count, small_squares_count + fast_squares_count],
+            [big_squares_count + slow_squares_count, big_squares_count + fast_squares_count]
+        ], columns=['small', 'big'], index=['slow', 'fast'])
+
+        if show_result:
+            print(new_result.to_markdown())
+
+        if result_to_file:
+            Analyzer.__save_to_file(new_result, title)
 
     @staticmethod
     def __save_to_file(data: pd.DataFrame, title: str) -> None:

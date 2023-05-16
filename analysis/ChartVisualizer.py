@@ -9,7 +9,8 @@ from ChartParams import ChartParams
 
 
 class ChartVisualizer:
-    results_dir = './results/images'
+    images_dir = './results/images'
+    pdf_dir = './results/pdf'
 
     @staticmethod
     def visualize(chart_type: ChartTypeEnum, chart_params: ChartParams, save: bool = False) -> None:
@@ -38,7 +39,8 @@ class ChartVisualizer:
             title = unidecode(title)
             filename = f"{title}.png"
 
-        plt.savefig(f'{ChartVisualizer.results_dir}/{filename}')
+        plt.savefig(f'{ChartVisualizer.images_dir}/{filename}')
+        plt.savefig(f'{ChartVisualizer.pdf_dir}/{filename.replace("png", "pdf")}', format="pdf", bbox_inches="tight")
 
     @staticmethod
     def __draw_chart(chart_type: ChartTypeEnum, chart_params: ChartParams) -> None:
@@ -107,4 +109,4 @@ class ChartVisualizer:
     @staticmethod
     def __get_random_colors(n: int) -> np.array:
         # return np.array(["#%06x" % random.randint(0, 0xFFFFFF) for _ in range(n)])
-        return plt.cm.get_cmap('hsv', n)
+        return plt.cm.get_cmap('rainbow', n)
