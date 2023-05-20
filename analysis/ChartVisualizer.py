@@ -1,3 +1,5 @@
+import os
+
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.patches import Patch
@@ -13,7 +15,7 @@ class ChartVisualizer:
     pdf_dir = './results/pdf'
 
     @staticmethod
-    def visualize(chart_type: ChartTypeEnum, chart_params: ChartParams, save: bool = False) -> None:
+    def visualize(chart_type: ChartTypeEnum, chart_params: ChartParams, save: bool = False, sub_dir: str = None) -> None:
         plt.figure(figsize=chart_params.fig_size)
         ChartVisualizer.__draw_chart(chart_type, chart_params)
 
@@ -33,14 +35,23 @@ class ChartVisualizer:
             return
 
         filename = 'result.png'
+        sub_dir = f'/{sub_dir}' if sub_dir is not None else ''
+
+        image_dir_path = f'{ChartVisualizer.images_dir}{sub_dir}'
+        if not os.path.exists(image_dir_path):
+            os.makedirs(image_dir_path)
+
+        pdf_dir_path = f'{ChartVisualizer.pdf_dir}{sub_dir}'
+        if not os.path.exists(pdf_dir_path):
+            os.makedirs(pdf_dir_path)
 
         if chart_params.fig_title:
             title = chart_params.fig_title.replace(' ', '_')
             title = unidecode(title)
             filename = f"{title}.png"
 
-        plt.savefig(f'{ChartVisualizer.images_dir}/{filename}')
-        plt.savefig(f'{ChartVisualizer.pdf_dir}/{filename.replace("png", "pdf")}', format="pdf", bbox_inches="tight")
+        plt.savefig(f'{image_dir_path}/{filename}')
+        plt.savefig(f'{pdf_dir_path}/{filename.replace("png", "pdf")}', format="pdf", bbox_inches="tight")
 
     @staticmethod
     def __draw_chart(chart_type: ChartTypeEnum, chart_params: ChartParams) -> None:

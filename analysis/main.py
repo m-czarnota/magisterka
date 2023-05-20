@@ -1,6 +1,22 @@
 import mysql.connector as mc
 
-from Analyzer import Analyzer
+from Analyzer.AgeAnalyzer import AgeAnalyzer
+from Analyzer.Analyzer import Analyzer
+from Analyzer.FavGameTypeAnalyzer import FavGameTypeAnalyzer
+from Analyzer.GenderAnalyzer import GenderAnalyzer
+
+
+def analyze_class(custom_analyzer: Analyzer) -> None:
+    custom_analyzer.mean_score()
+    custom_analyzer.best_score()
+    custom_analyzer.best_score_with_game_count()
+    custom_analyzer.mean_accurate()
+    custom_analyzer.mean_time_to_click()
+    custom_analyzer.count_of_games_to_best_score()
+    custom_analyzer.time_to_click_by_square_size()
+    custom_analyzer.time_to_click_by_square_velocity()
+    custom_analyzer.median_of_score()
+    
 
 if __name__ == '__main__':
     with mc.connect(
@@ -12,26 +28,16 @@ if __name__ == '__main__':
     ) as connection:
         analyzer = Analyzer(connection)
 
-        analyzer.mean_score_by_fav_game_type()
+        for class_analyzer in [GenderAnalyzer(connection), AgeAnalyzer(connection), FavGameTypeAnalyzer(connection)]:
+            analyze_class(class_analyzer)
+
         analyzer.dependency_score_on_time()
-        analyzer.best_score_by_age()
-        analyzer.best_score_by_fav_game_type_with_game_count()
         analyzer.count_of_rejected_scores()
-        analyzer.mean_score_by_age()
         analyzer.count_of_preferred_playing_style()
-        analyzer.mean_accurate_by_fav_game_type()
         analyzer.mean_accurate_by_preferred_playing_style_with_best_score()
-        analyzer.mean_time_to_click_by_fav_game_type()
-        analyzer.mean_time_to_click_by_age()
-        analyzer.count_of_games_to_best_score_by_fav_game_type()
         analyzer.accurate_by_score_with_fav_game_type()
         analyzer.accurate_by_score_with_gender()
         analyzer.mediocre_game_count_to_best_score_on_fav_game_type()
-        analyzer.time_to_click_by_square_size_by_age()
-        analyzer.time_to_click_by_square_size_by_fav_game_type()
         analyzer.mean_time_to_click_by_square_size()
-        analyzer.time_to_click_by_square_velocity_by_age()
-        analyzer.time_to_click_by_square_velocity_by_fav_game_type()
         analyzer.mean_time_to_click_by_square_velocity()
-        analyzer.median_of_score_by_fav_game_type()
         analyzer.squares_size_and_time_to_fall_taking_away_hp()
