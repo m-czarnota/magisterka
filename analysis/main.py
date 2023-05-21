@@ -28,16 +28,22 @@ if __name__ == '__main__':
     ) as connection:
         analyzer = Analyzer(connection)
 
-        for class_analyzer in [GenderAnalyzer(connection), AgeAnalyzer(connection), FavGameTypeAnalyzer(connection)]:
-            analyze_class(class_analyzer)
-
-        analyzer.dependency_score_on_time()
-        analyzer.count_of_rejected_scores()
-        analyzer.count_of_preferred_playing_style()
-        analyzer.mean_accurate_by_preferred_playing_style_with_best_score()
-        analyzer.accurate_by_score_with_fav_game_type()
-        analyzer.accurate_by_score_with_gender()
-        analyzer.mediocre_game_count_to_best_score_on_fav_game_type()
-        analyzer.mean_time_to_click_by_square_size()
-        analyzer.mean_time_to_click_by_square_velocity()
-        analyzer.squares_size_and_time_to_fall_taking_away_hp()
+        # for class_analyzer in [GenderAnalyzer(connection), AgeAnalyzer(connection), FavGameTypeAnalyzer(connection)]:
+        #     analyze_class(class_analyzer)
+        #
+        # analyzer.dependency_score_on_time()
+        # analyzer.count_of_rejected_scores()
+        # analyzer.count_of_preferred_playing_style()
+        # analyzer.mean_accurate_by_preferred_playing_style_with_best_score()
+        # analyzer.accurate_by_score_with_fav_game_type()
+        # analyzer.accurate_by_score_with_gender()
+        # analyzer.mediocre_game_count_to_best_score_on_fav_game_type()
+        # analyzer.mean_time_to_click_by_square_size()
+        # analyzer.mean_time_to_click_by_square_velocity()
+        # analyzer.squares_size_and_time_to_fall_taking_away_hp()
+        analyzer.mean_time_to_click_squares_by_size_and_time_to_fall('favourite_game_type')
+        analyzer.median_time_to_click_squares_by_size_and_time_to_fall('favourite_game_type')
+        analyzer.mean_time_to_click_squares_by_size_and_time_to_fall('gender')
+        analyzer.median_time_to_click_squares_by_size_and_time_to_fall('gender')
+        analyzer.mean_time_to_click_squares_by_size_and_time_to_fall('age')
+        analyzer.median_time_to_click_squares_by_size_and_time_to_fall('age')

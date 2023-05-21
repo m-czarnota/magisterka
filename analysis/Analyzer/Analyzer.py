@@ -1,6 +1,8 @@
 import os
 from abc import abstractmethod
 
+import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 from mysql.connector.abstracts import MySQLConnectionAbstract
 from text_unidecode import unidecode
@@ -13,6 +15,8 @@ from SqlQueries.SqlQueries import SqlQueries
 
 class Analyzer:
     results_dir = './results/data'
+    small_square_border = 60
+    fast_square_border = 6
 
     def __init__(self, connection: MySQLConnectionAbstract):
         self.connection = connection
@@ -192,22 +196,135 @@ class Analyzer:
         result_pd = pd.read_sql(self.sql_queries.squares_size_and_time_to_fall_taking_away_hp(), self.connection)
         title = 'Rozkład kwadratów zabierających punkty życia'
 
-        small_squares_count = result_pd[result_pd['size'] < 60].shape[0]
-        big_squares_count = result_pd.shape[0] - small_squares_count
+        small_fast_squares_count = result_pd[(result_pd['size'] < self.small_square_border) & (result_pd['time_to_fall'] < self.fast_square_border)].shape[0]
+        big_fast_squares_count = result_pd[(result_pd['size'] >= self.small_square_border) & (result_pd['time_to_fall'] < self.fast_square_border)].shape[0]
 
-        fast_squares_count = result_pd[result_pd['time_to_fall'] < 7].shape[0]
-        slow_squares_count = result_pd.shape[0] - fast_squares_count
+        small_slow_squares_count = result_pd[(result_pd['size'] < self.small_square_border) & (result_pd['time_to_fall'] >= self.fast_square_border)].shape[0]
+        big_slow_squares_count = result_pd[(result_pd['size'] >= self.small_square_border) & (result_pd['time_to_fall'] >= self.fast_square_border)].shape[0]
 
         new_result = pd.DataFrame([
-            [small_squares_count + slow_squares_count, small_squares_count + fast_squares_count],
-            [big_squares_count + slow_squares_count, big_squares_count + fast_squares_count]
-        ], columns=['small', 'big'], index=['slow', 'fast'])
+            [small_slow_squares_count, small_fast_squares_count],
+            [big_slow_squares_count, big_fast_squares_count]
+        ], columns=['slow', 'fast'], index=['small', 'big'])
 
         if show_result:
             print(new_result.to_markdown())
 
         if result_to_file:
             Analyzer._save_to_file(new_result, title)
+
+    def mean_time_to_click_squares_by_size_and_time_to_fall(self, selected_category: str, show_result: bool = True, result_to_file: bool = True) -> None:
+        uniques_categories = pd.read_sql(self.sql_queries.uniques_category_from_survey(selected_category), self.connection)[selected_category]
+        result_pd = pd.read_sql(self.sql_queries.clicked_squares_size_and_time_to_fall_and_time_to_click(selected_category), self.connection)
+        title = f'Średni czas do kliknięcia kwadratów z podziałem na rozmiar oraz szybkość by {selected_category}'
+
+        new_result = np.empty((uniques_categories.shape[0], 5), dtype=object)
+
+        for index, unique_category in uniques_categories.items():
+            filtered_result = result_pd[result_pd[selected_category] == unique_category]
+
+            avg_time_to_click_on_small = filtered_result[filtered_result['size'] < self.small_square_border]['time_to_click'].mean()
+            avg_time_to_click_on_big = filtered_result[filtered_result['size'] >= self.small_square_border]['time_to_click'].mean()
+
+            avg_time_to_click_on_slow = filtered_result[filtered_result['time_to_fall'] >= self.fast_square_border]['time_to_click'].mean()
+            avg_time_to_click_on_fast = filtered_result[filtered_result['time_to_fall'] < self.fast_square_border]['time_to_click'].mean()
+
+            new_result[index] = np.array([
+                avg_time_to_click_on_small,
+                avg_time_to_click_on_big,
+                avg_time_to_click_on_slow,
+                avg_time_to_click_on_fast,
+                unique_category,
+            ])
+
+        new_result = pd.DataFrame(new_result, columns=['small', 'big', 'slow', 'fast', selected_category])
+        new_result = new_result.drop(selected_category, axis=1).applymap(lambda x: float(x))
+        new_result[selected_category] = uniques_categories
+        new_result = new_result.dropna()
+
+        sub_dir = selected_category.replace("_", "-").replace("favourite", "fav")
+
+        if show_result:
+            print(new_result.to_markdown())
+
+        if result_to_file:
+            Analyzer._save_to_file(new_result, title, sub_dir)
+
+        ax = new_result.plot(
+            x=selected_category,
+            kind='bar',
+            stacked=False,
+            figsize=(20, 10),
+            rot=30,
+        )
+        for p in ax.patches:
+            ax.annotate(f'{p.get_height():.2f}', (p.get_x() * 0.99, p.get_height() * 1.005), fontsize=8)
+
+        filename = ChartVisualizer.save_encode_filename(title)
+        plt.savefig(f'./results/images/{sub_dir}/{filename}')
+        plt.savefig(f'./results/pdf/{sub_dir}/{filename.replace("png", "pdf")}', format="pdf", bbox_inches="tight")
+
+        plt.close()
+
+    def median_time_to_click_squares_by_size_and_time_to_fall(self, selected_category: str, show_result: bool = True, result_to_file: bool = True) -> None:
+        uniques_categories = pd.read_sql(self.sql_queries.uniques_category_from_survey(selected_category), self.connection)[selected_category]
+        result_pd = pd.read_sql(
+            self.sql_queries.clicked_squares_size_and_time_to_fall_and_time_to_click(selected_category),
+            self.connection
+        )
+        title = f'Mediana czasu do kliknięcia kwadratów z podziałem na rozmiar oraz szybkość by {selected_category}'
+
+        new_result = np.empty((uniques_categories.shape[0], 5), dtype=object)
+
+        for index, unique_category in uniques_categories.items():
+            filtered_result = result_pd[result_pd[selected_category] == unique_category]
+
+            avg_time_to_click_on_small = filtered_result[filtered_result['size'] < self.small_square_border][
+                'time_to_click'].median()
+            avg_time_to_click_on_big = filtered_result[filtered_result['size'] >= self.small_square_border][
+                'time_to_click'].median()
+
+            avg_time_to_click_on_slow = filtered_result[filtered_result['time_to_fall'] >= self.fast_square_border][
+                'time_to_click'].median()
+            avg_time_to_click_on_fast = filtered_result[filtered_result['time_to_fall'] < self.fast_square_border][
+                'time_to_click'].median()
+
+            new_result[index] = np.array([
+                avg_time_to_click_on_small,
+                avg_time_to_click_on_big,
+                avg_time_to_click_on_slow,
+                avg_time_to_click_on_fast,
+                unique_category,
+            ])
+
+        new_result = pd.DataFrame(new_result, columns=['small', 'big', 'slow', 'fast', selected_category])
+        new_result = new_result.drop(selected_category, axis=1).applymap(lambda x: float(x))
+        new_result[selected_category] = uniques_categories
+        new_result = new_result.dropna()
+
+        sub_dir = selected_category.replace("_", "-").replace("favourite", "fav")
+
+        if show_result:
+            print(new_result.to_markdown())
+
+        if result_to_file:
+            Analyzer._save_to_file(new_result, title, sub_dir)
+
+        ax = new_result.plot(
+            x=selected_category,
+            kind='bar',
+            stacked=False,
+            figsize=(20, 10),
+            rot=30,
+        )
+        for p in ax.patches:
+            ax.annotate(f'{p.get_height():.2f}', (p.get_x(), p.get_height() * 1.005), fontsize=8)
+
+        filename = ChartVisualizer.save_encode_filename(title)
+        plt.savefig(f'./results/images/{sub_dir}/{filename}')
+        plt.savefig(f'./results/pdf/{sub_dir}/{filename.replace("png", "pdf")}', format="pdf", bbox_inches="tight")
+
+        plt.close()
 
     @staticmethod
     def _save_to_file(data: pd.DataFrame, title: str, sub_dir: str = None) -> None:

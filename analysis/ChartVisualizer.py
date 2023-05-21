@@ -46,9 +46,7 @@ class ChartVisualizer:
             os.makedirs(pdf_dir_path)
 
         if chart_params.fig_title:
-            title = chart_params.fig_title.replace(' ', '_')
-            title = unidecode(title)
-            filename = f"{title}.png"
+            filename = ChartVisualizer.save_encode_filename(chart_params.fig_title)
 
         plt.savefig(f'{image_dir_path}/{filename}')
         plt.savefig(f'{pdf_dir_path}/{filename.replace("png", "pdf")}', format="pdf", bbox_inches="tight")
@@ -101,6 +99,13 @@ class ChartVisualizer:
             return
 
         plt.plot(x, y)
+
+    @staticmethod
+    def save_encode_filename(title: str) -> str:
+        title = title.replace(' ', '_')
+        title = unidecode(title)
+
+        return f"{title}.png"
 
     @staticmethod
     def __generate_colors_amd(class_labels: np.array):

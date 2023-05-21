@@ -135,6 +135,28 @@ class SqlQueries:
                 AND s.status = 'OUT_OF_BOARD'
         """
 
+    def clicked_squares_size_and_time_to_fall_and_time_to_click(self, category: str) -> str:
+        return f"""
+            SELECT 
+                s.size AS size,
+                s.time_to_fall AS time_to_fall,
+                s.time_to_click AS time_to_click,
+                i.{category} AS {category}
+            FROM game g
+            JOIN `user` u ON g.user_id = u.id
+            JOIN initial_survey i ON u.id = i.user_id
+            JOIN square s ON s.game_id = g.id
+            WHERE u.roles NOT LIKE '%ROLE_ADMIN%'
+                AND g.score > 100
+                AND s.time_to_click IS NOT NULL
+        """
+
+    def uniques_category_from_survey(self, category: str) -> str:
+        return f"""
+            SELECT DISTINCT {category} AS {category}
+            FROM initial_survey
+        """
+
     @abstractmethod
     def best_score(self) -> str:
         ...
