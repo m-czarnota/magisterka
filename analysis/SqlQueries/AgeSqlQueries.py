@@ -17,9 +17,9 @@ class AgeSqlQueries(SqlQueries):
             GROUP BY i.age
         """
     
-    def mean_time_to_click(self) -> str: 
+    def time_to_click(self) -> str:
         return f"""
-            SELECT i.age AS age, AVG(s.time_to_click) AS mean_time
+            SELECT i.age AS age, s.time_to_click AS time_to_click
             FROM game g
             JOIN `user` u ON g.user_id = u.id
             JOIN initial_survey i ON u.id = i.user_id
@@ -27,7 +27,7 @@ class AgeSqlQueries(SqlQueries):
             WHERE u.roles NOT LIKE '%ROLE_ADMIN%'
                 AND g.score > 100
                 AND s.time_to_click IS NOT NULL
-            GROUP BY i.age
+            GROUP BY s.id
         """
     
     def time_to_click_by_square_size(self) -> str:
@@ -66,21 +66,22 @@ class AgeSqlQueries(SqlQueries):
         return f"""
             SELECT i.age AS age, MAX(g.score) AS best_score, COUNT(g.score) AS game_count
             {self._from_game_join_user_survey}
+                AND g.score > 100
             GROUP BY i.age
         """
 
-    def mean_accurate(self) -> str:
+    def accurate(self) -> str:
         return f"""
-            SELECT 
-                i.age AS age, 
+            SELECT
+                i.age AS age,
                 ((COUNT(s.miss_shots) - SUM(s.miss_shots)) / COUNT(s.miss_shots)) * 100 AS accurate
             FROM game g
-            JOIN `user` u ON g.user_id = u.id
-            JOIN initial_survey i ON u.id = i.user_id
-            JOIN square s ON s.game_id = g.id
+                 JOIN `user` u ON g.user_id = u.id
+                 JOIN initial_survey i ON u.id = i.user_id
+                 JOIN square s ON s.game_id = g.id
             WHERE u.roles NOT LIKE '%ROLE_ADMIN%'
-                AND g.score > 100
-            GROUP BY i.age
+              AND g.score > 100
+            GROUP BY g.id
         """
 
     def count_of_games_to_best_score(self) -> str:

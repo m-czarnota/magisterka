@@ -36,6 +36,7 @@ class ChartVisualizer:
 
         filename = 'result.png'
         sub_dir = f'/{sub_dir}' if sub_dir is not None else ''
+        sub_dir = sub_dir.replace("_", "-").replace("favourite", "fav")
 
         image_dir_path = f'{ChartVisualizer.images_dir}{sub_dir}'
         if not os.path.exists(image_dir_path):

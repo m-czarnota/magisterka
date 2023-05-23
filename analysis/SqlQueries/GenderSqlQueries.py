@@ -17,9 +17,9 @@ class GenderSqlQueries(SqlQueries):
             GROUP BY i.gender
         """
 
-    def mean_time_to_click(self) -> str:
+    def time_to_click(self) -> str:
         return f"""
-            SELECT i.gender AS gender, AVG(s.time_to_click) AS mean_time
+            SELECT i.gender AS gender, s.time_to_click AS time_to_click
             FROM game g
             JOIN `user` u ON g.user_id = u.id
             JOIN initial_survey i ON u.id = i.user_id
@@ -27,7 +27,7 @@ class GenderSqlQueries(SqlQueries):
             WHERE u.roles NOT LIKE '%ROLE_ADMIN%'
                 AND g.score > 100
                 AND s.time_to_click IS NOT NULL
-            GROUP BY i.gender
+            GROUP BY s.id
         """
     
     def time_to_click_by_square_size(self) -> str:
@@ -69,7 +69,7 @@ class GenderSqlQueries(SqlQueries):
             GROUP BY i.gender
         """
 
-    def mean_accurate(self) -> str:
+    def accurate(self) -> str:
         return f"""
             SELECT 
                 i.gender AS gender, 
@@ -80,7 +80,7 @@ class GenderSqlQueries(SqlQueries):
             JOIN square s ON s.game_id = g.id
             WHERE u.roles NOT LIKE '%ROLE_ADMIN%'
                 AND g.score > 100
-            GROUP BY i.gender
+            GROUP BY g.id
         """
 
     def count_of_games_to_best_score(self) -> str:

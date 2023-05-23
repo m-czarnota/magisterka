@@ -255,6 +255,8 @@ class Analyzer:
             kind='bar',
             stacked=False,
             figsize=(20, 10),
+            title=title,
+            ylabel='Średni czas do kliknięcia [s]',
             rot=30,
         )
         for p in ax.patches:
@@ -315,6 +317,8 @@ class Analyzer:
             kind='bar',
             stacked=False,
             figsize=(20, 10),
+            title=title,
+            ylabel='Mediana czasu do kliknięcia [s]',
             rot=30,
         )
         for p in ax.patches:
@@ -326,6 +330,126 @@ class Analyzer:
 
         plt.close()
 
+    def mean_time_spending_on_gaming_by_category(self, selected_category: str, show_result: bool = True, result_to_file: bool = True, visualize: bool = True, save_visualization: bool = True) -> None:
+        result_pd = pd.read_sql(
+            self.sql_queries.time_spend_on_gaming_by_category(selected_category),
+            self.connection
+        )
+        result_pd = result_pd.groupby(selected_category)['gaming_per_day'].mean()
+        title = 'Średnia czasu spędzanego na granie dziennie w zależności od wieku'
+
+        if show_result:
+            print(result_pd.to_markdown())
+
+        if result_to_file:
+            Analyzer._save_to_file(result_pd, title, sub_dir=selected_category)
+
+        if visualize or save_visualization:
+            ChartVisualizer.visualize(ChartTypeEnum.BAR, ChartParams(
+                x=result_pd.keys(),
+                y=result_pd.values,
+                fig_title=title,
+                fig_size=(20, 10),
+                x_label='Wiek',
+                y_label='Średnia czasu spędzanego na granie dziennie [h]',
+            ), save_visualization, sub_dir=selected_category)
+
+    def median_time_spending_on_gaming_by_category(self, selected_category: str, show_result: bool = True, result_to_file: bool = True, visualize: bool = True, save_visualization: bool = True) -> None:
+        result_pd = pd.read_sql(
+            self.sql_queries.time_spend_on_gaming_by_category(selected_category),
+            self.connection
+        )
+        result_pd = result_pd.groupby(selected_category)['gaming_per_day'].median()
+        title = 'Mediana czasu spędzanego na granie dziennie w zależności od wieku'
+
+        if show_result:
+            print(result_pd.to_markdown())
+
+        if result_to_file:
+            Analyzer._save_to_file(result_pd, title, sub_dir=selected_category)
+
+        if visualize or save_visualization:
+            ChartVisualizer.visualize(ChartTypeEnum.BAR, ChartParams(
+                x=result_pd.keys(),
+                y=result_pd.values,
+                fig_title=title,
+                fig_size=(20, 10),
+                x_label='Wiek',
+                y_label='Mediana czasu spędzanego na granie dziennie [h]',
+            ), save_visualization, sub_dir=selected_category)
+
+    def mean_time_using_computer_by_category(self, selected_category: str, show_result: bool = True, result_to_file: bool = True, visualize: bool = True, save_visualization: bool = True) -> None:
+        result_pd = pd.read_sql(
+            self.sql_queries.time_spend_on_computer_by_category(selected_category),
+            self.connection
+        )
+        result_pd = result_pd.groupby(selected_category)['computer_usage_per_day'].mean()
+        title = 'Średnia liczba godzin używania komputera dziennie w zależności od wieku'
+
+        if show_result:
+            print(result_pd.to_markdown())
+
+        if result_to_file:
+            Analyzer._save_to_file(result_pd, title, sub_dir=selected_category)
+
+        if visualize or save_visualization:
+            ChartVisualizer.visualize(ChartTypeEnum.BAR, ChartParams(
+                x=result_pd.keys(),
+                y=result_pd.values,
+                fig_title=title,
+                fig_size=(20, 10),
+                x_label='Wiek',
+                y_label='Średnia liczba godzin używania komputera dziennie [h]',
+            ), save_visualization, sub_dir=selected_category)
+
+    def median_time_using_computer_by_category(self, selected_category: str, show_result: bool = True, result_to_file: bool = True, visualize: bool = True, save_visualization: bool = True) -> None:
+        result_pd = pd.read_sql(
+            self.sql_queries.time_spend_on_computer_by_category(selected_category),
+            self.connection
+        )
+        result_pd = result_pd.groupby(selected_category)['computer_usage_per_day'].median()
+        title = 'Mediana liczby godzin używania komputera dziennie w zależności od wieku'
+
+        if show_result:
+            print(result_pd.to_markdown())
+
+        if result_to_file:
+            Analyzer._save_to_file(result_pd, title, sub_dir=selected_category)
+
+        if visualize or save_visualization:
+            ChartVisualizer.visualize(ChartTypeEnum.BAR, ChartParams(
+                x=result_pd.keys(),
+                y=result_pd.values,
+                fig_title=title,
+                fig_size=(20, 10),
+                x_label='Wiek',
+                y_label='Mediana liczba godzin używania komputera dziennie [h]',
+            ), save_visualization, sub_dir=selected_category)
+
+    def median_accurate_by_category(self, selected_category: str, show_result: bool = True, result_to_file: bool = True, visualize: bool = True, save_visualization: bool = True) -> None:
+        result_pd = pd.read_sql(
+            self.sql_queries.time_spend_on_computer_by_category(selected_category),
+            self.connection
+        )
+        result_pd = result_pd.groupby(selected_category)['computer_usage_per_day'].median()
+        title = 'Mediana liczby godzin używania komputera dziennie w zależności od wieku'
+
+        if show_result:
+            print(result_pd.to_markdown())
+
+        if result_to_file:
+            Analyzer._save_to_file(result_pd, title, sub_dir=selected_category)
+
+        if visualize or save_visualization:
+            ChartVisualizer.visualize(ChartTypeEnum.BAR, ChartParams(
+                x=result_pd.keys(),
+                y=result_pd.values,
+                fig_title=title,
+                fig_size=(20, 10),
+                x_label='Wiek',
+                y_label='Mediana liczba godzin używania komputera dziennie [h]',
+            ), save_visualization, sub_dir=selected_category)
+
     @staticmethod
     def _save_to_file(data: pd.DataFrame, title: str, sub_dir: str = None) -> None:
         filename = title.replace(' ', '_')
@@ -333,6 +457,7 @@ class Analyzer:
         filename = f"{filename}.csv"
 
         sub_dir = f'/{sub_dir}' if sub_dir is not None else ''
+        sub_dir = sub_dir.replace("_", "-").replace("favourite", "fav")
         dir_path = f'{Analyzer.results_dir}{sub_dir}'
 
         if not os.path.exists(dir_path):
@@ -353,6 +478,11 @@ class Analyzer:
         ...
 
     @abstractmethod
+    def median_time_to_click(self, show_result: bool = True, result_to_file: bool = True, visualize: bool = True,
+                             save_visualization: bool = True) -> None:
+        ...
+
+    @abstractmethod
     def time_to_click_by_square_size(self, show_result: bool = True, result_to_file: bool = True, visualize: bool = True, save_visualization: bool = True) -> str:
         ...
 
@@ -366,6 +496,11 @@ class Analyzer:
 
     @abstractmethod
     def mean_accurate(self, show_result: bool = True, result_to_file: bool = True, visualize: bool = True, save_visualization: bool = True) -> str:
+        ...
+
+    @abstractmethod
+    def median_accurate(self, show_result: bool = True, result_to_file: bool = True, visualize: bool = True,
+                        save_visualization: bool = True) -> None:
         ...
 
     @abstractmethod

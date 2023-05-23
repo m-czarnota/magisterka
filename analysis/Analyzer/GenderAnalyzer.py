@@ -61,7 +61,8 @@ class GenderAnalyzer(Analyzer):
 
     def mean_time_to_click(self, show_result: bool = True, result_to_file: bool = True, visualize: bool = True,
                            save_visualization: bool = True) -> None:
-        result_pd = pd.read_sql(self.sql_queries.mean_time_to_click(), self.connection)
+        result_pd = pd.read_sql(self.sql_queries.time_to_click(), self.connection)
+        result_pd = result_pd.groupby('gender')['time_to_click'].mean()
         title = 'Średni czas do kliknięcia na płeć'
 
         if show_result:
@@ -72,12 +73,35 @@ class GenderAnalyzer(Analyzer):
 
         if visualize or save_visualization:
             ChartVisualizer.visualize(ChartTypeEnum.BAR, ChartParams(
-                x=result_pd['gender'],
-                y=result_pd['mean_time'],
+                x=result_pd.keys(),
+                y=result_pd.values,
                 fig_title=title,
                 fig_size=(20, 10),
                 x_label='Płeć',
                 y_label='Średni czas do kliknięcia [s]',
+                bar_width=0.3,
+            ), save_visualization, sub_dir=self._sub_dir)
+
+    def median_time_to_click(self, show_result: bool = True, result_to_file: bool = True, visualize: bool = True,
+                           save_visualization: bool = True) -> None:
+        result_pd = pd.read_sql(self.sql_queries.time_to_click(), self.connection)
+        result_pd = result_pd.groupby('gender')['time_to_click'].median()
+        title = 'Mediana czasu do kliknięcia na płeć'
+
+        if show_result:
+            print(result_pd.to_markdown())
+
+        if result_to_file:
+            Analyzer._save_to_file(result_pd, title, sub_dir=self._sub_dir)
+
+        if visualize or save_visualization:
+            ChartVisualizer.visualize(ChartTypeEnum.BAR, ChartParams(
+                x=result_pd.keys(),
+                y=result_pd.values,
+                fig_title=title,
+                fig_size=(20, 10),
+                x_label='Płeć',
+                y_label='Mediana czasu do kliknięcia [s]',
                 bar_width=0.3,
             ), save_visualization, sub_dir=self._sub_dir)
 
@@ -150,7 +174,8 @@ class GenderAnalyzer(Analyzer):
 
     def mean_accurate(self, show_result: bool = True, result_to_file: bool = True, visualize: bool = True,
                       save_visualization: bool = True) -> None:
-        result_pd = pd.read_sql(self.sql_queries.mean_accurate(), self.connection)
+        result_pd = pd.read_sql(self.sql_queries.accurate(), self.connection)
+        result_pd = result_pd.groupby('gender')['accurate'].mean()
         title = 'Średnia celność na płeć'
 
         if show_result:
@@ -161,12 +186,35 @@ class GenderAnalyzer(Analyzer):
 
         if visualize or save_visualization:
             ChartVisualizer.visualize(ChartTypeEnum.BAR, ChartParams(
-                x=result_pd['gender'],
-                y=result_pd['accurate'],
+                x=result_pd.keys(),
+                y=result_pd.values,
                 fig_title=title,
                 fig_size=(20, 10),
                 x_label='Płeć',
                 y_label='Średnia celność [%]',
+                bar_width=0.3,
+            ), save_visualization, sub_dir=self._sub_dir)
+
+    def median_accurate(self, show_result: bool = True, result_to_file: bool = True, visualize: bool = True,
+                      save_visualization: bool = True) -> None:
+        result_pd = pd.read_sql(self.sql_queries.accurate(), self.connection)
+        result_pd = result_pd.groupby('gender')['accurate'].median()
+        title = 'Mediana celności na płeć'
+
+        if show_result:
+            print(result_pd.to_markdown())
+
+        if result_to_file:
+            Analyzer._save_to_file(result_pd, title, sub_dir=self._sub_dir)
+
+        if visualize or save_visualization:
+            ChartVisualizer.visualize(ChartTypeEnum.BAR, ChartParams(
+                x=result_pd.keys(),
+                y=result_pd.values,
+                fig_title=title,
+                fig_size=(20, 10),
+                x_label='Płeć',
+                y_label='Mediana celności [%]',
                 bar_width=0.3,
             ), save_visualization, sub_dir=self._sub_dir)
 

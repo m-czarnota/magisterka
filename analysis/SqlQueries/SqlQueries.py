@@ -157,6 +157,34 @@ class SqlQueries:
             FROM initial_survey
         """
 
+    def time_spend_on_gaming_by_category(self, category: str) -> str:
+        return f"""
+            SELECT i.{category}, i.gaming_per_day AS gaming_per_day
+            {self._from_game_join_user_survey}
+                AND g.score > 100
+        """
+
+    def time_spend_on_computer_by_category(self, category: str) -> str:
+        return f"""
+            SELECT i.{category}, i.computer_usage_per_day AS computer_usage_per_day
+            {self._from_game_join_user_survey}
+                AND g.score > 100
+        """
+
+    def median_accurate_by_category(self, category: str) -> str:
+        return f"""
+            SELECT 
+                i.age AS age, 
+                ((COUNT(s.miss_shots) - SUM(s.miss_shots)) / COUNT(s.miss_shots)) * 100 AS accurate
+            FROM game g
+            JOIN `user` u ON g.user_id = u.id
+            JOIN initial_survey i ON u.id = i.user_id
+            JOIN square s ON s.game_id = g.id
+            WHERE u.roles NOT LIKE '%ROLE_ADMIN%'
+                AND g.score > 100
+            GROUP BY i.age
+        """
+
     @abstractmethod
     def best_score(self) -> str:
         ...
@@ -166,7 +194,7 @@ class SqlQueries:
         ...
 
     @abstractmethod
-    def mean_time_to_click(self) -> str:
+    def time_to_click(self) -> str:
         ...
 
     @abstractmethod
@@ -182,7 +210,7 @@ class SqlQueries:
         ...
 
     @abstractmethod
-    def mean_accurate(self) -> str:
+    def accurate(self) -> str:
         ...
 
     @abstractmethod
