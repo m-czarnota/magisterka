@@ -30,11 +30,11 @@ class AgeSqlQueries(SqlQueries):
             GROUP BY s.id
         """
     
-    def time_to_click_by_square_size(self) -> str:
+    def mean_time_to_click_by_square_size(self) -> str:
         return f"""
             SELECT 
                 i.age AS age,
-                s.time_to_click AS time_to_click,
+                AVG(s.time_to_click) AS time_to_click,
                 s.size AS square_size
             FROM game g
             JOIN `user` u ON g.user_id = u.id
@@ -43,14 +43,14 @@ class AgeSqlQueries(SqlQueries):
             WHERE u.roles NOT LIKE '%ROLE_ADMIN%'
                 AND g.score > 100
                 AND s.time_to_click IS NOT NULL
-            GROUP BY g.id
+            GROUP BY s.size, i.age
         """
 
-    def time_to_click_by_square_velocity(self) -> str:
+    def mean_time_to_click_by_square_velocity(self) -> str:
         return f"""
             SELECT 
                 i.age AS age,
-                s.time_to_click AS time_to_click,
+                AVG(s.time_to_click) AS time_to_click,
                 s.time_to_fall AS time_to_fall
             FROM game g
             JOIN `user` u ON g.user_id = u.id
@@ -59,7 +59,7 @@ class AgeSqlQueries(SqlQueries):
             WHERE u.roles NOT LIKE '%ROLE_ADMIN%'
                 AND g.score > 100
                 AND s.time_to_click IS NOT NULL
-            GROUP BY g.id
+            GROUP BY s.size, i.age
         """
 
     def best_score_with_game_count(self) -> str:

@@ -16,7 +16,7 @@ from SqlQueries.SqlQueries import SqlQueries
 class Analyzer:
     results_dir = './results/data'
     small_square_border = 60
-    fast_square_border = 6
+    fast_square_border = 6.5
 
     def __init__(self, connection: MySQLConnectionAbstract):
         self.connection = connection
@@ -237,10 +237,19 @@ class Analyzer:
                 unique_category,
             ])
 
-        new_result = pd.DataFrame(new_result, columns=['small', 'big', 'slow', 'fast', selected_category])
+        new_result = pd.DataFrame(
+            new_result,
+            columns=[
+                f'small < {self.small_square_border}px',
+                f'big >= {self.small_square_border}px',
+                f'slow < {self.fast_square_border}s',
+                f'fast >= {self.fast_square_border}s',
+                selected_category
+            ]
+        )
         new_result = new_result.drop(selected_category, axis=1).applymap(lambda x: float(x))
         new_result[selected_category] = uniques_categories
-        new_result = new_result.dropna()
+        # new_result = new_result.dropna()
 
         sub_dir = selected_category.replace("_", "-").replace("favourite", "fav")
 
@@ -299,10 +308,19 @@ class Analyzer:
                 unique_category,
             ])
 
-        new_result = pd.DataFrame(new_result, columns=['small', 'big', 'slow', 'fast', selected_category])
+        new_result = pd.DataFrame(
+            new_result,
+            columns=[
+                f'small < {self.small_square_border}px',
+                f'big >= {self.small_square_border}px',
+                f'slow < {self.fast_square_border}s',
+                f'fast >= {self.fast_square_border}s',
+                selected_category
+            ]
+        )
         new_result = new_result.drop(selected_category, axis=1).applymap(lambda x: float(x))
         new_result[selected_category] = uniques_categories
-        new_result = new_result.dropna()
+        # new_result = new_result.dropna()
 
         sub_dir = selected_category.replace("_", "-").replace("favourite", "fav")
 

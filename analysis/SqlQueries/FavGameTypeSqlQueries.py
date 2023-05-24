@@ -67,11 +67,11 @@ class FavGameTypeSqlQueries(SqlQueries):
             GROUP BY i.favourite_game_type
         """
     
-    def time_to_click_by_square_size(self) -> str:
+    def mean_time_to_click_by_square_size(self) -> str:
         return f"""
             SELECT 
                 i.favourite_game_type AS fav_game_type,
-                s.time_to_click AS time_to_click,
+                AVG(s.time_to_click) AS time_to_click,
                 s.size AS square_size
             FROM game g
             JOIN `user` u ON g.user_id = u.id
@@ -80,14 +80,14 @@ class FavGameTypeSqlQueries(SqlQueries):
             WHERE u.roles NOT LIKE '%ROLE_ADMIN%'
                 AND g.score > 100
                 AND s.time_to_click IS NOT NULL
-            GROUP BY g.id
+            GROUP BY s.size, i.favourite_game_type
         """
     
-    def time_to_click_by_square_velocity(self) -> str:
+    def mean_time_to_click_by_square_velocity(self) -> str:
         return f"""
             SELECT 
                 i.favourite_game_type AS fav_game_type,
-                s.time_to_click AS time_to_click,
+                AVG(s.time_to_click) AS time_to_click,
                 s.time_to_fall AS time_to_fall
             FROM game g
             JOIN `user` u ON g.user_id = u.id
@@ -96,7 +96,7 @@ class FavGameTypeSqlQueries(SqlQueries):
             WHERE u.roles NOT LIKE '%ROLE_ADMIN%'
                 AND g.score > 100
                 AND s.time_to_click IS NOT NULL
-            GROUP BY g.id
+            GROUP BY s.size, i.favourite_game_type
         """
 
     def score_with_class(self) -> str:

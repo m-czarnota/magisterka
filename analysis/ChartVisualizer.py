@@ -92,10 +92,18 @@ class ChartVisualizer:
                 rgb_colors = ChartVisualizer.__get_random_colors(len(uniques_colors))
 
                 for color_unique in np.unique(colors):
-                    plt.scatter(x[color_unique == colors], y[color_unique == colors], color=rgb_colors(color_unique),
-                                label=labels[color_unique == colors][0], cmap=plt.get_cmap('magma'))
+                    values = y[color_unique == colors]
+
+                    plt.scatter(x[color_unique == colors], values, color=rgb_colors(color_unique),
+                                label=labels[color_unique == colors][0], cmap=plt.get_cmap('magma'), edgecolors='black' if chart_params.line_in_mean else None)
+
+                    if chart_params.line_in_mean:
+                        plt.plot(np.linspace(np.min(x), np.max(x), values.shape[0]), np.full(values.shape[0], np.mean(values)), color=rgb_colors(color_unique))
             else:
-                plt.scatter(x, y, c=colors, cmap=plt.get_cmap('rainbow'))
+                plt.scatter(x, y, c=colors, cmap=plt.get_cmap('rainbow'), edgecolors='black' if chart_params.line_in_mean else None)
+
+                if chart_params.line_in_mean:
+                    plt.plot(np.mean(chart_params.y))
 
             return
 

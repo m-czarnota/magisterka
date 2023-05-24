@@ -105,9 +105,9 @@ class GenderAnalyzer(Analyzer):
                 bar_width=0.3,
             ), save_visualization, sub_dir=self._sub_dir)
 
-    def time_to_click_by_square_size(self, show_result: bool = True, result_to_file: bool = True, visualize: bool = True, save_visualization: bool = True) -> None:
-        result_pd = pd.read_sql(self.sql_queries.time_to_click_by_square_size(), self.connection)
-        title = 'Zależność czasu do kliknięcia kwadratu w zależności od jego rozmiaru na typ płeć'
+    def mean_time_to_click_by_square_size(self, show_result: bool = True, result_to_file: bool = True, visualize: bool = True, save_visualization: bool = True) -> None:
+        result_pd = pd.read_sql(self.sql_queries.mean_time_to_click_by_square_size(), self.connection)
+        title = 'Zależność średniego czasu do kliknięcia kwadratu w zależności od jego rozmiaru na typ płeć'
 
         if show_result:
             print(result_pd.to_markdown())
@@ -122,13 +122,14 @@ class GenderAnalyzer(Analyzer):
                 fig_title=title,
                 fig_size=(20, 10),
                 x_label='Wielkość kwadratu [px]',
-                y_label='Czas do kliknięcia [s]',
+                y_label='Średni czas do kliknięcia [s]',
                 classes=result_pd['gender'],
+                line_in_mean=True,
             ), save_visualization, sub_dir=self._sub_dir)
 
-    def time_to_click_by_square_velocity(self, show_result: bool = True, result_to_file: bool = True, visualize: bool = True, save_visualization: bool = True) -> None:
-        result_pd = pd.read_sql(self.sql_queries.time_to_click_by_square_velocity(), self.connection)
-        title = 'Zależność czasu do kliknięcia kwadratu w zależności od jego czasu spadania na płeć'
+    def mean_time_to_click_by_square_velocity(self, show_result: bool = True, result_to_file: bool = True, visualize: bool = True, save_visualization: bool = True) -> None:
+        result_pd = pd.read_sql(self.sql_queries.mean_time_to_click_by_square_velocity(), self.connection)
+        title = 'Zależność średniego czasu do kliknięcia kwadratu w zależności od jego czasu spadania na płeć'
 
         if show_result:
             print(result_pd.to_markdown())
@@ -143,8 +144,9 @@ class GenderAnalyzer(Analyzer):
                 fig_title=title,
                 fig_size=(20, 10),
                 x_label='Czas do spadnięcia kwadratu [s]',
-                y_label='Czas do kliknięcia [s]',
+                y_label='Średni czas do kliknięcia [s]',
                 classes=result_pd['gender'],
+                line_in_mean=True,
             ), save_visualization, sub_dir=self._sub_dir)
 
     def best_score_with_game_count(self, show_result: bool = True, result_to_file: bool = True, visualize: bool = True,
