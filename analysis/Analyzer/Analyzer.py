@@ -216,7 +216,7 @@ class Analyzer:
     def mean_time_to_click_squares_by_size_and_time_to_fall(self, selected_category: str, show_result: bool = True, result_to_file: bool = True) -> None:
         uniques_categories = pd.read_sql(self.sql_queries.uniques_category_from_survey(selected_category), self.connection)[selected_category]
         result_pd = pd.read_sql(self.sql_queries.clicked_squares_size_and_time_to_fall_and_time_to_click(selected_category), self.connection)
-        title = f'Średni czas do kliknięcia kwadratów z podziałem na rozmiar oraz szybkość by {selected_category}'
+        title = f'Średni czas do kliknięcia kwadratów z podziałem na rozmiar oraz szybkość w zależności od {self.translate_category(selected_category, True)}'
 
         new_result = np.empty((uniques_categories.shape[0], 5), dtype=object)
 
@@ -269,7 +269,7 @@ class Analyzer:
             rot=30,
         )
         for p in ax.patches:
-            ax.annotate(f'{p.get_height():.2f}', (p.get_x() * 0.99, p.get_height() * 1.005), fontsize=8)
+            ax.annotate(f'{p.get_height():.2f}', (p.get_x() * 1.005, p.get_height() * 1.005), fontsize=8)
 
         filename = ChartVisualizer.save_encode_filename(title)
         plt.savefig(f'./results/images/{sub_dir}/{filename}')
@@ -283,7 +283,7 @@ class Analyzer:
             self.sql_queries.clicked_squares_size_and_time_to_fall_and_time_to_click(selected_category),
             self.connection
         )
-        title = f'Mediana czasu do kliknięcia kwadratów z podziałem na rozmiar oraz szybkość by {selected_category}'
+        title = f'Mediana czasu do kliknięcia kwadratów z podziałem na rozmiar oraz szybkość w zależności od {self.translate_category(selected_category, True)}'
 
         new_result = np.empty((uniques_categories.shape[0], 5), dtype=object)
 
@@ -340,7 +340,7 @@ class Analyzer:
             rot=30,
         )
         for p in ax.patches:
-            ax.annotate(f'{p.get_height():.2f}', (p.get_x(), p.get_height() * 1.005), fontsize=8)
+            ax.annotate(f'{p.get_height():.2f}', (p.get_x() * 1.005, p.get_height() * 1.005), fontsize=8)
 
         filename = ChartVisualizer.save_encode_filename(title)
         plt.savefig(f'./results/images/{sub_dir}/{filename}')
@@ -354,7 +354,7 @@ class Analyzer:
             self.connection
         )
         result_pd = result_pd.groupby(selected_category)['gaming_per_day'].mean()
-        title = 'Średnia czasu spędzanego na granie dziennie w zależności od wieku'
+        title = f'Średnia czasu spędzanego na granie dziennie w zależności od {self.translate_category(selected_category, True)}'
 
         if show_result:
             print(result_pd.to_markdown())
@@ -368,7 +368,7 @@ class Analyzer:
                 y=result_pd.values,
                 fig_title=title,
                 fig_size=(20, 10),
-                x_label='Wiek',
+                x_label=self.translate_category(selected_category).capitalize(),
                 y_label='Średnia czasu spędzanego na granie dziennie [h]',
             ), save_visualization, sub_dir=selected_category)
 
@@ -378,7 +378,7 @@ class Analyzer:
             self.connection
         )
         result_pd = result_pd.groupby(selected_category)['gaming_per_day'].median()
-        title = 'Mediana czasu spędzanego na granie dziennie w zależności od wieku'
+        title = f'Mediana czasu spędzanego na granie dziennie w zależności od {self.translate_category(selected_category, True)}'
 
         if show_result:
             print(result_pd.to_markdown())
@@ -392,7 +392,7 @@ class Analyzer:
                 y=result_pd.values,
                 fig_title=title,
                 fig_size=(20, 10),
-                x_label='Wiek',
+                x_label=self.translate_category(selected_category).capitalize(),
                 y_label='Mediana czasu spędzanego na granie dziennie [h]',
             ), save_visualization, sub_dir=selected_category)
 
@@ -402,7 +402,7 @@ class Analyzer:
             self.connection
         )
         result_pd = result_pd.groupby(selected_category)['computer_usage_per_day'].mean()
-        title = 'Średnia liczba godzin używania komputera dziennie w zależności od wieku'
+        title = f'Średnia liczba godzin używania komputera dziennie w zależności od {self.translate_category(selected_category, True)}'
 
         if show_result:
             print(result_pd.to_markdown())
@@ -416,7 +416,7 @@ class Analyzer:
                 y=result_pd.values,
                 fig_title=title,
                 fig_size=(20, 10),
-                x_label='Wiek',
+                x_label=self.translate_category(selected_category).capitalize(),
                 y_label='Średnia liczba godzin używania komputera dziennie [h]',
             ), save_visualization, sub_dir=selected_category)
 
@@ -426,7 +426,7 @@ class Analyzer:
             self.connection
         )
         result_pd = result_pd.groupby(selected_category)['computer_usage_per_day'].median()
-        title = 'Mediana liczby godzin używania komputera dziennie w zależności od wieku'
+        title = f'Mediana liczby godzin używania komputera dziennie w zależności od {self.translate_category(selected_category, True)}'
 
         if show_result:
             print(result_pd.to_markdown())
@@ -440,7 +440,7 @@ class Analyzer:
                 y=result_pd.values,
                 fig_title=title,
                 fig_size=(20, 10),
-                x_label='Wiek',
+                x_label=self.translate_category(selected_category).capitalize(),
                 y_label='Mediana liczba godzin używania komputera dziennie [h]',
             ), save_visualization, sub_dir=selected_category)
 
@@ -450,7 +450,7 @@ class Analyzer:
             self.connection
         )
         result_pd = result_pd.groupby(selected_category)['computer_usage_per_day'].median()
-        title = 'Mediana liczby godzin używania komputera dziennie w zależności od wieku'
+        title = f'Mediana liczby godzin używania komputera dziennie w zależności od {self.translate_category(selected_category, True)}'
 
         if show_result:
             print(result_pd.to_markdown())
@@ -464,7 +464,7 @@ class Analyzer:
                 y=result_pd.values,
                 fig_title=title,
                 fig_size=(20, 10),
-                x_label='Wiek',
+                x_label=self.translate_category(selected_category).capitalize(),
                 y_label='Mediana liczba godzin używania komputera dziennie [h]',
             ), save_visualization, sub_dir=selected_category)
 
@@ -528,3 +528,16 @@ class Analyzer:
     @abstractmethod
     def median_of_score(self, show_result: bool = True, result_to_file: bool = True, visualize: bool = True, save_visualization: bool = True) -> str:
         ...
+
+    @staticmethod
+    def translate_category(category: str, in_dependent: bool = False) -> str:
+        if category == 'favourite_game_type':
+            return ('typu' if in_dependent else 'typ') + 'ulubionej gry'
+
+        if category == 'gender':
+            return 'płci' if in_dependent else 'płeć'
+
+        if category == 'age':
+            return 'wieku' if in_dependent else 'wiek'
+
+        return category

@@ -21,6 +21,7 @@ class FavGameTypeSqlQueries(SqlQueries):
         return f"""
             SELECT i.favourite_game_type AS fav_game_type, MAX(g.score) AS best_score, COUNT(g.score) AS game_count
             {self._from_game_join_user_survey}
+                AND g.score > 100
             GROUP BY i.favourite_game_type
         """
     

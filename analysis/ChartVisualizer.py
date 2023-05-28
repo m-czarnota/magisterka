@@ -1,3 +1,4 @@
+import itertools
 import os
 
 import numpy as np
@@ -90,20 +91,24 @@ class ChartVisualizer:
             if colors is not None:
                 uniques_colors = np.unique(colors)
                 rgb_colors = ChartVisualizer.__get_random_colors(len(uniques_colors))
+                symbols = itertools.cycle(('.', 'o', '1', '2', 'h', 's', 'p', 'P', '*', 'x', 'D', '+', 'X', 'v', '^'))
 
                 for color_unique in np.unique(colors):
                     values = y[color_unique == colors]
 
                     plt.scatter(x[color_unique == colors], values, color=rgb_colors(color_unique),
-                                label=labels[color_unique == colors][0], cmap=plt.get_cmap('magma'), edgecolors='black' if chart_params.line_in_mean else None)
+                                label=labels[color_unique == colors][0], marker=next(symbols),
+                                edgecolors='black' if chart_params.line_in_mean else None)
 
                     if chart_params.line_in_mean:
                         plt.plot(np.linspace(np.min(x), np.max(x), values.shape[0]), np.full(values.shape[0], np.mean(values)), color=rgb_colors(color_unique))
+                        plt.plot(np.linspace(np.min(x), np.max(x), values.shape[0]), np.full(values.shape[0], np.median(values)), color=rgb_colors(color_unique), linestyle='dashed')
             else:
                 plt.scatter(x, y, c=colors, cmap=plt.get_cmap('rainbow'), edgecolors='black' if chart_params.line_in_mean else None)
 
                 if chart_params.line_in_mean:
                     plt.plot(np.mean(chart_params.y))
+                    plt.plot(np.median(chart_params.y), linestyle='dashed')
 
             return
 

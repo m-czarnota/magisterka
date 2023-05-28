@@ -107,7 +107,7 @@ class GenderAnalyzer(Analyzer):
 
     def mean_time_to_click_by_square_size(self, show_result: bool = True, result_to_file: bool = True, visualize: bool = True, save_visualization: bool = True) -> None:
         result_pd = pd.read_sql(self.sql_queries.mean_time_to_click_by_square_size(), self.connection)
-        title = 'Zależność średniego czasu do kliknięcia kwadratu w zależności od jego rozmiaru na typ płeć'
+        title = 'Zależność średniego czasu do kliknięcia kwadratu w zależności od jego rozmiaru na płeć'
 
         if show_result:
             print(result_pd.to_markdown())

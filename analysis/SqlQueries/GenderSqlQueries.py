@@ -66,6 +66,7 @@ class GenderSqlQueries(SqlQueries):
         return f"""
             SELECT i.gender AS gender, MAX(g.score) AS best_score, COUNT(g.score) AS game_count
             {self._from_game_join_user_survey}
+                AND g.score > 100
             GROUP BY i.gender
         """
 
