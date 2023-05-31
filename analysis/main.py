@@ -1,24 +1,25 @@
 import mysql.connector as mc
-import pandas as pd
 
 from Analyzer.AgeAnalyzer import AgeAnalyzer
 from Analyzer.Analyzer import Analyzer
 from Analyzer.FavGameTypeAnalyzer import FavGameTypeAnalyzer
 from Analyzer.GenderAnalyzer import GenderAnalyzer
+from Analyzer.PreferredPlayingStyleAnalyzer import PreferredPlayingStyleAnalyzer
+from Analyzer.WorkTypeAnalyzer import WorkTypeAnalyzer
 
 
 def analyze_class(custom_analyzer: Analyzer) -> None:
-    # custom_analyzer.mean_score()
-    # custom_analyzer.best_score()
+    custom_analyzer.mean_score()
+    custom_analyzer.best_score()
     custom_analyzer.best_score_with_game_count()
-    # custom_analyzer.mean_accurate()
-    # custom_analyzer.median_accurate()
-    # custom_analyzer.mean_time_to_click()
-    # custom_analyzer.median_time_to_click()
-    # custom_analyzer.count_of_games_to_best_score()
+    custom_analyzer.mean_accurate()
+    custom_analyzer.median_accurate()
+    custom_analyzer.mean_time_to_click()
+    custom_analyzer.median_time_to_click()
+    custom_analyzer.count_of_games_to_best_score()
     custom_analyzer.mean_time_to_click_by_square_size()
     custom_analyzer.mean_time_to_click_by_square_velocity()
-    # custom_analyzer.median_of_score()
+    custom_analyzer.median_of_score()
 
 
 if __name__ == '__main__':
@@ -31,9 +32,15 @@ if __name__ == '__main__':
     ) as connection:
         analyzer = Analyzer(connection)
 
-        for class_analyzer in [GenderAnalyzer(connection), AgeAnalyzer(connection), FavGameTypeAnalyzer(connection)]:
+        for class_analyzer in [
+            # GenderAnalyzer(connection),
+            # AgeAnalyzer(connection),
+            # FavGameTypeAnalyzer(connection),
+            WorkTypeAnalyzer(connection),
+            PreferredPlayingStyleAnalyzer(connection)
+        ]:
             analyze_class(class_analyzer)
-        #
+
         # analyzer.dependency_score_on_time()
         # analyzer.count_of_rejected_scores()
         # analyzer.count_of_preferred_playing_style()

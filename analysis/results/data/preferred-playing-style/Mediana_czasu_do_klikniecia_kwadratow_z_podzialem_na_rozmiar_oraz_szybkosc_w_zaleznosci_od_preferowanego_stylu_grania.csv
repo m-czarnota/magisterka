@@ -1,0 +1,4 @@
+small < 60px,big >= 60px,slow < 6.5s,fast >= 6.5s,preferred_playing_style
+2.149,2.074,1.669,2.434,MOUSE_AND_KEYBOARD
+2.5915,2.4275,2.092,3.114,GAMEPAD
+2.4560000000000004,2.422,2.4285,2.426,PHONE
