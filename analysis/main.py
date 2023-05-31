@@ -65,3 +65,17 @@ if __name__ == '__main__':
         # analyzer.median_time_spending_on_gaming_by_category('gender')
         # analyzer.mean_time_using_computer_by_category('gender')
         # analyzer.median_time_using_computer_by_category('gender')
+
+        analyzer.mean_time_to_click_squares_by_size_and_time_to_fall('work_type')
+        analyzer.median_time_to_click_squares_by_size_and_time_to_fall('work_type')
+        analyzer.mean_time_spending_on_gaming_by_category('work_type')
+        analyzer.median_time_spending_on_gaming_by_category('work_type')
+        analyzer.mean_time_using_computer_by_category('work_type')
+        analyzer.median_time_using_computer_by_category('work_type')
+
+        analyzer.mean_time_to_click_squares_by_size_and_time_to_fall('preferred_playing_style')
+        analyzer.median_time_to_click_squares_by_size_and_time_to_fall('preferred_playing_style')
+        analyzer.mean_time_spending_on_gaming_by_category('preferred_playing_style')
+        analyzer.median_time_spending_on_gaming_by_category('preferred_playing_style')
+        analyzer.mean_time_using_computer_by_category('preferred_playing_style')
+        analyzer.median_time_using_computer_by_category('preferred_playing_style')

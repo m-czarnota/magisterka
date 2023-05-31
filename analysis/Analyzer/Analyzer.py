@@ -540,4 +540,10 @@ class Analyzer:
         if category == 'age':
             return 'wieku' if in_dependent else 'wiek'
 
+        if category == 'work_type':
+            return ('typu' if in_dependent else 'typ') + ' pracy'
+
+        if category == 'preferred_playing_style':
+            return 'preferowanego stylu grania' if in_dependent else 'preferowany styl gry'
+
         return category
