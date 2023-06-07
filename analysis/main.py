@@ -32,14 +32,14 @@ if __name__ == '__main__':
     ) as connection:
         analyzer = Analyzer(connection)
 
-        for class_analyzer in [
-            # GenderAnalyzer(connection),
-            # AgeAnalyzer(connection),
-            # FavGameTypeAnalyzer(connection),
-            WorkTypeAnalyzer(connection),
-            PreferredPlayingStyleAnalyzer(connection)
-        ]:
-            analyze_class(class_analyzer)
+        # for class_analyzer in [
+        #     GenderAnalyzer(connection),
+        #     AgeAnalyzer(connection),
+        #     FavGameTypeAnalyzer(connection),
+        #     WorkTypeAnalyzer(connection),
+        #     PreferredPlayingStyleAnalyzer(connection)
+        # ]:
+        #     analyze_class(class_analyzer)
 
         # analyzer.dependency_score_on_time()
         # analyzer.count_of_rejected_scores()
@@ -52,8 +52,8 @@ if __name__ == '__main__':
         # analyzer.mean_time_to_click_by_square_velocity()
         # analyzer.squares_size_and_time_to_fall_taking_away_hp()
 
-        # analyzer.mean_time_to_click_squares_by_size_and_time_to_fall('favourite_game_type')
-        # analyzer.median_time_to_click_squares_by_size_and_time_to_fall('favourite_game_type')
+        analyzer.mean_time_to_click_squares_by_size_and_time_to_fall('favourite_game_type')
+        analyzer.median_time_to_click_squares_by_size_and_time_to_fall('favourite_game_type')
         # analyzer.mean_time_spending_on_gaming_by_category('favourite_game_type')
         # analyzer.median_time_spending_on_gaming_by_category('favourite_game_type')
         # analyzer.mean_time_using_computer_by_category('favourite_game_type')
@@ -72,17 +72,17 @@ if __name__ == '__main__':
         # analyzer.median_time_spending_on_gaming_by_category('gender')
         # analyzer.mean_time_using_computer_by_category('gender')
         # analyzer.median_time_using_computer_by_category('gender')
-
-        analyzer.mean_time_to_click_squares_by_size_and_time_to_fall('work_type')
-        analyzer.median_time_to_click_squares_by_size_and_time_to_fall('work_type')
-        analyzer.mean_time_spending_on_gaming_by_category('work_type')
-        analyzer.median_time_spending_on_gaming_by_category('work_type')
-        analyzer.mean_time_using_computer_by_category('work_type')
-        analyzer.median_time_using_computer_by_category('work_type')
-
-        analyzer.mean_time_to_click_squares_by_size_and_time_to_fall('preferred_playing_style')
-        analyzer.median_time_to_click_squares_by_size_and_time_to_fall('preferred_playing_style')
-        analyzer.mean_time_spending_on_gaming_by_category('preferred_playing_style')
-        analyzer.median_time_spending_on_gaming_by_category('preferred_playing_style')
-        analyzer.mean_time_using_computer_by_category('preferred_playing_style')
-        analyzer.median_time_using_computer_by_category('preferred_playing_style')
+        #
+        # analyzer.mean_time_to_click_squares_by_size_and_time_to_fall('work_type')
+        # analyzer.median_time_to_click_squares_by_size_and_time_to_fall('work_type')
+        # analyzer.mean_time_spending_on_gaming_by_category('work_type')
+        # analyzer.median_time_spending_on_gaming_by_category('work_type')
+        # analyzer.mean_time_using_computer_by_category('work_type')
+        # analyzer.median_time_using_computer_by_category('work_type')
+        #
+        # analyzer.mean_time_to_click_squares_by_size_and_time_to_fall('preferred_playing_style')
+        # analyzer.median_time_to_click_squares_by_size_and_time_to_fall('preferred_playing_style')
+        # analyzer.mean_time_spending_on_gaming_by_category('preferred_playing_style')
+        # analyzer.median_time_spending_on_gaming_by_category('preferred_playing_style')
+        # analyzer.mean_time_using_computer_by_category('preferred_playing_style')
+        # analyzer.median_time_using_computer_by_category('preferred_playing_style')

@@ -269,7 +269,7 @@ class Analyzer:
             rot=30,
         )
         for p in ax.patches:
-            ax.annotate(f'{p.get_height():.2f}', (p.get_x() * 1.005, p.get_height() * 1.005), fontsize=8)
+            ax.annotate(f'{p.get_height():.2f}', (p.get_x() * 1.005, p.get_height() * 1.005), fontsize=10)
 
         filename = ChartVisualizer.save_encode_filename(title)
         plt.savefig(f'./results/images/{sub_dir}/{filename}')
@@ -340,7 +340,7 @@ class Analyzer:
             rot=30,
         )
         for p in ax.patches:
-            ax.annotate(f'{p.get_height():.2f}', (p.get_x() * 1.005, p.get_height() * 1.005), fontsize=8)
+            ax.annotate(f'{p.get_height():.2f}', (p.get_x() * 1.005, p.get_height() * 1.005), fontsize=10)
 
         filename = ChartVisualizer.save_encode_filename(title)
         plt.savefig(f'./results/images/{sub_dir}/{filename}')
@@ -368,6 +368,7 @@ class Analyzer:
                 y=result_pd.values,
                 fig_title=title,
                 fig_size=(20, 10),
+                x_label_rotation=30 if 'fav' in selected_category else None,
                 x_label=self.translate_category(selected_category).capitalize(),
                 y_label='Średnia czasu spędzanego na granie dziennie [h]',
             ), save_visualization, sub_dir=selected_category)
@@ -392,6 +393,7 @@ class Analyzer:
                 y=result_pd.values,
                 fig_title=title,
                 fig_size=(20, 10),
+                x_label_rotation=30 if 'fav' in selected_category else None,
                 x_label=self.translate_category(selected_category).capitalize(),
                 y_label='Mediana czasu spędzanego na granie dziennie [h]',
             ), save_visualization, sub_dir=selected_category)
@@ -416,6 +418,7 @@ class Analyzer:
                 y=result_pd.values,
                 fig_title=title,
                 fig_size=(20, 10),
+                x_label_rotation=30 if 'fav' in selected_category else None,
                 x_label=self.translate_category(selected_category).capitalize(),
                 y_label='Średnia liczba godzin używania komputera dziennie [h]',
             ), save_visualization, sub_dir=selected_category)
@@ -440,6 +443,7 @@ class Analyzer:
                 y=result_pd.values,
                 fig_title=title,
                 fig_size=(20, 10),
+                x_label_rotation=30 if 'fav' in selected_category else None,
                 x_label=self.translate_category(selected_category).capitalize(),
                 y_label='Mediana liczba godzin używania komputera dziennie [h]',
             ), save_visualization, sub_dir=selected_category)
@@ -464,6 +468,7 @@ class Analyzer:
                 y=result_pd.values,
                 fig_title=title,
                 fig_size=(20, 10),
+                x_label_rotation=30 if 'fav' in selected_category else None,
                 x_label=self.translate_category(selected_category).capitalize(),
                 y_label='Mediana liczba godzin używania komputera dziennie [h]',
             ), save_visualization, sub_dir=selected_category)
@@ -532,7 +537,7 @@ class Analyzer:
     @staticmethod
     def translate_category(category: str, in_dependent: bool = False) -> str:
         if category == 'favourite_game_type':
-            return ('typu' if in_dependent else 'typ') + 'ulubionej gry'
+            return ('typu' if in_dependent else 'typ') + ' ulubionej gry'
 
         if category == 'gender':
             return 'płci' if in_dependent else 'płeć'

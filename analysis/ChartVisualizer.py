@@ -18,6 +18,7 @@ class ChartVisualizer:
     @staticmethod
     def visualize(chart_type: ChartTypeEnum, chart_params: ChartParams, save: bool = False, sub_dir: str = None) -> None:
         plt.figure(figsize=chart_params.fig_size)
+        plt.rcParams.update({'font.size': 14})
         ChartVisualizer.__draw_chart(chart_type, chart_params)
 
         plt.title(chart_params.fig_title)
